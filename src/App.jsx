@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Header } from "./components/Header/Header";
+import { Footer } from "./components/Footer/Footer";
 
 import ImagePlaceholder from "./assets/images/placeholder-image.svg";
 import IllustrationPlaceholder from "./assets/images/illustration-placeholder.svg";
@@ -87,6 +88,8 @@ export function App() {
                     </section>
                 </section>
             </main>
+
+            <Footer />
         </React.Fragment>
     );
 }

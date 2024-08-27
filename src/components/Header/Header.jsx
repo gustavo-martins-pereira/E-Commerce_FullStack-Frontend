@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { IoIosMenu, IoIosClose } from "react-icons/io";
 
-import Logo from "./assets/images/logo.svg";
+import Logo from "../../assets/images/logo.svg";
 
 export function Header() {
     // STATES
