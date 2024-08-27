@@ -36,6 +36,11 @@
 
 /*============================== GENERIC CLASSES ==============================*/
 @layer components {
+    /* DEFAULT SECTION */
+    .section {
+        @apply px-4 py-12 lg:px-16 lg:py-24;
+    }
+
     /* BUTTON */
     .btn {
         @apply py-2 px-4;
