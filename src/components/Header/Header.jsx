@@ -27,7 +27,7 @@ export function Header() {
     }
 
     return (
-        <header className="border-b border-b-header-menu p-4 lg:px-16">
+        <header className="bg-white sticky top-0 border-b p-4 lg:px-16">
             <nav className="flex flex-col justify-between gap-8 lg:flex-row">
                 <div className="flex justify-between items-center">
                     <a href=""><img src={Logo} alt="Logotype of the Shop Wave" /></a>
