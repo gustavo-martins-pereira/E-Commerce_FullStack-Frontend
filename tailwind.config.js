@@ -10,6 +10,7 @@ export default {
                 // PRIMITIVE COLORS
                 "black-05": "hsla(0, 0%, 0%, 0.5)",
                 "pickled-bluewood": "hsl(210, 29%, 24%)",
+
                 // COMPOSITE COLORS
                 "button-default-color": "hsl(0, 0%, 0%)",
             },
@@ -20,6 +21,7 @@ export default {
                 // ========== GENERIC COMPONENTS ==========
                 // BUTTONS
                 "btn-primary": theme("colors.button-default-color"),
+
                 // HEADER MENU
                 "header-menu": theme("colors.pickled-bluewood"),
             }),
