@@ -10,7 +10,7 @@ export function NotFound() {
                 <h1>Page Not Found</h1>
                 <p>The page you are looking for could not be found. Please check the URL and try again.</p>
 
-                <button className="btn btn-primary" onClick={() => navigator("/")}>Back</button>
+                <button className="btn btn-primary" onClick={() => navigator(-1)}>Back</button>
             </section>
 
             <article className="section flex flex-col items-start gap-4 md:flex-row md:justify-between">
