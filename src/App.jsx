@@ -6,6 +6,7 @@ import { Footer } from "./components/Footer/Footer";
 import { Home } from "./pages/Home/Home";
 import { NotFound } from "./pages/NotFound/NotFound";
 import { ScrollToTop } from "./components/scripts/ScrollToTop/ScrollToTop";
+import { Products } from "./pages/Products/Products";
 
 export function App() {
     return (
@@ -17,6 +18,7 @@ export function App() {
 
                 <Routes>
                     <Route path="/" element={<Home />} />
+                    <Route path="/products" element={<Products />} />
 
                     <Route path="*" element={<NotFound />} />
                 </Routes>

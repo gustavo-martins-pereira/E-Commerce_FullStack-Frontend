@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { IoIosMenu, IoIosClose } from "react-icons/io";
 
 import Logo from "../../assets/images/logo.svg";
+import { Link } from "react-router-dom";
 
 export function Header() {
     // STATES
@@ -48,8 +49,8 @@ export function Header() {
 
                 {(isMobile ? isMenuOpen : true) && <div id="main-menu" className="flex flex-col justify-between gap-8 lg:flex-row" aria-hidden={!isMenuOpen}>
                     <ul className="flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
-                        <li><a className="inline-block px-4 py-2 hover:underline" href="">Home</a></li>
-                        <li><a className="inline-block px-4 py-2 hover:underline" href="">Shop Now</a></li>
+                        <li><Link className="inline-block px-4 py-2 hover:underline" to="/">Home</Link></li>
+                        <li><Link className="inline-block px-4 py-2 hover:underline" to="/products">Shop Now</Link></li>
                     </ul>
 
                     <div className="flex flex-col justify-between gap-4 lg:flex-row">

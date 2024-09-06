@@ -43,7 +43,7 @@
 
     /* BUTTON */
     .btn {
-        @apply py-2 px-4;
+        @apply inline-block py-2 px-4;
     }
 
         .btn-primary {
