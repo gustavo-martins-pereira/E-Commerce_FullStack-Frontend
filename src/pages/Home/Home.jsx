@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
-import ImagePlaceholder from "../../assets/images/placeholder-image.svg";
-import IllustrationPlaceholder from "../../assets/images/illustration-placeholder.svg";
+import ImagePlaceholder from "@assets/images/placeholder-image.svg";
+import IllustrationPlaceholder from "@assets/images/illustration-placeholder.svg";
 
 export function Home() {
     return (

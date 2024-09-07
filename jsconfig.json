@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        // General JS
+        "moduleResolution": "node",
+
+        // Paths
+        "baseUrl": "src",
+        "paths": {
+            "@components/*": [
+                "src/components/*",
+            ],
+            "@pages/*": [
+                "src/pages/*",
+            ],
+            "@assets/*": [
+                "src/assets/*",
+            ],
+        },
+    },
+    "include": [
+        "src",
+    ],
+}

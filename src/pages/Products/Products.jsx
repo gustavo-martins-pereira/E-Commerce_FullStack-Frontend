@@ -1,8 +1,8 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from "swiper/modules";
 
-import ImagePlaceholder from "../../assets/images/placeholder-image.svg";
-import IllustrationPlaceholder from "../../assets/images/illustration-placeholder.svg";
+import ImagePlaceholder from "@assets/images/placeholder-image.svg";
+import IllustrationPlaceholder from "@assets/images/illustration-placeholder.svg";
 
 export function Products() {
     return (
