@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { IoIosMenu, IoIosClose } from "react-icons/io";
-
-import Logo from "../../assets/images/logo.svg";
 import { Link } from "react-router-dom";
 
+import Logo from "../../assets/images/logo.svg";
+
 export function Header() {
+    const iconsStyle = { display: "inline-block", cursor: "pointer" };
+
     // STATES
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(undefined);
@@ -28,7 +30,7 @@ export function Header() {
     }
 
     return (
-        <header className="bg-white sticky top-0 border-b p-4 lg:px-16">
+        <header className="bg-white sticky top-0 border-b p-4 lg:px-16 z-10">
             <nav className="flex flex-col justify-between gap-8 lg:flex-row">
                 <div className="flex justify-between items-center">
                     <a href=""><img src={Logo} alt="Logotype of the Shop Wave" /></a>
@@ -40,8 +42,8 @@ export function Header() {
                             onClick={handleOnMenuClicked}
                         >
                         {isMenuOpen ?
-                            <IoIosClose size="3rem" style={{ display: "inline-block", cursor: "pointer" }} />
-                            : <IoIosMenu size="3rem" style={{ display: "inline-block", cursor: "pointer" }} />}
+                            <IoIosClose size="3rem" style={iconsStyle} />
+                            : <IoIosMenu size="3rem" style={iconsStyle} />}
                         </button>
                         :
                         ""}

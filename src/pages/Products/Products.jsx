@@ -1,3 +1,6 @@
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination } from "swiper/modules";
+
 import ImagePlaceholder from "../../assets/images/placeholder-image.svg";
 import IllustrationPlaceholder from "../../assets/images/illustration-placeholder.svg";
 
@@ -6,13 +9,36 @@ export function Products() {
         <main>
             {/* PRODUCTS CAROUSEL */}
             <section className="flex flex-col gap-8 p-8">
-                <img src={ImagePlaceholder} alt="" />
+                <section>
+                    <Swiper
+                        modules={[ Pagination ]}
+                        spaceBetween={"50px"}
+                        pagination={{
+                            clickable: true,
+                        }}
+                        style={{ paddingBottom: "3rem" }}
+                    >
+                        <SwiperSlide tag="article">
+                            <img src={ImagePlaceholder} alt="" />
 
-                <header className="flex flex-col gap-4">
-                    <h2>Product Name</h2>
-                    <p className="text-2xl font-bold">$55</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit id nemo minima a recusandae ab quaerat explicabo pariatur numquam, natus repellat blanditiis maiores eaque ipsum maxime vitae iure sapiente atque.</p>
-                </header>
+                            <header className="flex flex-col gap-4 mt-4">
+                                <h2>Product Name</h2>
+                                <p className="text-2xl font-bold">$55</p>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit id nemo minima a recusandae ab quaerat explicabo pariatur numquam, natus repellat blanditiis maiores eaque ipsum maxime vitae iure sapiente atque.</p>
+                            </header>
+                        </SwiperSlide>
+
+                        <SwiperSlide tag="article">
+                            <img src={ImagePlaceholder} alt="" />
+
+                            <header className="flex flex-col gap-4 mt-4">
+                                <h2>Product Name</h2>
+                                <p className="text-2xl font-bold">$55</p>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit id nemo minima a recusandae ab quaerat explicabo pariatur numquam, natus repellat blanditiis maiores eaque ipsum maxime vitae iure sapiente atque.</p>
+                            </header>
+                        </SwiperSlide>
+                    </Swiper>
+                </section>
 
                 <div className="flex flex-col gap-2">
                     <label htmlFor="quantity">Quantity</label>
@@ -51,27 +77,93 @@ export function Products() {
             </article>
 
             {/* OUR PRODUCTS */}
-            <section className="flex flex-col gap-8 p-8">
+            <section className="p-8">
                 <div className="flex flex-col gap-4">
                     <h2>Our Products</h2>
                     <p>Explore our wide range of high-quality products.</p>
                 </div>
 
-                <article className="flex flex-col gap-4">
-                    <img src={ImagePlaceholder} alt="" />
-                    
-                    <div className="flex justify-between items-center font-bold">
-                        <h3 className="text-xl">Product Name</h3>
-                        <p className="text-xl">$55</p>
-                    </div>
+                <Swiper
+                    modules={[ Pagination ]}
+                    spaceBetween={"24px"}
+                    slidesPerView={1.5}
+                    centeredSlides={true}
+                    pagination={{
+                        clickable: true,
+                    }}
+                    style={{ marginTop: "2rem", paddingBottom: "3rem" }}
+                >
+                    <SwiperSlide tag="article">
+                        <img src={ImagePlaceholder} alt="" />
 
-                    <button className="btn btn-primary">Add to Cart</button>
-                </article>
+                        <div className="flex justify-between items-center mt-4 font-bold">
+                            <h3 className="text-xl">Product Name</h3>
+                            <p className="text-xl">$55</p>
+                        </div>
+
+                        <button className="btn btn-primary w-full mt-4">Add to Cart</button>
+                    </SwiperSlide>
+
+                    <SwiperSlide tag="article">
+                        <img src={ImagePlaceholder} alt="" />
+
+                        <div className="flex justify-between items-center mt-4 font-bold">
+                            <h3 className="text-xl">Product Name</h3>
+                            <p className="text-xl">$55</p>
+                        </div>
+
+                        <button className="btn btn-primary w-full mt-4">Add to Cart</button>
+                    </SwiperSlide>
+
+                    <SwiperSlide tag="article">
+                        <img src={ImagePlaceholder} alt="" />
+
+                        <div className="flex justify-between items-center mt-4 font-bold">
+                            <h3 className="text-xl">Product Name</h3>
+                            <p className="text-xl">$55</p>
+                        </div>
+
+                        <button className="btn btn-primary w-full mt-4">Add to Cart</button>
+                    </SwiperSlide>
+
+                    <SwiperSlide tag="article">
+                        <img src={ImagePlaceholder} alt="" />
+
+                        <div className="flex justify-between items-center mt-4 font-bold">
+                            <h3 className="text-xl">Product Name</h3>
+                            <p className="text-xl">$55</p>
+                        </div>
+
+                        <button className="btn btn-primary w-full mt-4">Add to Cart</button>
+                    </SwiperSlide>
+
+                    <SwiperSlide tag="article">
+                        <img src={ImagePlaceholder} alt="" />
+
+                        <div className="flex justify-between items-center mt-4 font-bold">
+                            <h3 className="text-xl">Product Name</h3>
+                            <p className="text-xl">$55</p>
+                        </div>
+
+                        <button className="btn btn-primary w-full mt-4">Add to Cart</button>
+                    </SwiperSlide>
+
+                    <SwiperSlide tag="article">
+                        <img src={ImagePlaceholder} alt="" />
+
+                        <div className="flex justify-between items-center mt-4 font-bold">
+                            <h3 className="text-xl">Product Name</h3>
+                            <p className="text-xl">$55</p>
+                        </div>
+
+                        <button className="btn btn-primary w-full mt-4">Add to Cart</button>
+                    </SwiperSlide>
+                </Swiper>
             </section>
 
             {/* PERFECT PRODUCT */}
             <article className="flex flex-col gap-8 p-8">
-            <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-4">
                     <h2>Find the Perfect Product for You</h2>
                     <p>Explore our wide range of products and use our advanced filter options to refine your search. Whether you're looking for a specific category, price range, popularity, or other attributes, we've got you covered.</p>
                 </div>
