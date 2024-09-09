@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 
+import { Button } from "@components/dumbs/Button/Button";
+
 import ImagePlaceholder from "@assets/images/placeholder-image.svg";
 import IllustrationPlaceholder from "@assets/images/illustration-placeholder.svg";
 
@@ -14,7 +16,7 @@ export function Home() {
 
                     <div className="flex gap-4">
                         <Link className="btn btn-primary" to="/products">Explore</Link>
-                        <button className="btn btn-secondary">Sign Up</button>
+                        <Button className="btn-secondary">Sign Up</Button>
                     </div>
                 </div>
 
@@ -49,7 +51,7 @@ export function Home() {
                         </article>
                     </div>
 
-                    <button className="btn mt-4 hover:underline">Sign Up &gt;</button>
+                    <Button className="mt-4 hover:underline">Sign Up &gt;</Button>
                 </section>
             </section>
 

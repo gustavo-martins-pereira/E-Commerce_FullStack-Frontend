@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { IoIosMenu, IoIosClose } from "react-icons/io";
 import { Link } from "react-router-dom";
 
+import { Button } from "@components/dumbs/Button/Button";
+
 import Logo from "@assets/images/logo.svg";
 
 export function Header() {
@@ -41,9 +43,9 @@ export function Header() {
                             aria-expanded={isMenuOpen}
                             onClick={handleOnMenuClicked}
                         >
-                        {isMenuOpen ?
-                            <IoIosClose size="3rem" style={iconsStyle} />
-                            : <IoIosMenu size="3rem" style={iconsStyle} />}
+                            {isMenuOpen ?
+                                <IoIosClose size="3rem" style={iconsStyle} />
+                                : <IoIosMenu size="3rem" style={iconsStyle} />}
                         </button>
                         :
                         ""}
@@ -56,8 +58,8 @@ export function Header() {
                     </ul>
 
                     <div className="flex flex-col justify-between gap-4 lg:flex-row">
-                        <button className="btn btn-primary">Login</button>
-                        <button className="btn btn-secondary">Sign Up</button>
+                        <Button className="btn-primary">Login</Button>
+                        <Button className="btn-secondary">Sign Up</Button>
                     </div>
                 </div>}
             </nav>

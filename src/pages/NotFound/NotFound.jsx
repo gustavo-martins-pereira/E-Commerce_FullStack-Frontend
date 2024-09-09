@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
+import { Button } from "@components/dumbs/Button/Button";
+
 export function NotFound() {
     const navigator = useNavigate();
 
@@ -10,7 +12,7 @@ export function NotFound() {
                 <h1>Page Not Found</h1>
                 <p>The page you are looking for could not be found. Please check the URL and try again.</p>
 
-                <button className="btn btn-primary" onClick={() => navigator(-1)}>Back</button>
+                <Button className="btn-primary" onClick={() => navigator(-1)}>Back</Button>
             </section>
 
             <article className="section flex flex-col items-start gap-4 md:flex-row md:justify-between">
@@ -20,7 +22,7 @@ export function NotFound() {
                     <p>Explore our wide range of high-quality products and find exactly what you need.</p>
 
                     <div className="flex gap-4">
-                        <button className="btn btn-secondary" onClick={() => navigator("/")}>Homepage</button>
+                        <Button className="btn-secondary" onClick={() => navigator("/")}>Homepage</Button>
                     </div>
                 </div>
             </article>

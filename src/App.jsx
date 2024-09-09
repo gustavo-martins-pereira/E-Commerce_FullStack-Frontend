@@ -3,10 +3,11 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { Home } from "@pages/Home/Home";
 import { Products } from "@pages/Products/Products";
+import { AllProducts } from "@pages/Products/AllProducts/AllProducts";
 import { NotFound } from "@pages/NotFound/NotFound";
 
-import { Header } from "@components/Header/Header";
-import { Footer } from "@components/Footer/Footer";
+import { Header } from "@components/smart/Header/Header";
+import { Footer } from "@components/smart/Footer/Footer";
 import { ScrollToTop } from "@components/scripts/ScrollToTop/ScrollToTop";
 
 export function App() {
@@ -19,7 +20,10 @@ export function App() {
 
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/products" element={<Products />} />
+                    <Route path="/products">
+                        <Route index element={<Products />} />
+                        <Route path="all" element={<AllProducts />} />
+                    </Route>
 
                     <Route path="*" element={<NotFound />} />
                 </Routes>

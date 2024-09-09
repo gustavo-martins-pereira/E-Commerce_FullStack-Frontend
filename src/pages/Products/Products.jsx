@@ -2,6 +2,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Link } from "react-router-dom";
 import { Pagination } from "swiper/modules";
 
+import { Button } from "@components/dumbs/Button/Button";
+
 import ImagePlaceholder from "@assets/images/placeholder-image.svg";
 import IllustrationPlaceholder from "@assets/images/illustration-placeholder.svg";
 
@@ -111,7 +113,7 @@ export function Products() {
                                 <h3 className="text-xl">Product Name</h3>
                                 <p className="text-xl">$55</p>
                             </div>
-                            <button className="btn btn-primary w-full mt-4">Add to Cart</button>
+                            <Button className="btn-primary w-full mt-4">Add to Cart</Button>
                         </SwiperSlide>
 
                         <SwiperSlide tag="article">
@@ -120,7 +122,7 @@ export function Products() {
                                 <h3 className="text-xl">Product Name</h3>
                                 <p className="text-xl">$55</p>
                             </div>
-                            <button className="btn btn-primary w-full mt-4">Add to Cart</button>
+                            <Button className="btn-primary w-full mt-4">Add to Cart</Button>
                         </SwiperSlide>
 
                         <SwiperSlide tag="article">
@@ -129,7 +131,7 @@ export function Products() {
                                 <h3 className="text-xl">Product Name</h3>
                                 <p className="text-xl">$55</p>
                             </div>
-                            <button className="btn btn-primary w-full mt-4">Add to Cart</button>
+                            <Button className="btn-primary w-full mt-4">Add to Cart</Button>
                         </SwiperSlide>
 
                         <SwiperSlide tag="article">
@@ -138,7 +140,7 @@ export function Products() {
                                 <h3 className="text-xl">Product Name</h3>
                                 <p className="text-xl">$55</p>
                             </div>
-                            <button className="btn btn-primary w-full mt-4">Add to Cart</button>
+                            <Button className="btn-primary w-full mt-4">Add to Cart</Button>
                         </SwiperSlide>
 
                         <SwiperSlide tag="article">
@@ -147,7 +149,7 @@ export function Products() {
                                 <h3 className="text-xl">Product Name</h3>
                                 <p className="text-xl">$55</p>
                             </div>
-                            <button className="btn btn-primary w-full mt-4">Add to Cart</button>
+                            <Button className="btn-primary w-full mt-4">Add to Cart</Button>
                         </SwiperSlide>
 
                         <SwiperSlide tag="article">
@@ -156,12 +158,12 @@ export function Products() {
                                 <h3 className="text-xl">Product Name</h3>
                                 <p className="text-xl">$55</p>
                             </div>
-                            <button className="btn btn-primary w-full mt-4">Add to Cart</button>
+                            <Button className="btn-primary w-full mt-4">Add to Cart</Button>
                         </SwiperSlide>
                     </Swiper>
                 </div>
 
-                <Link className="btn btn-primary w-full text-center md:row-start-1 md:col-start-2 md:self-end">View All</Link>
+                <Link className="btn btn-primary w-full text-center md:row-start-1 md:col-start-2 md:self-end" to="/products/all">View All</Link>
             </section>
 
             {/* PERFECT PRODUCT */}
@@ -191,7 +193,7 @@ export function Products() {
                     </article>
                 </section>
 
-                <Link className="btn btn-primary self-center px-12 text-center">View All</Link>
+                <Link className="btn btn-primary self-center px-12 text-center" to="/products/all">View All</Link>
             </article>
         </main>
     );
