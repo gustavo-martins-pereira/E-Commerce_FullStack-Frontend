@@ -8,7 +8,7 @@ export default {
         extend: {
             colors: {
                 // PRIMITIVE COLORS
-                "black-05": "hsla(0, 0%, 0%, 0.5)",
+                "black-50": "hsla(0, 0%, 0%, 0.5)",
                 "pickled-bluewood": "hsl(210, 29%, 24%)",
 
                 // COMPOSITE COLORS
