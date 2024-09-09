@@ -33,7 +33,7 @@ export function Header() {
         <header className="bg-white sticky top-0 border-b p-4 lg:px-16 z-10">
             <nav className="flex flex-col justify-between gap-8 lg:flex-row">
                 <div className="flex justify-between items-center">
-                    <a href=""><img src={Logo} alt="Logotype of the Shop Wave" /></a>
+                    <Link to="/"><img src={Logo} alt="Logotype of the Shop Wave" /></Link>
                     {isMobile ?
                         <button
                             aria-label="Main menu"
@@ -49,7 +49,7 @@ export function Header() {
                         ""}
                 </div>
 
-                {(isMobile ? isMenuOpen : true) && <div id="main-menu" className="flex flex-col justify-between gap-8 lg:flex-row" aria-hidden={!isMenuOpen}>
+                {(isMobile ? isMenuOpen : true) && <div id="main-menu" className="flex flex-col justify-between gap-8 lg:flex-row">
                     <ul className="flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
                         <li><Link className="inline-block px-4 py-2 hover:underline" to="/">Home</Link></li>
                         <li><Link className="inline-block px-4 py-2 hover:underline" to="/products">Shop Now</Link></li>
