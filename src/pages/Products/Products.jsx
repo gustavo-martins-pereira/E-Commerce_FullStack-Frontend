@@ -2,7 +2,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Link } from "react-router-dom";
 import { Pagination } from "swiper/modules";
 
-import { Button } from "@components/dumbs/Button/Button";
+import { Button } from "@components/dumbs/custom/Button/Button";
 
 import ImagePlaceholder from "@assets/images/placeholder-image.svg";
 import IllustrationPlaceholder from "@assets/images/illustration-placeholder.svg";

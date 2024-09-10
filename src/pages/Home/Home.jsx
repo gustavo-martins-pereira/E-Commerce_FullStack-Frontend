@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import { Button } from "@components/dumbs/Button/Button";
+import { Button } from "@components/dumbs/custom/Button/Button";
 
 import ImagePlaceholder from "@assets/images/placeholder-image.svg";
 import IllustrationPlaceholder from "@assets/images/illustration-placeholder.svg";
@@ -20,7 +20,7 @@ export function Home() {
                     </div>
                 </div>
 
-                <img src={ImagePlaceholder} alt="" />
+                <img className="w-1/2" src={ImagePlaceholder} alt="" />
             </section>
 
             {/* FEATURES */}

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { IoIosMenu, IoIosClose } from "react-icons/io";
 import { Link } from "react-router-dom";
 
-import { Button } from "@components/dumbs/Button/Button";
+import { Button } from "@components/dumbs/custom/Button/Button";
 
 import Logo from "@assets/images/logo.svg";
 

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import { Button } from "@components/dumbs/Button/Button";
+import { Button } from "@components/dumbs/custom/Button/Button";
 
 export function NotFound() {
     const navigator = useNavigate();

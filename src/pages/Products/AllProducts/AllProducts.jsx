@@ -1,4 +1,6 @@
-import { Button } from "@components/dumbs/Button/Button";
+import { Link } from "react-router-dom";
+
+import { Button } from "@components/dumbs/custom/Button/Button";
 
 import PlaceholderImage from "@assets/images/placeholder-image.svg";
 
@@ -14,51 +16,67 @@ export function AllProducts() {
 
                 <section className="grid grid-cols-2 gap-4 md:gap-12 lg:grid-cols-4 lg:gap-4">
                     <article>
-                        <img src={PlaceholderImage} alt="" />
-                        <h3 className="text-lg">Product Name</h3>
-                        <p>$55</p>
+                        <Link to="/products/all/1">
+                            <img src={PlaceholderImage} alt="" />
+                            <h3 className="text-lg">Product Name</h3>
+                            <h4>$55</h4>
+                        </Link>
                     </article>
 
                     <article>
-                        <img src={PlaceholderImage} alt="" />
-                        <h3 className="text-lg">Product Name</h3>
-                        <p>$55</p>
+                        <Link to="/products/all/2">
+                            <img src={PlaceholderImage} alt="" />
+                            <h3 className="text-lg">Product Name</h3>
+                            <h4>$55</h4>
+                        </Link>
                     </article>
 
                     <article>
-                        <img src={PlaceholderImage} alt="" />
-                        <h3 className="text-lg">Product Name</h3>
-                        <p>$55</p>
+                        <Link to="/products/all/3">
+                            <img src={PlaceholderImage} alt="" />
+                            <h3 className="text-lg">Product Name</h3>
+                            <h4>$55</h4>
+                        </Link>
                     </article>
 
                     <article>
-                        <img src={PlaceholderImage} alt="" />
-                        <h3 className="text-lg">Product Name</h3>
-                        <p>$55</p>
+                        <Link to="/products/all/4">
+                            <img src={PlaceholderImage} alt="" />
+                            <h3 className="text-lg">Product Name</h3>
+                            <h4>$55</h4>
+                        </Link>
                     </article>
 
                     <article>
-                        <img src={PlaceholderImage} alt="" />
-                        <h3 className="text-lg">Product Name</h3>
-                        <p>$55</p>
+                        <Link to="/products/all/5">
+                            <img src={PlaceholderImage} alt="" />
+                            <h3 className="text-lg">Product Name</h3>
+                            <h4>$55</h4>
+                        </Link>
                     </article>
 
                     <article>
-                        <img src={PlaceholderImage} alt="" />
-                        <h3 className="text-lg">Product Name</h3>
-                        <p>$55</p>
+                        <Link to="/products/all/6">
+                            <img src={PlaceholderImage} alt="" />
+                            <h3 className="text-lg">Product Name</h3>
+                            <h4>$55</h4>
+                        </Link>
                     </article>
 
                     <article>
-                        <img src={PlaceholderImage} alt="" />
-                        <h3 className="text-lg">Product Name</h3>
-                        <p>$55</p>
+                        <Link to="/products/all/7">
+                            <img src={PlaceholderImage} alt="" />
+                            <h3 className="text-lg">Product Name</h3>
+                            <h4>$55</h4>
+                        </Link>
                     </article>
 
                     <article>
-                        <img src={PlaceholderImage} alt="" />
-                        <h3 className="text-lg">Product Name</h3>
-                        <p>$55</p>
+                        <Link to="/products/all/8">
+                            <img src={PlaceholderImage} alt="" />
+                            <h3 className="text-lg">Product Name</h3>
+                            <h4>$55</h4>
+                        </Link>
                     </article>
                 </section>
 

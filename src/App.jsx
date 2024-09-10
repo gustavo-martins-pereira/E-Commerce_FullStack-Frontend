@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home } from "@pages/Home/Home";
 import { Products } from "@pages/Products/Products";
 import { AllProducts } from "@pages/Products/AllProducts/AllProducts";
+import { ProductDetails } from "@pages/Products/AllProducts/ProductDetails/ProductDetails";
 import { NotFound } from "@pages/NotFound/NotFound";
 
 import { Header } from "@components/smart/Header/Header";
@@ -22,7 +23,10 @@ export function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/products">
                         <Route index element={<Products />} />
-                        <Route path="all" element={<AllProducts />} />
+                        <Route path="all">
+                            <Route index element={<AllProducts />} />
+                            <Route path=":productId" element={<ProductDetails />} />
+                        </Route>
                     </Route>
 
                     <Route path="*" element={<NotFound />} />
