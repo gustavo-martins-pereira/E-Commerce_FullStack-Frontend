@@ -5,6 +5,7 @@ import { Home } from "@pages/Home/Home";
 import { Products } from "@pages/Products/Products";
 import { AllProducts } from "@pages/Products/AllProducts/AllProducts";
 import { ProductDetails } from "@pages/Products/AllProducts/ProductDetails/ProductDetails";
+import { Orders } from "@pages/Orders/Orders";
 import { NotFound } from "@pages/NotFound/NotFound";
 
 import { Header } from "@components/smart/Header/Header";
@@ -28,6 +29,8 @@ export function App() {
                             <Route path=":productId" element={<ProductDetails />} />
                         </Route>
                     </Route>
+
+                    <Route path="/orders" element={<Orders />} />
 
                     <Route path="*" element={<NotFound />} />
                 </Routes>

@@ -9,7 +9,7 @@ export function ProductDetails() {
     return (
         <main>
             {/* PRODUCT ITSELF */}
-            <section className="section flex flex-col gap-4 lg:flex-row-reverse">
+            <section className="section flex flex-col gap-8 lg:flex-row-reverse">
                 <img className="w-1/2 m-auto lg:m-0 lg:ml-auto" src={PlaceholderImage} alt="" />
 
                 <div className="flex flex-col gap-4 flex-grow">

@@ -11,6 +11,7 @@ export function Footer() {
                 <ul className="flex flex-col justify-between gap-4 lg:items-end">
                     <li><Link className="inline-block px-4 py-2 pl-0 hover:underline" to="/">Home</Link></li>
                     <li><Link className="inline-block px-4 py-2 pl-0 hover:underline" to="/products">Shop Now</Link></li>
+                    <li><Link className="inline-block px-4 py-2 pl-0 hover:underline" to="/orders">Orders</Link></li>
                 </ul>
             </nav>
         </footer>

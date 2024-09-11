@@ -20,7 +20,7 @@ export function Home() {
                     </div>
                 </div>
 
-                <img className="w-1/2" src={ImagePlaceholder} alt="" />
+                <img className="lg:w-1/2" src={ImagePlaceholder} alt="" />
             </section>
 
             {/* FEATURES */}
