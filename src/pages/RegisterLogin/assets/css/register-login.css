@@ -1,0 +1,3 @@
+.swiper-gallery > .swiper-wrapper {
+    transition-timing-function: linear;
+}

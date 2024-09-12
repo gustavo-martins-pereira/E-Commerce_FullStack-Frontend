@@ -15,8 +15,8 @@ export function Home() {
                     <p>Welcome to our online store, where you'll find a wide selection of high-quality products to meet your needs. Whether you're looking for everyday essentials or unique gifts, we've got you covered.</p>
 
                     <div className="flex gap-4">
-                        <Link className="btn btn-primary" to="/products">Explore</Link>
-                        <Button className="btn-secondary">Sign Up</Button>
+                        <Link to="/products"><Button className="btn-primary">Explore</Button></Link>
+                        <Link to="/register-login"><Button className="btn-secondary">Sign Up</Button></Link>
                     </div>
                 </div>
 
@@ -51,7 +51,7 @@ export function Home() {
                         </article>
                     </div>
 
-                    <Button className="mt-4 hover:underline">Sign Up &gt;</Button>
+                    <Link to="/register-login"><Button className="mt-4 hover:underline">Sign Up &gt;</Button></Link>
                 </section>
             </section>
 

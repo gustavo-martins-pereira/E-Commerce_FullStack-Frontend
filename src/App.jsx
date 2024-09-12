@@ -7,6 +7,7 @@ import { AllProducts } from "@pages/Products/AllProducts/AllProducts";
 import { ProductDetails } from "@pages/Products/AllProducts/ProductDetails/ProductDetails";
 import { Orders } from "@pages/Orders/Orders";
 import { OrderDetails } from "@pages/Orders/OrderDetails/OrderDetails";
+import { RegisterLogin } from "@pages/RegisterLogin/RegisterLogin";
 import { NotFound } from "@pages/NotFound/NotFound";
 
 import { Header } from "@components/smart/Header/Header";
@@ -35,6 +36,8 @@ export function App() {
                         <Route index element={<Orders />} />
                         <Route path=":id" element={<OrderDetails />} />
                     </Route>
+
+                    <Route path="/register-login" element={<RegisterLogin />} />
 
                     <Route path="*" element={<NotFound />} />
                 </Routes>

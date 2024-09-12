@@ -89,8 +89,8 @@ export function AllProducts() {
                 <p>Explore our wide range of high-quality products and find exactly what you need.</p>
 
                 <div className="flex gap-4">
-                    <Button className="btn-secondary">Sign Up</Button>
-                    <Button className="btn-primary">Log In</Button>
+                    <Link to="/register-login"><Button className="btn-secondary">Sign Up</Button></Link>
+                    <Link to="/register-login"><Button className="btn-primary">Log In</Button></Link>
                 </div>
             </section>
         </main>

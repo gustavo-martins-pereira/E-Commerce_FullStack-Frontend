@@ -35,7 +35,7 @@ export function OrderDetails() {
                     <caption className="pb-4 font-semibold text-lg text-left">Order summary</caption>
 
                     <thead className="border-b border-gray-300">
-                        <tr className="bg-gray-100">
+                        <tr className="bg-gray-100 text-left">
                             <th scope="col" className="px-4 py-2 hidden md:table-cell">Product Image</th>
                             <th scope="col" className="px-4 py-2">Product Name</th>
                             <th scope="col" className="px-4 py-2">Quantity</th>
@@ -44,7 +44,7 @@ export function OrderDetails() {
                     </thead>
 
                     <tbody>
-                        <tr className="border-b border-gray-300 text-left">
+                        <tr className="border-b border-gray-300">
                             <td className="px-4 py-2 hidden md:table-cell">
                                 <img src="https://via.placeholder.com/50" alt="Product 1" className="w-16 h-16 object-cover" />
                             </td>
