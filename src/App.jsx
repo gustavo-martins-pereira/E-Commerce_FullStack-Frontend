@@ -10,6 +10,7 @@ import { OrderDetails } from "@pages/Orders/OrderDetails/OrderDetails";
 import { RegisterLogin } from "@pages/RegisterLogin/RegisterLogin";
 import { SellerDashboard } from "@pages/SellerDashboard/SellerDashboard";
 import { ManageProducts } from "@pages/SellerDashboard/ManageProducts/ManageProducts";
+import { CreateProduct } from "@pages/SellerDashboard/ManageProducts/CreateProduct/CreateProduct";
 import { NotFound } from "@pages/NotFound/NotFound";
 
 import { Header } from "@components/smart/Header/Header";
@@ -44,7 +45,10 @@ export function App() {
                     {/* SELLER ROUTES */}
                     <Route path="/seller-dashboard">
                         <Route index element={<SellerDashboard />} />
-                        <Route path="manage-products" element={<ManageProducts />} />
+                        <Route path="manage-products">
+                            <Route index element={<ManageProducts />} />
+                            <Route path="create" element={<CreateProduct />} />
+                        </Route>
                     </Route>
 
                     <Route path="*" element={<NotFound />} />
