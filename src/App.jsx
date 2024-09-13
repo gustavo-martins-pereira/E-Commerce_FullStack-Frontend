@@ -8,6 +8,7 @@ import { ProductDetails } from "@pages/Products/AllProducts/ProductDetails/Produ
 import { Orders } from "@pages/Orders/Orders";
 import { OrderDetails } from "@pages/Orders/OrderDetails/OrderDetails";
 import { RegisterLogin } from "@pages/RegisterLogin/RegisterLogin";
+import { SellerDashboard } from "@pages/SellerDashboard/SellerDashboard";
 import { NotFound } from "@pages/NotFound/NotFound";
 
 import { Header } from "@components/smart/Header/Header";
@@ -38,6 +39,11 @@ export function App() {
                     </Route>
 
                     <Route path="/register-login" element={<RegisterLogin />} />
+
+                    {/* SELLER ROUTES */}
+                    <Route path="/seller-dashboard">
+                        <Route index element={<SellerDashboard />} />
+                    </Route>
 
                     <Route path="*" element={<NotFound />} />
                 </Routes>
