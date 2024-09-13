@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import IllustrationPlaceholder from "@assets/images/illustration-placeholder.svg";
 
 export function SellerDashboard() {
@@ -13,11 +15,13 @@ export function SellerDashboard() {
                 <h2 className="text-center">Dashboard Features</h2>
 
                 <section className="flex flex-col gap-8 md:grid md:grid-cols-2">
-                    <article className="flex flex-col items-center gap-4 text-center">
-                        <img src={IllustrationPlaceholder} alt="" />
-                        <h3>Manage Existing Products</h3>
-                        <p className="mt-auto">The seller can easily create new products and add them to their inventory.</p>
-                    </article>
+                    <Link to="/seller-dashboard/manage-products">
+                        <article className="flex flex-col items-center gap-4 text-center">
+                            <img src={IllustrationPlaceholder} alt="" />
+                            <h3>Manage Existing Products</h3>
+                            <p className="mt-auto">The seller can easily create new products and add them to their inventory.</p>
+                        </article>
+                    </Link>
 
                     <article className="flex flex-col items-center gap-4 text-center">
                         <img src={IllustrationPlaceholder} alt="" />
