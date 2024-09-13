@@ -1,7 +1,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from "swiper/modules";
 
-import { InputText } from "@components/dumbs/windui/InputText/InputText";
+import { InputText } from "@components/dumbs/custom/InputText/InputText";
 
 import "./assets/css/register-login.css";
 
