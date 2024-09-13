@@ -11,6 +11,7 @@ import { RegisterLogin } from "@pages/RegisterLogin/RegisterLogin";
 import { SellerDashboard } from "@pages/SellerDashboard/SellerDashboard";
 import { ManageProducts } from "@pages/SellerDashboard/ManageProducts/ManageProducts";
 import { CreateProduct } from "@pages/SellerDashboard/ManageProducts/CreateProduct/CreateProduct";
+import { EditProduct } from "@pages/SellerDashboard/ManageProducts/EditProduct/EditProduct";
 import { NotFound } from "@pages/NotFound/NotFound";
 
 import { Header } from "@components/smart/Header/Header";
@@ -48,6 +49,7 @@ export function App() {
                         <Route path="manage-products">
                             <Route index element={<ManageProducts />} />
                             <Route path="create" element={<CreateProduct />} />
+                            <Route path="edit" element={<EditProduct />} />
                         </Route>
                     </Route>
 

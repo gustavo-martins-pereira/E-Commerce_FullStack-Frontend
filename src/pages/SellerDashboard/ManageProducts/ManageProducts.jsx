@@ -20,7 +20,7 @@ export function ManageProducts() {
                         <p className="text-xl font-bold">$55</p>
 
                         <div className="flex gap-4">
-                            <Button className="btn btn-primary">Edit</Button>
+                            <Link to="/seller-dashboard/manage-products/edit"><Button className="btn btn-primary">Edit</Button></Link>
                             <Button className="btn btn-secondary">Delete</Button>
                         </div>
                     </article>
@@ -31,7 +31,7 @@ export function ManageProducts() {
                         <p className="text-xl font-bold">$55</p>
 
                         <div className="flex gap-4">
-                            <Button className="btn btn-primary">Edit</Button>
+                            <Link to="/seller-dashboard/manage-products/edit"><Button className="btn btn-primary">Edit</Button></Link>
                             <Button className="btn btn-secondary">Delete</Button>
                         </div>
                     </article>
@@ -42,7 +42,7 @@ export function ManageProducts() {
                         <p className="text-xl font-bold">$55</p>
 
                         <div className="flex gap-4">
-                            <Button className="btn btn-primary">Edit</Button>
+                            <Link to="/seller-dashboard/manage-products/edit"><Button className="btn btn-primary">Edit</Button></Link>
                             <Button className="btn btn-secondary">Delete</Button>
                         </div>
                     </article>
@@ -53,7 +53,7 @@ export function ManageProducts() {
                         <p className="text-xl font-bold">$55</p>
 
                         <div className="flex gap-4">
-                            <Button className="btn btn-primary">Edit</Button>
+                            <Link to="/seller-dashboard/manage-products/edit"><Button className="btn btn-primary">Edit</Button></Link>
                             <Button className="btn btn-secondary">Delete</Button>
                         </div>
                     </article>
@@ -64,7 +64,7 @@ export function ManageProducts() {
                         <p className="text-xl font-bold">$55</p>
 
                         <div className="flex gap-4">
-                            <Button className="btn btn-primary">Edit</Button>
+                            <Link to="/seller-dashboard/manage-products/edit"><Button className="btn btn-primary">Edit</Button></Link>
                             <Button className="btn btn-secondary">Delete</Button>
                         </div>
                     </article>
