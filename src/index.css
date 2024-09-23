@@ -9,6 +9,7 @@
         @apply text-[16px] md:text-[18px] lg:text-[20px];
     }
 
+    /* TITTLES */
     h1 {
         @apply text-4xl font-bold tracking-tight;
     }
@@ -38,27 +39,27 @@
 @layer components {
     /* DEFAULT SECTION */
     .section {
-        @apply px-4 py-12 md:px-16 md:py-24 lg:px-20 lg:py-28;
+        @apply bg-page px-4 py-12 md:px-16 md:py-24 lg:px-20 lg:py-28;
     }
 
     /* BUTTON */
     .btn {
-        @apply inline-block py-2 px-4 cursor-pointer;
+        @apply inline-block py-2 px-4 transition-colors duration-200 cursor-pointer;
     }
 
         .btn-primary {
-            @apply bg-white border border-btn-primary transition-colors;
+            @apply bg-btn-primary text-btn-primary;
 
             &:hover {
-                @apply bg-black bg-opacity-5;
+                @apply bg-opacity-65;
             }
         }
-
+    
         .btn-secondary {
-            @apply bg-btn-secondary border border-black text-white;
-
+            @apply bg-btn-secondary border border-btn-secondary transition-colors;
+    
             &:hover {
-                @apply bg-opacity-60;
+                @apply bg-btn-secondary--hover;
             }
         }
 }

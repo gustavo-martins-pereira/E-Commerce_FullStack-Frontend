@@ -6,24 +6,32 @@ export default {
     ],
     theme: {
         extend: {
-            colors: {
+            colors: theme => ({
                 // PRIMITIVE COLORS
                 "black-50": "hsla(0, 0%, 0%, 0.5)",
+                "cosmos": "hsl(0, 100%, 91%)",
+                "alabaster": "hsl(0, 0%, 98%)",
+                "sunset-orange": 	"hsl(5, 100%, 62%)",
                 "pickled-bluewood": "hsl(210, 29%, 24%)",
-
-                // COMPOSITE COLORS
-                "button-default-color": "hsl(0, 0%, 0%)",
-            },
+            }),
             backgroundColor: theme => ({
-                "btn-secondary": theme("colors.button-default-color"),
+                // ========== DUMB COMPONENTS ==========
+                "btn-primary": theme("colors.sunset-orange"),
+                "btn-secondary": "white",
+                "btn-secondary--hover": theme("colors.cosmos"),
+
+                // ========== MAIN COMPONENTS ==========
+                "page": theme("colors.alabaster"),
             }),
             borderColor: theme => ({
-                // ========== GENERIC COMPONENTS ==========
+                // ========== DUMB COMPONENTS ==========
                 // BUTTONS
-                "btn-primary": theme("colors.button-default-color"),
-
-                // HEADER MENU
-                "header-menu": theme("colors.pickled-bluewood"),
+                "btn-secondary": theme("colors.sunset-orange"),
+            }),
+            textColor: theme => ({
+                // ========== DUMB COMPONENTS ==========
+                // BUTTONS
+                "btn-primary": theme("colors.white"),
             }),
         },
     },
