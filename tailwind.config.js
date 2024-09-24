@@ -26,6 +26,7 @@ export default {
             borderColor: theme => ({
                 // ========== DUMB COMPONENTS ==========
                 // BUTTONS
+                "btn-primary": theme("colors.sunset-orange"),
                 "btn-secondary": theme("colors.sunset-orange"),
             }),
             textColor: theme => ({

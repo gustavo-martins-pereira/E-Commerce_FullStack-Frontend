@@ -32,7 +32,7 @@ export function Header() {
     }
 
     return (
-        <header className="bg-white sticky top-0 border-b p-4 lg:px-16 z-10">
+        <header className="bg-white sticky top-0 border-b shadow-md p-4 lg:px-16 z-10">
             <nav className="flex flex-col justify-between gap-8 lg:flex-row">
                 <div className="flex justify-between items-center">
                     <Link to="/"><img src={Logo} alt="Logotype of the Shop Wave" /></Link>
@@ -53,9 +53,9 @@ export function Header() {
 
                 {(isMobile ? isMenuOpen : true) && <div id="main-menu" className="flex flex-col justify-between gap-8 lg:flex-row">
                     <ul className="flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
-                        <li><Link className="inline-block pr-4 py-2 hover:underline" to="/">Home</Link></li>
-                        <li><Link className="inline-block pr-4 py-2 hover:underline" to="/products">Shop Now</Link></li>
-                        <li><Link className="inline-block pr-4 py-2 hover:underline" to="/orders">Orders</Link></li>
+                        <li><Link className="inline-block pr-4 py-2 hover:underline lg:px-4" to="/">Home</Link></li>
+                        <li><Link className="inline-block pr-4 py-2 hover:underline lg:px-4" to="/products">Shop Now</Link></li>
+                        <li><Link className="inline-block pr-4 py-2 hover:underline lg:px-4" to="/orders">Orders</Link></li>
                     </ul>
 
                     <div className="flex flex-col justify-between gap-4 lg:flex-row">

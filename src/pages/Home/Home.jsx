@@ -1,11 +1,56 @@
 import { Link } from "react-router-dom";
 
+import { FeaturesSection } from "@components/dumbs/custom/FeaturesSection/FeaturesSection";
 import { Button } from "@components/dumbs/custom/Button/Button";
+import { LinkArrow } from "@components/dumbs/custom/LinkArrow/LinkArrow";
 
 import ImagePlaceholder from "@assets/images/placeholder-image.svg";
 import IllustrationPlaceholder from "@assets/images/illustration-placeholder.svg";
 
 export function Home() {
+    // MOCKED DATA
+    const shopWithConfidenceData = [
+        {
+            imageSrc: IllustrationPlaceholder,
+            title: 'Fast Shipping',
+            description: 'Get your products delivered quickly and efficiently.',
+            altText: 'Shipping Illustration'
+        },
+        {
+            imageSrc: IllustrationPlaceholder,
+            title: 'Excellent Customer Service',
+            description: 'Our dedicated customer service team is here to assist you every step of the way.',
+            altText: 'Customer Service Illustration'
+        },
+        {
+            imageSrc: IllustrationPlaceholder,
+            title: 'Quality Guarantee',
+            description: 'Shop with confidence knowing that our products are of the highest quality.',
+            altText: 'Quality Guarantee Illustration'
+        },
+    ];
+
+    const howWorksData = [
+        {
+            imageSrc: IllustrationPlaceholder,
+            title: 'Find the Perfect Product for Your Needs',
+            description: 'Explore our wide range of high-quality products and choose the one that suits you best.',
+            altText: 'Product Illustration'
+        },
+        {
+            imageSrc: IllustrationPlaceholder,
+            title: 'Enjoy Secure and Convenient Online Shopping',
+            description: 'With our user-friendly interface, you can easily browse, select, and purchase products hassle-free.',
+            altText: 'Online Shopping Illustration'
+        },
+        {
+            imageSrc: IllustrationPlaceholder,
+            title: 'Discover New Products and Exciting Deals',
+            description: 'Stay updated with our latest product releases and exclusive promotions.',
+            altText: 'Deals and Promotions Illustration'
+        },
+    ];
+
     return (
         <main>
             {/* HERO */}
@@ -23,65 +68,31 @@ export function Home() {
                 <img className="lg:w-1/2" src={ImagePlaceholder} alt="" />
             </section>
 
-            {/* FEATURES */}
+            {/* SHOP WITH CONFIDENCE */}
             <section className="section flex flex-col gap-12 text-center">
                 <header className="flex flex-col gap-4">
                     <h2>Shop with Confidence on Our Site</h2>
                     <p>Experience fast shipping, quality guarantee, and excellent customer service when you shop with us.</p>
                 </header>
 
-                <section>
-                    <div className="flex flex-col gap-8 md:grid md:grid-cols-3">
-                        <article className="flex flex-col items-center gap-4">
-                            <img className="w-8" src={IllustrationPlaceholder} alt="" />
-                            <h3>Fast Shipping</h3>
-                            <p>Get your products delivered quickly and efficiently.</p>
-                        </article>
+                <FeaturesSection features={shopWithConfidenceData} />
 
-                        <article className="flex flex-col items-center gap-4">
-                            <img className="w-8" src={IllustrationPlaceholder} alt="" />
-                            <h3>Excellent Customer Service</h3>
-                            <p>Our dedicated customer service team is here to assist you every step of the way.</p>
-                        </article>
-
-                        <article className="flex flex-col items-center gap-4">
-                            <img className="w-8" src={IllustrationPlaceholder} alt="" />
-                            <h3>Quality Guarantee</h3>
-                            <p>Shop with confidence knowing that our products are of the highest quality.</p>
-                        </article>
-                    </div>
-
-                    <Link to="/register-login"><Button className="mt-4 hover:underline">Sign Up &gt;</Button></Link>
-                </section>
+                <LinkArrow
+                    url="/register-login"
+                    text="Sign Up"
+                />
             </section>
 
             {/* HOW WORKS */}
             <section className="section flex flex-col gap-12 text-center">
                 <h2>Browse, Select, and Purchase Products with Ease</h2>
 
-                <section>
-                    <div className="flex flex-col gap-8 md:grid md:grid-cols-3">
-                        <article className="flex flex-col items-center gap-4">
-                            <img src={IllustrationPlaceholder} alt="" />
-                            <h3>Find the Perfect Product for Your Needs</h3>
-                            <p>Explore our wide range of high-quality products and choose the one that suits you best.</p>
-                        </article>
+                <FeaturesSection features={howWorksData} />
 
-                        <article className="flex flex-col items-center gap-4">
-                            <img src={IllustrationPlaceholder} alt="" />
-                            <h3>Enjoy Secure and Convenient Online Shopping</h3>
-                            <p>With our user-friendly interface, you can easily browse, select, and purchase products hassle-free.</p>
-                        </article>
-
-                        <article className="flex flex-col items-center gap-4">
-                            <img src={IllustrationPlaceholder} alt="" />
-                            <h3>Discover New Products and Exciting Deals</h3>
-                            <p>Stay updated with our latest product releases and exclusive promotions.</p>
-                        </article>
-                    </div>
-
-                    <Link className="btn mt-4 hover:underline" to="/products">Buy &gt;</Link>
-                </section>
+                <LinkArrow
+                    url="/products"
+                    text="Buy"
+                />
             </section>
         </main>
     );
