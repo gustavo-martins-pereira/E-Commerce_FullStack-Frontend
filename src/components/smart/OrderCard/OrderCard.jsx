@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 
 export function OrderCard({ date, total, status }) {
     return (
-        // TODO: Change the route to "/orders/ORDER_ID"
         <Link to="/orders/1">
             <article className="border rounded p-4 md:p-8">
                 <p className="text-black-50">{date}</p>

@@ -51,7 +51,7 @@
             @apply bg-btn-primary border border-btn-primary text-btn-primary;
 
             &:hover {
-                @apply bg-opacity-65;
+                @apply bg-opacity-65 border-transparent;
             }
         }
     

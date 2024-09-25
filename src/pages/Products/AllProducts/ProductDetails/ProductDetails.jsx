@@ -26,7 +26,6 @@ export function ProductDetails() {
                 <p>Explore our wide range of high-quality products and find your perfect match.</p>
 
                 <div className="flex gap-4 justify-center">
-                    {/* TODO: Get and random product and access the Product Details */}
                     <Button className="btn-secondary">Explore More</Button>
                     <Link to="/products/all"><Button className="btn-primary">View all Products</Button></Link>
                 </div>

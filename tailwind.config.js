@@ -12,6 +12,7 @@ export default {
                 "cosmos": "hsl(0, 100%, 91%)",
                 "alabaster": "hsl(0, 0%, 98%)",
                 "sunset-orange": 	"hsl(5, 100%, 62%)",
+                "sunset-orange-33": 	"hsla(5, 100%, 62%, 0.33)",
                 "pickled-bluewood": "hsl(210, 29%, 24%)",
             }),
             backgroundColor: theme => ({
@@ -22,17 +23,28 @@ export default {
 
                 // ========== MAIN COMPONENTS ==========
                 "page": theme("colors.alabaster"),
+
+                // ===== SWIPER =====
+                "swiper-pagination-bullet": theme("colors.sunset-orange"),
             }),
             borderColor: theme => ({
                 // ========== DUMB COMPONENTS ==========
                 // BUTTONS
                 "btn-primary": theme("colors.sunset-orange"),
                 "btn-secondary": theme("colors.sunset-orange"),
+
+                // INPUTS
+                "input": theme("colors.sunset-orange"),
             }),
             textColor: theme => ({
                 // ========== DUMB COMPONENTS ==========
                 // BUTTONS
                 "btn-primary": theme("colors.white"),
+            }),
+            outlineColor: theme => ({
+                // ========== DUMB COMPONENTS ==========
+                // INPUTS
+                "input": theme("colors.sunset-orange-33"),
             }),
         },
     },

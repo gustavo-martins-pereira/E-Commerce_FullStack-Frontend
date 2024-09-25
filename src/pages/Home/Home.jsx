@@ -12,42 +12,42 @@ export function Home() {
     const shopWithConfidenceData = [
         {
             imageSrc: IllustrationPlaceholder,
-            title: 'Fast Shipping',
-            description: 'Get your products delivered quickly and efficiently.',
-            altText: 'Shipping Illustration'
+            title: "Fast Shipping",
+            description: "Get your products delivered quickly and efficiently.",
+            altText: "Shipping Illustration"
         },
         {
             imageSrc: IllustrationPlaceholder,
-            title: 'Excellent Customer Service',
-            description: 'Our dedicated customer service team is here to assist you every step of the way.',
-            altText: 'Customer Service Illustration'
+            title: "Excellent Customer Service",
+            description: "Our dedicated customer service team is here to assist you every step of the way.",
+            altText: "Customer Service Illustration"
         },
         {
             imageSrc: IllustrationPlaceholder,
-            title: 'Quality Guarantee',
-            description: 'Shop with confidence knowing that our products are of the highest quality.',
-            altText: 'Quality Guarantee Illustration'
+            title: "Quality Guarantee",
+            description: "Shop with confidence knowing that our products are of the highest quality.",
+            altText: "Quality Guarantee Illustration"
         },
     ];
 
     const howWorksData = [
         {
             imageSrc: IllustrationPlaceholder,
-            title: 'Find the Perfect Product for Your Needs',
-            description: 'Explore our wide range of high-quality products and choose the one that suits you best.',
-            altText: 'Product Illustration'
+            title: "Find the Perfect Product for Your Needs",
+            description: "Explore our wide range of high-quality products and choose the one that suits you best.",
+            altText: "Product Illustration"
         },
         {
             imageSrc: IllustrationPlaceholder,
-            title: 'Enjoy Secure and Convenient Online Shopping',
-            description: 'With our user-friendly interface, you can easily browse, select, and purchase products hassle-free.',
-            altText: 'Online Shopping Illustration'
+            title: "Enjoy Secure and Convenient Online Shopping",
+            description: "With our user-friendly interface, you can easily browse, select, and purchase products hassle-free.",
+            altText: "Online Shopping Illustration"
         },
         {
             imageSrc: IllustrationPlaceholder,
-            title: 'Discover New Products and Exciting Deals',
-            description: 'Stay updated with our latest product releases and exclusive promotions.',
-            altText: 'Deals and Promotions Illustration'
+            title: "Discover New Products and Exciting Deals",
+            description: "Stay updated with our latest product releases and exclusive promotions.",
+            altText: "Deals and Promotions Illustration"
         },
     ];
 
