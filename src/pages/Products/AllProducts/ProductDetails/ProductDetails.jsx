@@ -26,7 +26,7 @@ export function ProductDetails() {
                 <p>Explore our wide range of high-quality products and find your perfect match.</p>
 
                 <div className="flex gap-4 justify-center">
-                    <Button className="btn-secondary">Explore More</Button>
+                    <Link to="/products"><Button className="btn-secondary">Explore More</Button></Link>
                     <Link to="/products/all"><Button className="btn-primary">View all Products</Button></Link>
                 </div>
             </section>

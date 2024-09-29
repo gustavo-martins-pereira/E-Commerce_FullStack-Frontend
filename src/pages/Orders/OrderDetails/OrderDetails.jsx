@@ -35,7 +35,7 @@ export function OrderDetails() {
                     <caption className="pb-4 font-semibold text-lg text-left">Order summary</caption>
 
                     <thead className="border-b border-gray-300">
-                        <tr className="bg-gray-100 text-left">
+                        <tr className="bg-order-details-table-header text-white text-left">
                             <th scope="col" className="px-4 py-2 hidden md:table-cell">Product Image</th>
                             <th scope="col" className="px-4 py-2">Product Name</th>
                             <th scope="col" className="px-4 py-2">Quantity</th>
@@ -44,37 +44,21 @@ export function OrderDetails() {
                     </thead>
 
                     <tbody>
-                        <tr className="border-b border-gray-300">
-                            <td className="px-4 py-2 hidden md:table-cell">
-                                <img src="https://via.placeholder.com/50" alt="Product 1" className="w-16 h-16 object-cover" />
-                            </td>
-                            <td className="px-4 py-2">Product 1</td>
-                            <td className="px-4 py-2">1</td>
-                            <td className="px-4 py-2">$50</td>
-                        </tr>
-
-                        <tr className="border-b border-gray-300">
-                            <td className="px-4 py-2 hidden md:table-cell">
-                                <img src="https://via.placeholder.com/50" alt="Product 2" className="w-16 h-16 object-cover" />
-                            </td>
-                            <td className="px-4 py-2">Product 2</td>
-                            <td className="px-4 py-2">2</td>
-                            <td className="px-4 py-2">$75</td>
-                        </tr>
-
-                        <tr className="border-b border-gray-300">
-                            <td className="px-4 py-2 hidden md:table-cell">
-                                <img src="https://via.placeholder.com/50" alt="Product 3" className="w-16 h-16 object-cover" />
-                            </td>
-                            <td className="px-4 py-2">Product 3</td>
-                            <td className="px-4 py-2">3</td>
-                            <td className="px-4 py-2">$100</td>
-                        </tr>
+                        {Array.from({ length: 4 }).map((_, index) => {
+                            return <tr className="odd:bg-order-details-table-odd-line even:bg-order-details-table-even-line border-b border-gray-300" key={index}>
+                                <td className="px-4 py-2 hidden md:table-cell">
+                                    <img src="https://via.placeholder.com/50" alt="Product 1" className="w-16 h-16 object-cover" />
+                                </td>
+                                <td className="px-4 py-2">Product 1</td>
+                                <td className="px-4 py-2">1</td>
+                                <td className="px-4 py-2">$50</td>
+                            </tr>
+                        })}
                     </tbody>
 
-                    <tfoot className="font-semibold bg-gray-100">
+                    <tfoot className="bg-order-details-table-footer text-white font-semibold">
                         <tr>
-                            <th  className="px-4 py-2 text-left" scope="row" colSpan={colSpan}>Total</th>
+                            <th className="px-4 py-2 text-left" scope="row" colSpan={colSpan}>Total</th>
                             <td className="px-4 py-2 md:col-span-1">$33</td>
                         </tr>
                     </tfoot>
@@ -82,12 +66,13 @@ export function OrderDetails() {
             </section>
 
             {/* MORE INFO */}
-            <footer className="mt-8 p-4 bg-gray-50 rounded-md shadow-md">
+            <footer className="mt-8 p-4 bg-gray-50 rounded-md shadow-lg">
                 <h3 className="font-semibold text-2xl">Order Information</h3>
 
                 <div className="mt-2">
                     <p><span className="font-medium">Order Number:</span> #0944</p>
                     <p><span className="font-medium">Order Date:</span> 05/09/2024 • 18:56</p>
+                    {/* TODO: Define the color for the budges in the "index.css" */}
                     <p><span className="font-medium">Order Status:</span> <span className="text-green-600">Paid</span></p>
                 </div>
             </footer>

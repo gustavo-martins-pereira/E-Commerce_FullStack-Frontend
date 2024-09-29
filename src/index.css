@@ -9,6 +9,10 @@
         @apply text-[16px] md:text-[18px] lg:text-[20px];
     }
 
+    body {
+        @apply bg-page;
+    }
+
     /* TITTLES */
     h1 {
         @apply text-4xl font-bold tracking-tight;
@@ -39,7 +43,7 @@
 @layer components {
     /* DEFAULT SECTION */
     .section {
-        @apply bg-page px-4 py-12 md:px-16 md:py-24 lg:px-20 lg:py-28;
+        @apply px-4 py-12 md:px-16 md:py-24 lg:px-20 lg:py-28;
     }
 
     /* BUTTON */

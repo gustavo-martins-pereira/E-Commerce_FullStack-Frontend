@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { IoIosMenu, IoIosClose } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { Button } from "@components/dumbs/custom/Button/Button";
 
@@ -8,6 +8,8 @@ import Logo from "@assets/images/logo.svg";
 
 export function Header() {
     const iconsStyle = { display: "inline-block", cursor: "pointer" };
+
+    const { pathname } = useLocation();
 
     // STATES
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,6 +27,10 @@ export function Header() {
 
         handleOnChangeWindowSize();
     }, []);
+
+    useEffect(() => {
+        setIsMenuOpen(false);
+    }, [pathname]);
 
     // HANDLES
     function handleOnMenuClicked() {

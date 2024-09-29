@@ -4,7 +4,7 @@ import Logo from "@assets/images/logo.svg";
 
 export function Footer() {
     return (
-        <footer className="flex flex-col justify-between items-start gap-8 border-t p-4 lg:flex-row lg:p-16">
+        <footer className="bg-white flex flex-col justify-between items-start gap-8 border-t p-4 lg:flex-row lg:p-16">
             <Link to="/"><img className="lg:scale-150" src={Logo} alt="" /></Link>
 
             <nav>
