@@ -13,6 +13,7 @@ export default {
                 "alabaster": "hsl(0, 0%, 98%)",
                 "sunset-orange": 	"hsl(5, 100%, 62%)",
                 "sunset-orange-33": 	"hsla(5, 100%, 62%, 0.33)",
+                "fair-pink": "hsl(11, 100%, 95%)",
                 "pickled-bluewood": "hsl(210, 29%, 24%)",
             }),
             backgroundColor: theme => ({
@@ -23,6 +24,7 @@ export default {
 
                 // ========== MAIN COMPONENTS ==========
                 "page": theme("colors.alabaster"),
+                "banner": theme("colors.fair-pink"),
 
                 // ===== SWIPER =====
                 "swiper-pagination-bullet": theme("colors.sunset-orange"),

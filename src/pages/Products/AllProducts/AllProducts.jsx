@@ -14,77 +14,25 @@ export function AllProducts() {
                     <p>Explore our wide range of products for all your needs.</p>
                 </header>
 
-                <section className="grid grid-cols-2 gap-4 md:gap-12 lg:grid-cols-4 lg:gap-4">
-                    <article>
-                        <Link to="/products/all/1">
-                            <img src={PlaceholderImage} alt="" />
-                            <h3 className="text-lg">Product Name</h3>
-                            <h4>$55</h4>
-                        </Link>
-                    </article>
-
-                    <article>
-                        <Link to="/products/all/2">
-                            <img src={PlaceholderImage} alt="" />
-                            <h3 className="text-lg">Product Name</h3>
-                            <h4>$55</h4>
-                        </Link>
-                    </article>
-
-                    <article>
-                        <Link to="/products/all/3">
-                            <img src={PlaceholderImage} alt="" />
-                            <h3 className="text-lg">Product Name</h3>
-                            <h4>$55</h4>
-                        </Link>
-                    </article>
-
-                    <article>
-                        <Link to="/products/all/4">
-                            <img src={PlaceholderImage} alt="" />
-                            <h3 className="text-lg">Product Name</h3>
-                            <h4>$55</h4>
-                        </Link>
-                    </article>
-
-                    <article>
-                        <Link to="/products/all/5">
-                            <img src={PlaceholderImage} alt="" />
-                            <h3 className="text-lg">Product Name</h3>
-                            <h4>$55</h4>
-                        </Link>
-                    </article>
-
-                    <article>
-                        <Link to="/products/all/6">
-                            <img src={PlaceholderImage} alt="" />
-                            <h3 className="text-lg">Product Name</h3>
-                            <h4>$55</h4>
-                        </Link>
-                    </article>
-
-                    <article>
-                        <Link to="/products/all/7">
-                            <img src={PlaceholderImage} alt="" />
-                            <h3 className="text-lg">Product Name</h3>
-                            <h4>$55</h4>
-                        </Link>
-                    </article>
-
-                    <article>
-                        <Link to="/products/all/8">
-                            <img src={PlaceholderImage} alt="" />
-                            <h3 className="text-lg">Product Name</h3>
-                            <h4>$55</h4>
-                        </Link>
-                    </article>
+                <section className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5">
+                    {Array.from({ length: 10 }).map((_, index) => {
+                        return (
+                            <article key={index}>
+                                <Link to={`/products/all/${index + 1}`}>
+                                    <img src={PlaceholderImage} alt="" />
+                                    <h3 className="text-lg">Product Name</h3>
+                                    <h4>$55</h4>
+                                </Link>
+                            </article>
+                        );
+                    })}
                 </section>
 
                 <Button className="btn-primary w-fit m-auto">View All</Button>
             </section>
 
             {/* DISCOVER */}
-            <section className="section bg-black-50 flex flex-col gap-8 text-white">
+            <section className="section bg-banner flex flex-col gap-8">
                 <h2>Discover Our Amazing Products Today</h2>
                 <p>Explore our wide range of high-quality products and find exactly what you need.</p>
 

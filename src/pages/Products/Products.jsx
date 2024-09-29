@@ -101,7 +101,7 @@ export function Products() {
                 <div className="flex flex-col gap-2 -mt-12">
                     <label htmlFor="quantity">Quantity</label>
                     {/* TODO: Change to the WindUI library when the input of type number is done */}
-                    <input className="w-20 border  border-input p-2 focus:outline-input" type="number" name="quantity" id="quantity" />
+                    <input className="w-20 border border-input p-2 focus:outline-input" type="number" name="quantity" id="quantity" />
                 </div>
 
                 <input className="btn btn-primary" type="submit" value="Add to Cart" />
