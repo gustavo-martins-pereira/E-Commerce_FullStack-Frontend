@@ -32,6 +32,7 @@ export default {
                 "order-details-table-footer": theme("colors.sunset-orange"),
                 "order-details-table-odd-line": theme("colors.negroni-20"),
                 "order-details-table-even-line": theme("colors.white"),
+                "login-form": theme("colors.white"),
 
                 // ===== SWIPER =====
                 "swiper-pagination-bullet": theme("colors.sunset-orange"),

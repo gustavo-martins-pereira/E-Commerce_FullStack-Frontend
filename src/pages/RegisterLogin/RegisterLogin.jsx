@@ -1,12 +1,13 @@
+import { useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from "swiper/modules";
 
 import { InputText } from "@components/dumbs/custom/InputText/InputText";
+import { SubmitButton } from "@components/dumbs/custom/SubmitButton/SubmitButton";
 
 import "./assets/css/register-login.css";
 
 import ImagePlaceholder from "@assets/images/placeholder-image.svg";
-import { useState } from "react";
 
 export function RegisterLogin() {
     // STATES
@@ -41,6 +42,7 @@ export function RegisterLogin() {
                         centeredSlides={true}
                         loop={true}
                         speed={8000}
+                        allowTouchMove={false}
                         autoplay={{
                             delay: 0,
                             disableOnInteraction: false,
@@ -55,17 +57,8 @@ export function RegisterLogin() {
                                 spaceBetween: 10,
                             },
                         }}
-                        allowTouchMove={false}
                     >
-                        <SwiperSlide><img src={ImagePlaceholder} alt="" /></SwiperSlide>
-                        <SwiperSlide><img src={ImagePlaceholder} alt="" /></SwiperSlide>
-                        <SwiperSlide><img src={ImagePlaceholder} alt="" /></SwiperSlide>
-                        <SwiperSlide><img src={ImagePlaceholder} alt="" /></SwiperSlide>
-                        <SwiperSlide><img src={ImagePlaceholder} alt="" /></SwiperSlide>
-                        <SwiperSlide><img src={ImagePlaceholder} alt="" /></SwiperSlide>
-                        <SwiperSlide><img src={ImagePlaceholder} alt="" /></SwiperSlide>
-                        <SwiperSlide><img src={ImagePlaceholder} alt="" /></SwiperSlide>
-                        <SwiperSlide><img src={ImagePlaceholder} alt="" /></SwiperSlide>
+                        {Array.from({ length: 12 }).map((_, index) => <SwiperSlide key={index}><img src={ImagePlaceholder} alt="" /></SwiperSlide>)}
                     </Swiper>
 
                     <Swiper
@@ -76,6 +69,7 @@ export function RegisterLogin() {
                         centeredSlides={true}
                         loop={true}
                         speed={8000}
+                        allowTouchMove={false}
                         autoplay={{
                             delay: 0,
                             disableOnInteraction: false,
@@ -91,23 +85,14 @@ export function RegisterLogin() {
                                 spaceBetween: 10,
                             },
                         }}
-                        allowTouchMove={false}
                     >
-                        <SwiperSlide><img src={ImagePlaceholder} alt="" /></SwiperSlide>
-                        <SwiperSlide><img src={ImagePlaceholder} alt="" /></SwiperSlide>
-                        <SwiperSlide><img src={ImagePlaceholder} alt="" /></SwiperSlide>
-                        <SwiperSlide><img src={ImagePlaceholder} alt="" /></SwiperSlide>
-                        <SwiperSlide><img src={ImagePlaceholder} alt="" /></SwiperSlide>
-                        <SwiperSlide><img src={ImagePlaceholder} alt="" /></SwiperSlide>
-                        <SwiperSlide><img src={ImagePlaceholder} alt="" /></SwiperSlide>
-                        <SwiperSlide><img src={ImagePlaceholder} alt="" /></SwiperSlide>
-                        <SwiperSlide><img src={ImagePlaceholder} alt="" /></SwiperSlide>
+                        {Array.from({ length: 12 }).map((_, index) => <SwiperSlide key={index}><img src={ImagePlaceholder} alt="" /></SwiperSlide>)}
                     </Swiper>
                 </article>
             </section>
 
             {/* REGISTER / LOGIN */}
-            <section className="section w-3/4 relative m-auto my-24 p-0 rounded-lg shadow-lg overflow-hidden">
+            <section className="section w-3/4 relative m-auto my-24 p-0 rounded-lg shadow-lg overflow-hidden md:w-1/2">
                 {/* REGISTER FORM */}
                 <section
                     className={`${isLoginFormActive ? "opacity-25" : "opacity-100"} px-4 py-8 pb-28 md:px-8 md:py-16 md:pb-36`}
@@ -136,13 +121,13 @@ export function RegisterLogin() {
                             inputType="password"
                         />
 
-                        <input className="btn btn-secondary w-full" type="submit" value="Sign Up" />
+                        <SubmitButton className="btn-primary w-full" value="Sign Up" />
                     </form>
                 </section>
 
                 {/* LOGIN FORM */}
                 <section
-                    className={`bg-slate-300 absolute left-0 bottom-0 right-0 px-4 py-8 transition-transform duration-500 translate-y-3/4 ${isLoginFormActive ? 'translate-y-0' : 'translate-y-3/4 cursor-pointer'} md:px-8 md:py-16 md:pt-12`}
+                    className={`bg-login-form absolute left-0 bottom-0 right-0 shadow-[0_0_10px_rgba(0,0,0,0.25)] px-4 py-8 transition-transform duration-500 md:px-8 md:py-16 md:pt-12 ${isLoginFormActive ? 'translate-y-0' : 'translate-y-3/4 cursor-pointer'}`}
                     style={{ borderRadius: "60% / 10% 10% 0 0" }}
                     onClick={handleActiveLoginForm}
                 >
@@ -163,7 +148,10 @@ export function RegisterLogin() {
                             inputType="password"
                         />
 
-                        <input className="btn btn-secondary w-full" type="submit" value="Sign In" />
+                        <SubmitButton
+                            className="btn-primary w-full"
+                            value="Sign In"
+                        />
                     </form>
                 </section>
             </section>

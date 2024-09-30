@@ -117,7 +117,7 @@ export function Products() {
                 <FeaturesSection
                     features={arrivalsData}
                     featureStyles={{
-                        alignItems: "items-start",
+                        alignItems: "flex-start"
                     }}
                 />
             </article>
@@ -177,8 +177,7 @@ export function Products() {
                 <FeaturesSection
                     features={perfectProductData}
                     featureStyles={{
-                        alignItems: "items-start",
-                        others: "md:items-center",
+                        additionalClassNames: "md:items-center",
                     }}
                 />
 
