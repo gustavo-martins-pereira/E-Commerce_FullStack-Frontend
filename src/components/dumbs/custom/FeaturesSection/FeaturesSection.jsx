@@ -6,7 +6,7 @@ export function FeaturesSection({ features, featureStyles }) {
             {features.map((feature, index) => (
                 <FeatureItem
                     key={index}
-                    imageSrc={feature.imageSrc}
+                    icon={feature.icon}
                     altText={feature.altText}
                     title={feature.title}
                     description={feature.description}

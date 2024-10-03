@@ -12,14 +12,14 @@ export default function Accordion({ question, answer }) {
             onToggle={() => setIsOpen(!isOpen)}
         >
             <summary
-                className="flex justify-between items-center relative py-4 border-b font-bold transition-colors duration-300 cursor-pointer list-none focus-visible:outline [&::-webkit-details-marker]:hidden"
-                aria-expanded="false"
+                className="flex justify-between items-center relative border-b py-4 font-bold transition-colors duration-300 cursor-pointer list-none focus-visible:outline [&::-webkit-details-marker]:hidden"
+                aria-expanded={isOpen ? "true" : "false"}
                 aria-controls={`accordion-content-${question}`}
             >
                 {question}
 
                 <FaAngleDown
-                    className="w-4 h-4 transition duration-300 top-1 shrink-0 stroke-slate-700 group-open:rotate-180"
+                    className="w-4 h-4 top-1 transition duration-300 shrink-0 stroke-slate-700 group-open:rotate-180 text-accordion-arrow"
                     aria-label={isOpen ? "Collapse" : "Expand"}
                 />
             </summary>

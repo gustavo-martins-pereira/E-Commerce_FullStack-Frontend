@@ -1,29 +1,30 @@
 import { Link } from "react-router-dom";
+import { FaShippingFast, FaHeadset, FaAward, FaSearch, FaShoppingCart, FaTag } from "react-icons/fa";
 
 import { FeaturesSection } from "@components/dumbs/custom/FeaturesSection/FeaturesSection";
 import { Button } from "@components/dumbs/custom/Button/Button";
 import { LinkArrow } from "@components/dumbs/custom/LinkArrow/LinkArrow";
 
-import ImagePlaceholder from "@assets/images/placeholder-image.svg";
-import IllustrationPlaceholder from "@assets/images/illustration-placeholder.svg";
+import OnlineShopping from "./images/online-shopping.svg";
 
 export function Home() {
-    // MOCKED DATA
+    const iconSize = "3rem";
+
     const shopWithConfidenceData = [
         {
-            imageSrc: IllustrationPlaceholder,
+            icon: <FaShippingFast size={iconSize} className="text-icon-primary" />,
             title: "Fast Shipping",
             description: "Get your products delivered quickly and efficiently.",
             altText: "Shipping Illustration"
         },
         {
-            imageSrc: IllustrationPlaceholder,
+            icon: <FaHeadset size={iconSize} className="text-icon-primary" />,
             title: "Excellent Customer Service",
             description: "Our dedicated customer service team is here to assist you every step of the way.",
             altText: "Customer Service Illustration"
         },
         {
-            imageSrc: IllustrationPlaceholder,
+            icon: <FaAward size={iconSize} className="text-icon-primary" />,
             title: "Quality Guarantee",
             description: "Shop with confidence knowing that our products are of the highest quality.",
             altText: "Quality Guarantee Illustration"
@@ -32,19 +33,19 @@ export function Home() {
 
     const howWorksData = [
         {
-            imageSrc: IllustrationPlaceholder,
+            icon: <FaSearch size={iconSize} className="text-icon-primary" />,
             title: "Find the Perfect Product for Your Needs",
             description: "Explore our wide range of high-quality products and choose the one that suits you best.",
             altText: "Product Illustration"
         },
         {
-            imageSrc: IllustrationPlaceholder,
+            icon: <FaShoppingCart size={iconSize} className="text-icon-primary" />,
             title: "Enjoy Secure and Convenient Online Shopping",
             description: "With our user-friendly interface, you can easily browse, select, and purchase products hassle-free.",
             altText: "Online Shopping Illustration"
         },
         {
-            imageSrc: IllustrationPlaceholder,
+            icon: <FaTag size={iconSize} className="text-icon-primary" />,
             title: "Discover New Products and Exciting Deals",
             description: "Stay updated with our latest product releases and exclusive promotions.",
             altText: "Deals and Promotions Illustration"
@@ -65,7 +66,7 @@ export function Home() {
                     </div>
                 </div>
 
-                <img className="lg:w-1/2" src={ImagePlaceholder} alt="" />
+                <img className="lg:w-1/2" src={OnlineShopping} alt="" />
             </section>
 
             {/* SHOP WITH CONFIDENCE */}

@@ -26,6 +26,7 @@ export default {
                 "btn-secondary--hover": theme("colors.cosmos"),
 
                 // ========== MAIN COMPONENTS ==========
+                "header": theme("colors.white"),
                 "page": theme("colors.alabaster"),
                 "banner": theme("colors.fair-pink"),
                 "order-details-table-header": theme("colors.sunset-orange"),
@@ -33,6 +34,7 @@ export default {
                 "order-details-table-odd-line": theme("colors.negroni-20"),
                 "order-details-table-even-line": theme("colors.white"),
                 "login-form": theme("colors.white"),
+                "footer": theme("colors.white"),
 
                 // ===== SWIPER =====
                 "swiper-pagination-bullet": theme("colors.sunset-orange"),
@@ -53,6 +55,8 @@ export default {
                 // ========== DUMB COMPONENTS ==========
                 // BUTTONS
                 "btn-primary": theme("colors.white"),
+                "accordion-arrow": theme("colors.sunset-orange"),
+                "icon-primary": theme("colors.sunset-orange"),
             }),
             outlineColor: theme => ({
                 // ========== DUMB COMPONENTS ==========
