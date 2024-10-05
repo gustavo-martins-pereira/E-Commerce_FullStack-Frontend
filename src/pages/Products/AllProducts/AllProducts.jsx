@@ -1,10 +1,26 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import { getAllProducts } from "@api/services/productsService";
 import { Button } from "@components/dumbs/custom/Button/Button";
-
-import PlaceholderImage from "@assets/images/placeholder-image.svg";
+import { bufferArrayToImage } from "@utils/bufferArrayToImage";
 
 export function AllProducts() {
+    // STATES
+    const [products, setProducts] = useState([]);
+    const [isAllProducts, setIsAllProducts] = useState(false);
+
+    // EFFECTS
+    useEffect(() => {
+        async function fetchAllProducts() {
+            const products = await getAllProducts();
+
+            setProducts(products);
+        }
+
+        fetchAllProducts();
+    }, []);
+
     return (
         <main>
             {/* ALL PRODUCTS */}
@@ -14,21 +30,21 @@ export function AllProducts() {
                     <p>Explore our wide range of products for all your needs.</p>
                 </header>
 
-                <section className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5">
-                    {Array.from({ length: 10 }).map((_, index) => {
+                <section className={`grid grid-cols-2 gap-4 ${isAllProducts ? "max-h-none" : "max-h-[80vh] overflow-hidden"} sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5`}>
+                    {products.map(product => {
                         return (
-                            <article key={index}>
-                                <Link to={`/products/all/${index + 1}`}>
-                                    <img src={PlaceholderImage} alt="" />
-                                    <h3 className="text-lg">Product Name</h3>
-                                    <h4>$55</h4>
+                            <article key={product.id}>
+                                <Link to={`/products/all/${product.id}`}>
+                                    <img className="m-auto" src={bufferArrayToImage(product.image.data)} alt="" />
+                                    <h3 className="text-lg">{product.name}</h3>
+                                    <h4>${product.price}</h4>
                                 </Link>
                             </article>
                         );
                     })}
                 </section>
 
-                <Button className="btn-primary w-fit m-auto">View All</Button>
+                {!isAllProducts && <Button className="btn-primary w-fit m-auto" onClick={() => setIsAllProducts(true)}>View All</Button>}
             </section>
 
             {/* DISCOVER */}

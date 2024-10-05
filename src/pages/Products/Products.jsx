@@ -84,8 +84,8 @@ export function Products() {
                             renderBullet: paginationRenderBulletConfig,
                         }}
                     >
-                        {products.slice(0, 3).map((product, index) => (
-                            <SwiperSlide className="lg:grid lg:grid-cols-2 lg:gap-8" tag="article" key={index}>
+                        {products.slice(0, 3).map(product => (
+                            <SwiperSlide className="lg:grid lg:grid-cols-2 lg:gap-8" tag="article" key={product.id}>
                                 <img
                                     className="w-full max-h-[30rem] object-contain sm:w-1/2 sm:m-auto lg:w-full"
                                     src={bufferArrayToImage(product.image.data)}
@@ -155,8 +155,8 @@ export function Products() {
                             },
                         }}
                     >
-                        {products.slice(0, 10).map((product, index) => (
-                            <SwiperSlide className="h-auto flex flex-col justify-between" tag="article" key={index}>
+                        {products.slice(0, 10).map(product => (
+                            <SwiperSlide className="h-auto flex flex-col justify-between" tag="article" key={product.id}>
                                 <img
                                     className="max-h-80"
                                     src={bufferArrayToImage(product.image.data)}
