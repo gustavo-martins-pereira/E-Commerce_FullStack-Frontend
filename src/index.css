@@ -66,4 +66,9 @@
                 @apply bg-btn-secondary--hover;
             }
         }
+
+    /* ICONS */
+    .icon-primary {
+        @apply text-5xl text-icon-primary;
+    }
 }

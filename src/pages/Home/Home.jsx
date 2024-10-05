@@ -8,47 +8,45 @@ import { LinkArrow } from "@components/dumbs/custom/LinkArrow/LinkArrow";
 import OnlineShopping from "./images/online-shopping.svg";
 
 export function Home() {
-    const iconSize = "3rem";
-
     const shopWithConfidenceData = [
         {
-            icon: <FaShippingFast size={iconSize} className="text-icon-primary" />,
+            icon: <FaShippingFast className="icon-primary" />,
+            altText: "Delivery truck",
             title: "Fast Shipping",
             description: "Get your products delivered quickly and efficiently.",
-            altText: "Shipping Illustration"
         },
         {
-            icon: <FaHeadset size={iconSize} className="text-icon-primary" />,
+            icon: <FaHeadset className="icon-primary" />,
+            altText: "Headset",
             title: "Excellent Customer Service",
             description: "Our dedicated customer service team is here to assist you every step of the way.",
-            altText: "Customer Service Illustration"
         },
         {
-            icon: <FaAward size={iconSize} className="text-icon-primary" />,
+            icon: <FaAward className="icon-primary" />,
+            altText: "Badge with ribbon",
             title: "Quality Guarantee",
             description: "Shop with confidence knowing that our products are of the highest quality.",
-            altText: "Quality Guarantee Illustration"
         },
     ];
 
     const howWorksData = [
         {
-            icon: <FaSearch size={iconSize} className="text-icon-primary" />,
+            icon: <FaSearch className="icon-primary" />,
+            altText: "Magnifying glass",
             title: "Find the Perfect Product for Your Needs",
             description: "Explore our wide range of high-quality products and choose the one that suits you best.",
-            altText: "Product Illustration"
         },
         {
-            icon: <FaShoppingCart size={iconSize} className="text-icon-primary" />,
+            icon: <FaShoppingCart className="icon-primary" />,
+            altText: "Shopping cart",
             title: "Enjoy Secure and Convenient Online Shopping",
             description: "With our user-friendly interface, you can easily browse, select, and purchase products hassle-free.",
-            altText: "Online Shopping Illustration"
         },
         {
-            icon: <FaTag size={iconSize} className="text-icon-primary" />,
+            icon: <FaTag className="icon-primary" />,
+            altText: "Price tag",
             title: "Discover New Products and Exciting Deals",
             description: "Stay updated with our latest product releases and exclusive promotions.",
-            altText: "Deals and Promotions Illustration"
         },
     ];
 

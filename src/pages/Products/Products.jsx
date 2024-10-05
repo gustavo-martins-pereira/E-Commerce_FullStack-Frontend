@@ -1,74 +1,74 @@
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from "swiper/modules";
+import { FaStar, FaClock, FaHeart, FaListUl, FaDollarSign, FaChartLine } from "react-icons/fa";
 
 import { FeaturesSection } from "@components/dumbs/custom/FeaturesSection/FeaturesSection";
 import { Button } from "@components/dumbs/custom/Button/Button";
-
-import ImagePlaceholder from "@assets/images/placeholder-image.svg";
-import IllustrationPlaceholder from "@assets/images/illustration-placeholder.svg";
-
+import { getAllProducts } from "@api/services/productsService";
 import { paginationRenderBulletConfig } from "@utils/default-configs/swiper";
+import { bufferArrayToImage } from "@utils/bufferArrayToImage";
 
 export function Products() {
-    // MOCKED DATA
-    const bannerProducts = [
-        {
-            name: "Product Name",
-            price: "$55",
-            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur libero quaerat ut vero accusamus recusandae repellendus et rerum! Ducimus repellat, porro doloribus accusantium voluptatem quae explicabo tempora quasi unde nesciunt?",
-        },
-        {
-            name: "Product Name",
-            price: "$55",
-            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur libero quaerat ut vero accusamus recusandae repellendus et rerum! Ducimus repellat, porro doloribus accusantium voluptatem quae explicabo tempora quasi unde nesciunt?",
-        },
-    ];
-
     const arrivalsData = [
         {
-            imageSrc: IllustrationPlaceholder,
+            icon: <FaStar className="icon-primary" />,
+            altText: "Star",
             title: "Featured Products",
             description: "Explore our curated selection of top-quality products.",
-            altText: "Featured Products Illustration"
         },
         {
-            imageSrc: IllustrationPlaceholder,
+            icon: <FaClock className="icon-primary" />,
+            altText: "Clock",
             title: "Limited Time Offers",
             description: "Don't miss out on these exclusive deals.",
-            altText: "Limited Time Offers Illustration"
         },
         {
-            imageSrc: IllustrationPlaceholder,
+            icon: <FaHeart className="icon-primary" />,
+            altText: "Heart",
             title: "Customer Favorites",
             description: "Discover what our customers love the most.",
-            altText: "Customer Favorites Illustration"
         },
     ];
 
     const perfectProductData = [
         {
-            imageSrc: IllustrationPlaceholder,
-            title: 'Browse by Category',
-            description: 'Easily navigate through our product categories to find exactly what you need.',
-            altText: 'Category Illustration',
-            className: 'items-start md:items-center'
+            icon: <FaListUl className="icon-primary" />,
+            altText: "Bullet list",
+            title: "Browse by Category",
+            description: "Easily navigate through our product categories to find exactly what you need.",
+            className: "items-start md:items-center",
         },
         {
-            imageSrc: IllustrationPlaceholder,
-            title: 'Sort by Price Range',
-            description: 'Find products that fit your budget with our price range filter.',
-            altText: 'Price Range Illustration',
-            className: 'items-start md:items-center'
+            icon: <FaDollarSign className="icon-primary" />,
+            altText: "Dollar sign",
+            title: "Sort by Price Range",
+            description: "Find products that fit your budget with our price range filter.",
+            className: "items-start md:items-center",
         },
         {
-            imageSrc: IllustrationPlaceholder,
-            title: 'Discover Popular Products',
-            description: 'Stay up-to-date with the latest trends by exploring our most popular products.',
-            altText: 'Popular Products Illustration',
-            className: 'items-start md:items-center'
+            icon: <FaChartLine className="icon-primary" />,
+            altText: "Graph with upward arrow",
+            title: "Discover Popular Products",
+            description: "Stay up-to-date with the latest trends by exploring our most popular products.",
+            className: "items-start md:items-center",
         }
     ];
+
+    // STATES
+    const [products, setProducts] = useState([]);
+
+    // EFFECTS
+    useEffect(() => {
+        async function fetchAllProducts() {
+            const products = await getAllProducts();
+
+            setProducts(products);
+        }
+
+        fetchAllProducts();
+    }, []);
 
     return (
         <main>
@@ -84,13 +84,17 @@ export function Products() {
                             renderBullet: paginationRenderBulletConfig,
                         }}
                     >
-                        {bannerProducts.map((product, index) => (
-                            <SwiperSlide className="lg:flex lg:gap-8" tag="article" key={index}>
-                                <img className="w-full shadow-md sm:w-1/2 sm:m-auto" src={ImagePlaceholder} alt="" />
+                        {products.slice(0, 3).map((product, index) => (
+                            <SwiperSlide className="lg:grid lg:grid-cols-2 lg:gap-8" tag="article" key={index}>
+                                <img
+                                    className="w-full max-h-[30rem] object-contain sm:w-1/2 sm:m-auto lg:w-full"
+                                    src={bufferArrayToImage(product.image.data)}
+                                    alt={product.name}
+                                />
 
                                 <header className="flex flex-col gap-4 mt-4">
                                     <h2>{product.name}</h2>
-                                    <p className="text-2xl font-bold">{product.price}</p>
+                                    <p className="text-2xl font-bold">${product.price}</p>
                                     <p>{product.description}</p>
                                 </header>
                             </SwiperSlide>
@@ -151,12 +155,16 @@ export function Products() {
                             },
                         }}
                     >
-                        {Array.from({ length: 9 }, (_, index) => (
-                            <SwiperSlide tag="article" key={index}>
-                                <img src={ImagePlaceholder} alt="" />
-                                <div className="flex justify-between items-center mt-4 font-bold">
-                                    <h3 className="text-xl">Product Name</h3>
-                                    <p className="text-xl">$55</p>
+                        {products.slice(0, 10).map((product, index) => (
+                            <SwiperSlide className="h-auto flex flex-col justify-between" tag="article" key={index}>
+                                <img
+                                    className="max-h-80"
+                                    src={bufferArrayToImage(product.image.data)}
+                                    alt=""
+                                />
+                                <div className="flex justify-between items-center gap-4 mt-auto font-bold">
+                                    <h3 className="text-xl">{product.name}</h3>
+                                    <p className="text-xl">${product.price}</p>
                                 </div>
                                 <Button className="btn-secondary w-full mt-4">Add to Cart</Button>
                             </SwiperSlide>
