@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { getAllProducts } from "@api/services/productsService";
 import { Button } from "@components/dumbs/custom/Button/Button";
-import { bufferArrayToImage } from "@utils/bufferArrayToImage";
+import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 
 export function AllProducts() {
     // STATES
@@ -35,7 +35,7 @@ export function AllProducts() {
                         return (
                             <article key={product.id}>
                                 <Link to={`/products/all/${product.id}`}>
-                                    <img className="m-auto" src={bufferArrayToImage(product.image.data)} alt="" />
+                                    <img className="m-auto" src={bufferArrayToImageURL(product.image.data)} alt="" />
                                     <h3 className="text-lg">{product.name}</h3>
                                     <h4>${product.price}</h4>
                                 </Link>

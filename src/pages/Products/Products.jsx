@@ -8,7 +8,7 @@ import { FeaturesSection } from "@components/dumbs/custom/FeaturesSection/Featur
 import { Button } from "@components/dumbs/custom/Button/Button";
 import { getAllProducts } from "@api/services/productsService";
 import { paginationRenderBulletConfig } from "@utils/default-configs/swiper";
-import { bufferArrayToImage } from "@utils/bufferArrayToImage";
+import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 
 export function Products() {
     const arrivalsData = [
@@ -88,7 +88,7 @@ export function Products() {
                             <SwiperSlide className="lg:grid lg:grid-cols-2 lg:gap-8" tag="article" key={product.id}>
                                 <img
                                     className="w-full max-h-[30rem] object-contain sm:w-1/2 sm:m-auto lg:w-full"
-                                    src={bufferArrayToImage(product.image.data)}
+                                    src={bufferArrayToImageURL(product.image.data)}
                                     alt={product.name}
                                 />
 
@@ -159,7 +159,7 @@ export function Products() {
                             <SwiperSlide className="h-auto flex flex-col justify-between" tag="article" key={product.id}>
                                 <img
                                     className="max-h-80"
-                                    src={bufferArrayToImage(product.image.data)}
+                                    src={bufferArrayToImageURL(product.image.data)}
                                     alt=""
                                 />
                                 <div className="flex justify-between items-center gap-4 mt-auto font-bold">

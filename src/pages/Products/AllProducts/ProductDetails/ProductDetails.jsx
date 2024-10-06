@@ -1,21 +1,37 @@
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
+import { getProductById } from "@api/services/productsService";
 import { Button } from "@components/dumbs/custom/Button/Button";
 import Accordion from "@components/dumbs/windui/Accordion/Accordion";
-
-import PlaceholderImage from "@assets/images/placeholder-image.svg";
+import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 
 export function ProductDetails() {
+    const { productId } = useParams();
+
+    // STATES
+    const [product, setProduct] = useState({});
+
+    useEffect(() => {
+        async function fetchProductById() {
+            const product = await getProductById(productId);
+
+            setProduct(product);
+        }
+
+        fetchProductById();
+    }, []);
+
     return (
         <main>
             {/* PRODUCT ITSELF */}
             <section className="section flex flex-col gap-8 lg:flex-row-reverse">
-                <img className="w-1/2 m-auto lg:m-0 lg:ml-auto" src={PlaceholderImage} alt="" />
+                <img className="w-1/2 m-auto lg:m-0 lg:ml-auto" src={bufferArrayToImageURL(product.image?.data)} alt="" />
 
                 <div className="flex flex-col gap-4 flex-grow">
-                    <h2>Product Name</h2>
-                    <h3>$55</h3>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem, vel. Doloribus inventore reiciendis nesciunt expedita? Quaerat dolore fugit in adipisci laborum incidunt praesentium eos, consequatur fuga cumque ipsam fugiat laudantium.</p>
+                    <h2>{product.name}</h2>
+                    <h3>${product.price}</h3>
+                    <p>{product.description}.</p>
                     <Button className="btn-secondary">Add to Cart</Button>
                 </div>
             </section>
@@ -38,20 +54,20 @@ export function ProductDetails() {
 
                 <section className="flex flex-col mt-4 text-left">
                     <Accordion
-                        question="What are the features?"
-                        answer="Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, voluptatum modi unde non pariatur quae. Ullam obcaecati quod, ipsam nobis veniam similique amet fugit adipisci inventore eius corrupti facilis sapiente."
+                        question="When I add the product to the cart, can I edit the quantity?"
+                        answer="Yes, you can adjust the quantity of any product in the cart."
                     />
                     <Accordion
-                        question="What are the features?"
-                        answer="Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, voluptatum modi unde non pariatur quae. Ullam obcaecati quod, ipsam nobis veniam similique amet fugit adipisci inventore eius corrupti facilis sapiente."
+                        question="How many products can I put in the cart?"
+                        answer="As much as you want."
                     />
                     <Accordion
-                        question="What are the features?"
-                        answer="Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, voluptatum modi unde non pariatur quae. Ullam obcaecati quod, ipsam nobis veniam similique amet fugit adipisci inventore eius corrupti facilis sapiente."
+                        question="When I go to the payment system, I won't need to provide my personal data, right?"
+                        answer="No, the payment system is just a SIMULATION, so you can see what the system would be like if it were developed for real E-Commerce."
                     />
                     <Accordion
-                        question="What are the features?"
-                        answer="Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, voluptatum modi unde non pariatur quae. Ullam obcaecati quod, ipsam nobis veniam similique amet fugit adipisci inventore eius corrupti facilis sapiente."
+                        question="Because these questions aren't your standard questions like, 'Will I get a refund? Etc...'?"
+                        answer="Because these would be standard questions that would be very boring and not very engaging, I wanted to answer the most frequently asked questions that a recruiter would ask if they enter the site to see how it works."
                     />
                 </section>
             </section>
