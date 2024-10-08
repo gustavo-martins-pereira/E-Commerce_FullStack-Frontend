@@ -36,22 +36,22 @@ export function App() {
                         </Route>
                     </Route>
 
-                    {/* <Route path="/orders">
+                    <Route path="/orders">
                         <Route index element={<Orders />} />
                         <Route path=":id" element={<OrderDetails />} />
                     </Route>
 
-                    <Route path="/register-login" element={<RegisterLogin />} /> */}
+                    <Route path="/register-login" element={<RegisterLogin />} />
 
                     {/* SELLER ROUTES */}
-                    {/* <Route path="/seller-dashboard">
+                    <Route path="/seller-dashboard">
                         <Route index element={<SellerDashboard />} />
                         <Route path="manage-products">
                             <Route index element={<ManageProducts />} />
                             <Route path="create" element={<CreateProduct />} />
                             <Route path="edit" element={<EditProduct />} />
                         </Route>
-                    </Route> */}
+                    </Route>
 
                     <Route path="*" element={<NotFound />} />
                 </Routes>
