@@ -10,7 +10,7 @@
     }
 
     body {
-        @apply bg-page;
+        @apply bg-page scroll-smooth;
     }
 
     /* TITTLES */

@@ -7,19 +7,28 @@ import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 
 export function AllProducts() {
     // STATES
-    const [products, setProducts] = useState([]);
+    const [productsData, setProductsData] = useState([]);
+    const [productsToShow, setProductsToShow] = useState([]);
     const [isAllProducts, setIsAllProducts] = useState(false);
 
     // EFFECTS
     useEffect(() => {
+        console.log("effect");
         async function fetchAllProducts() {
-            const products = await getAllProducts();
+            let products = await getAllProducts();
 
-            setProducts(products);
+            setProductsData(products);
+            setProductsToShow(products.slice(0, 10));
         }
 
         fetchAllProducts();
     }, []);
+
+    // HANDLES
+    function handleShowAllProducts() {
+        setIsAllProducts(true);
+        setProductsToShow(productsData);
+    }
 
     return (
         <main>
@@ -30,21 +39,24 @@ export function AllProducts() {
                     <p>Explore our wide range of products for all your needs.</p>
                 </header>
 
-                <section className={`grid grid-cols-2 gap-4 ${isAllProducts ? "max-h-none" : "max-h-[80vh] overflow-hidden"} sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5`}>
-                    {products.map(product => {
+                <section className={`grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5`}>
+                    {productsToShow.map(product => {
                         return (
                             <article key={product.id}>
-                                <Link to={`/products/all/${product.id}`}>
-                                    <img className="m-auto" src={bufferArrayToImageURL(product.image.data)} alt="" />
-                                    <h3 className="text-lg">{product.name}</h3>
-                                    <h4>${product.price}</h4>
+                                <Link className="h-full flex flex-col justify-between gap-4" to={`/products/all/${product.id}`}>
+                                    <img className="max-h-[30rem] mx-auto object-contain" src={bufferArrayToImageURL(product.image.data)} alt="" />
+
+                                    <section>
+                                        <h3 className="text-lg">{product.name.length > 50 ? product.name.substring(0, 50) + "..." : product.name}</h3>
+                                        <h4>${product.price}</h4>
+                                    </section>
                                 </Link>
                             </article>
                         );
                     })}
                 </section>
 
-                {!isAllProducts && <Button className="btn-primary w-fit m-auto" onClick={() => setIsAllProducts(true)}>View All</Button>}
+                {!isAllProducts && <Button className="btn-primary w-fit m-auto" onClick={handleShowAllProducts}>View All</Button>}
             </section>
 
             {/* DISCOVER */}
