@@ -6,8 +6,8 @@ import { FaStar, FaClock, FaHeart, FaListUl, FaDollarSign, FaChartLine } from "r
 
 import { FeaturesSection } from "@components/dumbs/custom/FeaturesSection/FeaturesSection";
 import { Button } from "@components/dumbs/custom/Button/Button";
-import { getAllProducts } from "@api/services/productsService";
-import { paginationRenderBulletConfig } from "@utils/default-configs/swiper";
+import { getAllProducts } from "@api/services/productService";
+import { paginationRenderBulletConfig } from "@utils/swiper";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 
 export function Products() {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { getAllProducts } from "@api/services/productsService";
+import { getAllProducts } from "@api/services/productService";
 import { Button } from "@components/dumbs/custom/Button/Button";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 
@@ -13,7 +13,6 @@ export function AllProducts() {
 
     // EFFECTS
     useEffect(() => {
-        console.log("effect");
         async function fetchAllProducts() {
             let products = await getAllProducts();
 

@@ -11,19 +11,25 @@ export default {
                 "black-50": "hsla(0, 0%, 0%, 0.5)",
                 "alabaster": "hsl(0, 0%, 98%)",
                 "white": "hsl(0, 0%, 100%)",
+                "red": "hsl(0, 100%, 50%)",
                 "cosmos": "hsl(0, 100%, 91%)",
-                "sunset-orange": 	"hsl(5, 100%, 62%)",
-                "sunset-orange-33": 	"hsla(5, 100%, 62%, 0.33)",
+                "sunset-orange": "hsl(5, 100%, 62%)",
+                "sunset-orange-33": "hsla(5, 100%, 62%, 0.33)",
+                "sunset-orange-50": "hsla(5, 100%, 62%, 0.50)",
                 "fair-pink": "hsl(11, 100%, 95%)",
-                "negroni-50": "hsla(25, 100%, 88%, 0.5)",
                 "negroni-20": "hsla(25, 100%, 88%, 0.2)",
+                "negroni-50": "hsla(25, 100%, 88%, 0.5)",
                 "pickled-bluewood": "hsl(210, 29%, 24%)",
             }),
             backgroundColor: theme => ({
                 // ========== DUMB COMPONENTS ==========
+                // BUTTONS
                 "btn-primary": theme("colors.sunset-orange"),
                 "btn-secondary": "white",
                 "btn-secondary--hover": theme("colors.cosmos"),
+
+                // INPUTS
+                "input-radius--checked": theme("colors.sunset-orange-50"),
 
                 // ========== MAIN COMPONENTS ==========
                 "header": theme("colors.white"),
@@ -46,7 +52,7 @@ export default {
                 "btn-secondary": theme("colors.sunset-orange"),
 
                 // INPUTS
-                "input": theme("colors.sunset-orange"),
+                "input-text": theme("colors.sunset-orange"),
 
                 // ========== MAIN COMPONENTS ==========
                 "order-card": theme("colors.negroni-50"),
@@ -57,6 +63,9 @@ export default {
                 "btn-primary": theme("colors.white"),
                 "accordion-arrow": theme("colors.sunset-orange"),
                 "icon-primary": theme("colors.sunset-orange"),
+
+                // INPUTS
+                "input-error": theme("colors.red"),
             }),
             outlineColor: theme => ({
                 // ========== DUMB COMPONENTS ==========

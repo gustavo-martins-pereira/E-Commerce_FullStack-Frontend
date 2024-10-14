@@ -1,5 +1,5 @@
-import { InputText } from "@components/dumbs/custom/InputText/InputText";
-import { TextArea } from "@components/dumbs/custom/TextArea/TextArea";
+import { InputText } from "@components/dumbs/custom/inputs/InputText/InputText";
+import { TextArea } from "@components/dumbs/custom/inputs/TextArea/TextArea";
 
 export function CreateProduct() {
     return (

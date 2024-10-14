@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
-import { getProductById } from "@api/services/productsService";
+import { getProductById } from "@api/services/productService";
 import { Button } from "@components/dumbs/custom/Button/Button";
 import Accordion from "@components/dumbs/windui/Accordion/Accordion";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
@@ -12,6 +12,7 @@ export function ProductDetails() {
     // STATES
     const [product, setProduct] = useState({});
 
+    // EFFECTS
     useEffect(() => {
         async function fetchProductById() {
             const product = await getProductById(productId);

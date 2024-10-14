@@ -6,7 +6,7 @@ async function getAllProducts() {
 
         return response.data;
     } catch(error) {
-        console.error("Error fetching products: ", error.message);
+        console.error(error.response.data?.error);
     }
 }
 
@@ -16,7 +16,7 @@ async function getProductById(productId) {
 
         return response.data;
     } catch(error) {
-        console.error("Error fetching product by ID: ", error.message);
+        console.error(error.response.data?.error);
     }
 }
 
