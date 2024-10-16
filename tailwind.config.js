@@ -6,7 +6,7 @@ export default {
     ],
     theme: {
         extend: {
-            colors: theme => ({
+            colors: {
                 // PRIMITIVE COLORS
                 "black-50": "hsla(0, 0%, 0%, 0.5)",
                 "alabaster": "hsl(0, 0%, 98%)",
@@ -20,7 +20,7 @@ export default {
                 "negroni-20": "hsla(25, 100%, 88%, 0.2)",
                 "negroni-50": "hsla(25, 100%, 88%, 0.5)",
                 "pickled-bluewood": "hsl(210, 29%, 24%)",
-            }),
+            },
             backgroundColor: theme => ({
                 // ========== DUMB COMPONENTS ==========
                 // BUTTONS
@@ -44,6 +44,7 @@ export default {
 
                 // ===== SWIPER =====
                 "swiper-pagination-bullet": theme("colors.sunset-orange"),
+                "swiper-navigation-arrow": theme("colors.sunset-orange-33"),
             }),
             borderColor: theme => ({
                 // ========== DUMB COMPONENTS ==========
@@ -66,6 +67,13 @@ export default {
 
                 // INPUTS
                 "input-error": theme("colors.red"),
+
+                // LINKS
+                "link-primary": theme("colors.sunset-orange"),
+
+                // ========== MAIN COMPONENTS ==========
+                // ===== SWIPER =====
+                "swiper-navigation-arrow": theme("colors.sunset-orange"),
             }),
             outlineColor: theme => ({
                 // ========== DUMB COMPONENTS ==========

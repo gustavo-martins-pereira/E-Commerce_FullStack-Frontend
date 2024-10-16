@@ -1,16 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
+import { Autoplay, EffectFlip, Navigation } from "swiper/modules";
 import { useForm } from "react-hook-form";
 import { ToastContainer } from "react-toastify";
 
 import { getAllProducts } from "@api/services/productService";
-import { register as registerUser } from "@api/services/userService";
+import { register as registerUser, login } from "@api/services/userService";
 import { InputText } from "@components/dumbs/custom/inputs/InputText/InputText";
 import { InputRadius } from "@components/dumbs/custom/inputs/InputRadius/InputRadius";
 import { SubmitButton } from "@components/dumbs/custom/inputs/SubmitButton/SubmitButton";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
-import { toastError, toastSuccess } from "@utils/toast";
+import { toastError, toastSuccess, toastInfo } from "@utils/toast";
+
+import Register from "./assets/images/register.svg";
+import Login from "./assets/images/login.svg";
 
 import "./assets/css/register-login.css";
 
@@ -18,16 +21,29 @@ export function RegisterLogin() {
     // STATES
     const [products, setProducts] = useState([]);
 
-    // FORM
-    const { register, watch, handleSubmit, formState: {errors} } = useForm();
+    // REFS
+    const swiperRef = useRef(null);
 
-    const password = watch("password");
+    // FORM HOOKS (Separate for Register and Login)
+    const {
+        register: registerFormRegister,
+        watch: registerFormWatch,
+        handleSubmit: handleRegisterSubmit,
+        formState: { errors: registerErrors }
+    } = useForm();
+
+    const {
+        register: loginFormRegister,
+        handleSubmit: handleLoginSubmit,
+        formState: { errors: loginErrors }
+    } = useForm();
+
+    const registerPassword = registerFormWatch("registerPassword");
 
     // EFFECTS
     useEffect(() => {
         async function fetchProductsData() {
             const products = await getAllProducts();
-            
             setProducts(products);
         }
 
@@ -36,17 +52,45 @@ export function RegisterLogin() {
 
     // HANDLES
     function handleOnSubmitValidRegisterForm(registerFormData) {
-        const { username, password, role } = registerFormData;
+        const { registerUsername, registerPassword, role } = registerFormData;
 
         try {
-            registerUser(username, password, role)
-                .then(() => toastSuccess("Registration successful!"))
+            registerUser(registerUsername, registerPassword, role)
+                .then(() => {
+                    toastSuccess("Registration successful!");
+                    toastInfo("Now login with your new Account.", { autoClose: 10000 });
+                    swiperRef.current.slideNext();
+                })
                 .catch(error => {
                     toastError(error.response.data?.error);
                 });
         } catch (error) {
             toastError("An Unexpected error occurred");
         }
+    }
+
+    function handleOnSubmitValidLoginForm(loginFormData) {
+        const { loginUsername, loginPassword } = loginFormData;
+
+        try {
+            login(loginUsername, loginPassword)
+                .then(() => {
+                    toastSuccess("Login successful!");
+                })
+                .catch(error => {
+                    toastError(error.response.data?.error);
+                });
+        } catch (error) {
+            toastError("An Unexpected error occurred");
+        }
+    }
+
+    function handleNextSlide() {
+        swiperRef.current.slideNext();
+    }
+
+    function handlePrevSlide() {
+        swiperRef.current.slidePrev();
     }
 
     return (
@@ -117,127 +161,177 @@ export function RegisterLogin() {
             </section>
 
             {/* REGISTER / LOGIN */}
-            <section className="section w-3/4 relative m-auto my-24 p-0 rounded-lg shadow-lg overflow-hidden md:w-1/2">
+            <Swiper
+                className="section w-3/4 relative m-auto my-24 p-0 rounded-lg pointer-events-none md:w-10/12"
+                wrapperClass="swiper-wrapper swiper-wrapper-rg"
+                effect={"flip"}
+                grabCursor={false}
+                navigation={true}
+                modules={[EffectFlip, Navigation]}
+                onSwiper={swiper => (swiperRef.current = swiper)}
+            >
                 {/* REGISTER FORM */}
-                <section className="px-4 py-8 md:px-8 md:py-16">
-                    <h3 className="text-center">Create your Account</h3>
+                <SwiperSlide
+                    className="flex flex-col gap-4 shadow-lg px-4 py-8 md:px-8 md:py-16 lg:grid lg:grid-cols-2 lg:items-center lg:gap-4"
+                    tag="section"
+                >
+                    <div>
+                        <h3 className="text-center">Create your Account</h3>
 
-                    <form className="flex flex-col gap-4" onSubmit={handleSubmit(handleOnSubmitValidRegisterForm)}>
-                        <InputText
-                            label="Username"
-                            id="register-username"
-                            type="text"
-                            placeholder="Your username"
-                            register={register("username", {
-                                required: "The username is required",
-                                minLength: {
-                                    value: 5,
-                                    message: "The username must be greater than 5",
-                                },
-                                maxLength: {
-                                    value: 50,
-                                    message: "The username must be less than 50",
-                                },
-                                pattern: {
-                                    value: /^[A-Za-z][a-zA-Z0-9]+$/,
-                                    message: "The username must start with a letter and contain only letters and numbers",
-                                },
-                            })}
-                            errorMessage={errors.username?.message}
-                        />
+                        <form
+                            className="flex flex-col gap-2 mt-8"
+                            onSubmit={handleRegisterSubmit(handleOnSubmitValidRegisterForm)}
+                        >
+                            <InputText
+                                label="Username"
+                                id="register-username"
+                                type="text"
+                                placeholder="Your username"
+                                register={registerFormRegister("registerUsername", {
+                                    required: "The username is required",
+                                    minLength: {
+                                        value: 5,
+                                        message: "The username must be greater than 5",
+                                    },
+                                    maxLength: {
+                                        value: 50,
+                                        message: "The username must be less than 50",
+                                    },
+                                    pattern: {
+                                        value: /^[A-Za-z][a-zA-Z0-9]+$/,
+                                        message: "The username must start with a letter and contain only letters and numbers",
+                                    }
+                                })}
+                                errorMessage={registerErrors.registerUsername?.message}
+                            />
 
-                        <InputText
-                            label="Password"
-                            id="register-password"
-                            type="password"
-                            placeholder="Your password"
-                            register={register("password", {
-                                required: "The password is required",
-                                minLength: {
-                                    value: 8,
-                                    message: "The password must be greater than 8",
-                                },
-                                maxLength: {
-                                    value: 50,
-                                    message: "The password must be less than 50",
-                                },
-                            })}
-                            errorMessage={errors.password?.message}
-                        />
-                        <InputText
-                            label="Confirm Password"
-                            id="register-confirm-password"
-                            type="password"
-                            placeholder="Confirm Password"
-                            register={register("confirmPassword", {
-                                required: "The password is required",
-                                minLength: {
-                                    value: 8,
-                                    message: "The password must be greater than 8",
-                                },
-                                maxLength: {
-                                    value: 50,
-                                    message: "The password must be less than 50",
-                                },
-                                validate: value => value === password || "The passwords do not match",
-                            })}
-                            errorMessage={errors.confirmPassword?.message}
-                        />
+                            <InputText
+                                label="Password"
+                                id="register-password"
+                                type="password"
+                                placeholder="Your password"
+                                register={registerFormRegister("registerPassword", {
+                                    required: "The password is required",
+                                    minLength: {
+                                        value: 8,
+                                        message: "The password must be greater than 8",
+                                    },
+                                    maxLength: {
+                                        value: 50,
+                                        message: "The password must be less than 50",
+                                    }
+                                })}
+                                errorMessage={registerErrors.registerPassword?.message}
+                            />
 
-                        <div className="flex flex-col gap-2">
-                            <p className="font-semibold">Role</p>
-                            <div className="flex gap-4">
-                                <InputRadius
-                                    name="register-user-role"
-                                    id="register-user-role-user"
-                                    label="User"
-                                    value="USER"
-                                    checked={true}
-                                    register={register("role", {
-                                        required: "Please select a role",
-                                    })}
-                                    errorMessage={errors.role?.message}
-                                />
-                                <InputRadius
-                                    name="register-user-role"
-                                    id="register-user-role-seller"
-                                    label="Seller"
-                                    value="SELLER"
-                                    register={register("role")}
-                                />
+                            <InputText
+                                label="Confirm Password"
+                                id="register-confirm-password"
+                                type="password"
+                                placeholder="Confirm Password"
+                                register={registerFormRegister("registerConfirmPassword", {
+                                    required: "The password is required",
+                                    validate: value => value === registerPassword || "The passwords do not match",
+                                })}
+                                errorMessage={registerErrors.registerConfirmPassword?.message}
+                            />
+
+                            <div className="flex flex-col gap-2">
+                                <p className="font-semibold">Role</p>
+                                <div className="flex gap-4">
+                                    <InputRadius
+                                        name="register-user-role"
+                                        id="register-user-role-user"
+                                        label="User"
+                                        value="USER"
+                                        checked={true}
+                                        register={registerFormRegister("role", {
+                                            required: "Please select a role"
+                                        })}
+                                        errorMessage={registerErrors.role?.message}
+                                    />
+                                    <InputRadius
+                                        name="register-user-role"
+                                        id="register-user-role-seller"
+                                        label="Seller"
+                                        value="SELLER"
+                                        register={registerFormRegister("role")}
+                                    />
+                                </div>
                             </div>
-                        </div>
 
-                        <SubmitButton className="btn-primary w-full" value="Sign Up" />
-                    </form>
-                </section>
+                            <SubmitButton className="btn-primary w-full mt-4" value="Sign Up" />
+                        </form>
+                    </div>
+
+                    <div className="flex flex-col gap-4 items-center">
+                        <img className="hidden lg:block" src={Register} alt="" />
+                        <p className="text-center text-sm">
+                            Already have an account?
+                            <br />
+                            <span
+                                className="text-link-primary cursor-pointer hover:underline"
+                                onClick={handleNextSlide}
+                            >
+                                Sign in
+                            </span>
+                        </p>
+                    </div>
+                </SwiperSlide>
 
                 {/* LOGIN FORM */}
-                {/* <section className="bg-login-form px-4 py-8 md:px-8 md:py-16 md:pt-12"}>
-                    <h3 className="text-center">Sign In</h3>
+                <SwiperSlide
+                    className="flex flex-col-reverse gap-4 shadow-lg px-4 py-8 md:px-8 md:py-16 lg:grid lg:grid-cols-2 lg:items-center lg:gap-4"
+                    tag="section"
+                >
+                    <div className="flex flex-col gap-4 items-center">
+                        <img className="hidden lg:block" src={Login} alt="" />
+                        <p className="text-center text-sm">
+                            Do you not have an account?
+                            <br />
+                            <span
+                                className="text-link-primary cursor-pointer hover:underline"
+                                onClick={handlePrevSlide}
+                            >
+                                Sign Up
+                            </span>
+                        </p>
+                    </div>
 
-                    <form>
-                        <InputText
-                            label="Username"
-                            placeholder="Your username"
-                            name="login-username"
-                            inputType="text"
-                        />
+                    <div>
+                        <h3 className="text-center">Sign In</h3>
 
-                        <InputText
-                            label="Password"
-                            placeholder="Your password"
-                            name="login-password"
-                            inputType="password"
-                        />
+                        <form
+                            className="flex flex-col gap-2 mt-8"
+                            onSubmit={handleLoginSubmit(handleOnSubmitValidLoginForm)}
+                        >
+                            <InputText
+                                label="Username"
+                                id="login-username"
+                                type="text"
+                                placeholder="Your username"
+                                register={loginFormRegister("loginUsername", {
+                                    required: "The username is required"
+                                })}
+                                errorMessage={loginErrors.loginUsername?.message}
+                            />
 
-                        <SubmitButton
-                            className="btn-primary w-full"
-                            value="Sign In"
-                        />
-                    </form>
-                </section> */}
-            </section>
+                            <InputText
+                                label="Password"
+                                id="login-password"
+                                type="password"
+                                placeholder="Your password"
+                                register={loginFormRegister("loginPassword", {
+                                    required: "The password is required"
+                                })}
+                                errorMessage={loginErrors.loginPassword?.message}
+                            />
+
+                            <SubmitButton className="btn-primary w-full mt-4" value="Sign In" />
+                        </form>
+                    </div>
+                </SwiperSlide>
+            </Swiper>
 
             <ToastContainer />
         </main>

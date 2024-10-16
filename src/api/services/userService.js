@@ -14,6 +14,20 @@ async function register(username, password, role) {
     }
 }
 
+async function login(username, password) {
+    try {
+        const response = await api.post("/login", {
+            "username": username,
+            "password": password,
+        });
+
+        console.log(response);
+    } catch (error) {
+        throw error;
+    }
+}
+
 export {
     register,
+    login,
 };

@@ -1,3 +1,39 @@
+.swiper-wrapper-rg {
+    align-items: center;
+}
+
 .swiper-gallery > .swiper-wrapper {
     transition-timing-function: linear;
+}
+
+.swiper-button-next,
+.swiper-button-prev,
+.swiper-pagination {
+    pointer-events: auto;
+}
+
+/* CUSTOM SWIPER NAVIGATION STYLES */
+.swiper-button-next,
+.swiper-button-prev {
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+}
+
+.swiper-button-next {
+    left: calc(100% + 0.25rem);
+}
+.swiper-button-prev {
+    left: calc(0% - 2.75rem);
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    color: theme("textColor.swiper-navigation-arrow");
+    font-size: 40px;
 }
