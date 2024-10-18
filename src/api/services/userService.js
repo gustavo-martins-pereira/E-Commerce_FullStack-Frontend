@@ -19,9 +19,21 @@ async function login(username, password) {
         const response = await api.post("/login", {
             "username": username,
             "password": password,
+        }, {
+            withCredentials: true,
         });
 
-        console.log(response);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+async function refreshToken() {
+    try {
+        const response = await api.post("/login/refresh", {}, { withCredentials: true });
+        
+        return response;
     } catch (error) {
         throw error;
     }
@@ -30,4 +42,5 @@ async function login(username, password) {
 export {
     register,
     login,
+    refreshToken,
 };

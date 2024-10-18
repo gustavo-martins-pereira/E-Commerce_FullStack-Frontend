@@ -4,8 +4,8 @@ import { Autoplay, EffectFlip, Navigation } from "swiper/modules";
 import { useForm } from "react-hook-form";
 import { ToastContainer } from "react-toastify";
 
-import { getAllProducts } from "@api/services/productService";
-import { register as registerUser, login } from "@api/services/userService";
+import { getAllProducts, updateProduct } from "@api/services/productService";
+import { register, login, refreshToken } from "@api/services/userService";
 import { InputText } from "@components/dumbs/custom/inputs/InputText/InputText";
 import { InputRadius } from "@components/dumbs/custom/inputs/InputRadius/InputRadius";
 import { SubmitButton } from "@components/dumbs/custom/inputs/SubmitButton/SubmitButton";
@@ -50,12 +50,35 @@ export function RegisterLogin() {
         fetchProductsData();
     }, []);
 
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    async function fetchProtectedResource() {
+        try {
+            const accessToken = localStorage.getItem("token");
+            const response = await updateProduct(accessToken);
+
+            console.log(response);
+        } catch (error) {
+            if(error.response.data.error == "Token expired") {
+                refreshToken()
+                    .then(response => {
+                        localStorage.setItem("token", response.data.token);
+                        fetchProtectedResource();
+                    });
+            }
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////
+
     // HANDLES
     function handleOnSubmitValidRegisterForm(registerFormData) {
         const { registerUsername, registerPassword, role } = registerFormData;
 
         try {
-            registerUser(registerUsername, registerPassword, role)
+            register(registerUsername, registerPassword, role)
                 .then(() => {
                     toastSuccess("Registration successful!");
                     toastInfo("Now login with your new Account.", { autoClose: 10000 });
@@ -74,8 +97,10 @@ export function RegisterLogin() {
 
         try {
             login(loginUsername, loginPassword)
-                .then(() => {
+                .then(response => {
                     toastSuccess("Login successful!");
+
+                    localStorage.setItem("token", response.data.token);
                 })
                 .catch(error => {
                     toastError(error.response.data?.error);
@@ -332,6 +357,8 @@ export function RegisterLogin() {
                     </div>
                 </SwiperSlide>
             </Swiper>
+
+            <button className="bg-red w-20 h-20" onClick={fetchProtectedResource}>TEST ME</button>
 
             <ToastContainer />
         </main>
