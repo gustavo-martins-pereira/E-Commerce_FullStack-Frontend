@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFlip, Navigation } from "swiper/modules";
 import { useForm } from "react-hook-form";
-import { ToastContainer } from "react-toastify";
 
 import { getAllProducts, updateProduct } from "@api/services/productService";
 import { register, login, refreshToken } from "@api/services/userService";
@@ -50,29 +49,6 @@ export function RegisterLogin() {
         fetchProductsData();
     }, []);
 
-    //////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////
-    async function fetchProtectedResource() {
-        try {
-            const accessToken = localStorage.getItem("token");
-            const response = await updateProduct(accessToken);
-
-            console.log(response);
-        } catch (error) {
-            if(error.response.data.error == "Token expired") {
-                refreshToken()
-                    .then(response => {
-                        localStorage.setItem("token", response.data.token);
-                        fetchProtectedResource();
-                    });
-            }
-        }
-    }
-    //////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////
-
     // HANDLES
     function handleOnSubmitValidRegisterForm(registerFormData) {
         const { registerUsername, registerPassword, role } = registerFormData;
@@ -100,13 +76,28 @@ export function RegisterLogin() {
                 .then(response => {
                     toastSuccess("Login successful!");
 
-                    localStorage.setItem("token", response.data.token);
+                    localStorage.setItem("accessToken", response.data.accessToken);
                 })
                 .catch(error => {
                     toastError(error.response.data?.error);
                 });
         } catch (error) {
             toastError("An Unexpected error occurred");
+        }
+    }
+
+    async function fetchProtectedResource() {
+        try {
+            const accessToken = localStorage.getItem("accessToken");
+            await resourceWithToken(accessToken);
+        } catch (error) {
+            if(error.response.data.error == "Token expired") {
+                refreshToken()
+                    .then(response => {
+                        localStorage.setItem("accessToken", response.data.accessToken);
+                        fetchProtectedResource();
+                    });
+            }
         }
     }
 
@@ -354,13 +345,10 @@ export function RegisterLogin() {
 
                             <SubmitButton className="btn-primary w-full mt-4" value="Sign In" />
                         </form>
+                        <button className="bg-red w-20 h-20" onClick={fetchProtectedResource}>TEST ME</button>
                     </div>
                 </SwiperSlide>
             </Swiper>
-
-            <button className="bg-red w-20 h-20" onClick={fetchProtectedResource}>TEST ME</button>
-
-            <ToastContainer />
         </main>
     );
 }

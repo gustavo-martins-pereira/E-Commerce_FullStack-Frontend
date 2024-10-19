@@ -2,13 +2,11 @@ import { api } from "@api/apiClient";
 
 async function register(username, password, role) {
     try {
-        const response = await api.post("/register", {
+        return await api.post("/register", {
             "username": username,
             "password": password,
             "role": role,
         });
-
-        return response;
     } catch(error) {
         throw error;
     }
@@ -16,14 +14,10 @@ async function register(username, password, role) {
 
 async function login(username, password) {
     try {
-        const response = await api.post("/login", {
+        return await api.post("/login", {
             "username": username,
             "password": password,
-        }, {
-            withCredentials: true,
-        });
-
-        return response;
+        }, { withCredentials: true });
     } catch (error) {
         throw error;
     }
@@ -31,9 +25,7 @@ async function login(username, password) {
 
 async function refreshToken() {
     try {
-        const response = await api.post("/login/refresh", {}, { withCredentials: true });
-        
-        return response;
+        return await api.post("/login/refresh", {}, { withCredentials: true });
     } catch (error) {
         throw error;
     }

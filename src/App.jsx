@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 import { Home } from "@pages/Home/Home";
 import { Products } from "@pages/Products/Products";
@@ -57,6 +58,8 @@ export function App() {
                 </Routes>
 
                 <Footer />
+
+                <ToastContainer />
             </BrowserRouter>
         </React.Fragment>
     );
