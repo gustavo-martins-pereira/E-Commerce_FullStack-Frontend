@@ -23,5 +23,4 @@ async function getProductById(productId) {
 export {
     getAllProducts,
     getProductById,
-    updateProduct,
 };

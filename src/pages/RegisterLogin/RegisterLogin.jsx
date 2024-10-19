@@ -3,8 +3,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFlip, Navigation } from "swiper/modules";
 import { useForm } from "react-hook-form";
 
-import { getAllProducts, updateProduct } from "@api/services/productService";
-import { register, login, refreshToken } from "@api/services/userService";
+import { getAllProducts } from "@api/services/productService";
+import { register, login } from "@api/services/userService";
 import { InputText } from "@components/dumbs/custom/inputs/InputText/InputText";
 import { InputRadius } from "@components/dumbs/custom/inputs/InputRadius/InputRadius";
 import { SubmitButton } from "@components/dumbs/custom/inputs/SubmitButton/SubmitButton";
@@ -83,21 +83,6 @@ export function RegisterLogin() {
                 });
         } catch (error) {
             toastError("An Unexpected error occurred");
-        }
-    }
-
-    async function fetchProtectedResource() {
-        try {
-            const accessToken = localStorage.getItem("accessToken");
-            await resourceWithToken(accessToken);
-        } catch (error) {
-            if(error.response.data.error == "Token expired") {
-                refreshToken()
-                    .then(response => {
-                        localStorage.setItem("accessToken", response.data.accessToken);
-                        fetchProtectedResource();
-                    });
-            }
         }
     }
 
@@ -345,7 +330,6 @@ export function RegisterLogin() {
 
                             <SubmitButton className="btn-primary w-full mt-4" value="Sign In" />
                         </form>
-                        <button className="bg-red w-20 h-20" onClick={fetchProtectedResource}>TEST ME</button>
                     </div>
                 </SwiperSlide>
             </Swiper>
