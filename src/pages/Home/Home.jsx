@@ -1,9 +1,11 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { FaShippingFast, FaHeadset, FaAward, FaSearch, FaShoppingCart, FaTag } from "react-icons/fa";
 
 import { FeaturesSection } from "@components/dumbs/custom/FeaturesSection/FeaturesSection";
 import { Button } from "@components/dumbs/custom/Button/Button";
 import { LinkArrow } from "@components/dumbs/custom/LinkArrow/LinkArrow";
+import { UserContext } from "@contexts/userContext";
 
 import OnlineShopping from "./images/online-shopping.svg";
 
@@ -50,6 +52,9 @@ export function Home() {
         },
     ];
 
+    // CONTEXTS
+    const { user } = useContext(UserContext);
+
     return (
         <main>
             {/* HERO */}
@@ -60,7 +65,7 @@ export function Home() {
 
                     <div className="flex gap-4">
                         <Link to="/products"><Button className="btn-primary">Explore</Button></Link>
-                        <Link to="/register-login"><Button className="btn-secondary">Sign Up</Button></Link>
+                        {!user && <Link to="/register-login"><Button className="btn-secondary">Sign Up</Button></Link>}
                     </div>
                 </div>
 
@@ -76,10 +81,10 @@ export function Home() {
 
                 <FeaturesSection features={shopWithConfidenceData} />
 
-                <LinkArrow
+                {!user && <LinkArrow
                     url="/register-login"
                     text="Sign Up"
-                />
+                />}
             </section>
 
             {/* HOW WORKS */}

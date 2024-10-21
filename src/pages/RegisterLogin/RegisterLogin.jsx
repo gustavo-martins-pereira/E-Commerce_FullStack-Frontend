@@ -1,15 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFlip, Navigation } from "swiper/modules";
 import { useForm } from "react-hook-form";
 
 import { getAllProducts } from "@api/services/productService";
-import { register, login } from "@api/services/userService";
+import { register, login as loginApi } from "@api/services/userService";
 import { InputText } from "@components/dumbs/custom/inputs/InputText/InputText";
 import { InputRadius } from "@components/dumbs/custom/inputs/InputRadius/InputRadius";
 import { SubmitButton } from "@components/dumbs/custom/inputs/SubmitButton/SubmitButton";
+import { UserContext } from "@contexts/userContext";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
-import { toastError, toastSuccess, toastInfo } from "@utils/toast";
+import { toastError, toastSuccess, toastInfo, toastPromise } from "@utils/toast";
 
 import Register from "./assets/images/register.svg";
 import Login from "./assets/images/login.svg";
@@ -17,6 +18,41 @@ import Login from "./assets/images/login.svg";
 import "./assets/css/register-login.css";
 
 export function RegisterLogin() {
+    function swiperGalleryConfig(customConfig) {
+        return {
+            className: "swiper-gallery",
+            modules: [Autoplay],
+            spaceBetween: 10,
+            slidesPerView: 2.5,
+            centeredSlides: true,
+            loop: products.length >= 3,
+            speed: 8000,
+            allowTouchMove: false,
+            autoplay: {
+                delay: 0,
+                disableOnInteraction: false,
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 3,
+                    spaceBetween: 9,
+                },
+                1024: {
+                    slidesPerView: 4,
+                    spaceBetween: 10,
+                },
+                1536: {
+                    slidesPerView: 5,
+                    spaceBetween: 12,
+                },
+            },
+            ...customConfig,
+        };
+    }
+
+    // CONTEXTS
+    const { login } = useContext(UserContext);
+
     // STATES
     const [products, setProducts] = useState([]);
 
@@ -41,12 +77,10 @@ export function RegisterLogin() {
 
     // EFFECTS
     useEffect(() => {
-        async function fetchProductsData() {
+        (async function fetchProductsData() {
             const products = await getAllProducts();
             setProducts(products);
-        }
-
-        fetchProductsData();
+        }());
     }, []);
 
     // HANDLES
@@ -70,20 +104,13 @@ export function RegisterLogin() {
 
     function handleOnSubmitValidLoginForm(loginFormData) {
         const { loginUsername, loginPassword } = loginFormData;
+        
+        toastPromise(loginApi(loginUsername, loginPassword), { pending: "Logging...", success: "Login successful!" })
+            .then(response => {
+                localStorage.setItem("accessToken", response.data.accessToken);
 
-        try {
-            login(loginUsername, loginPassword)
-                .then(response => {
-                    toastSuccess("Login successful!");
-
-                    localStorage.setItem("accessToken", response.data.accessToken);
-                })
-                .catch(error => {
-                    toastError(error.response.data?.error);
-                });
-        } catch (error) {
-            toastError("An Unexpected error occurred");
-        }
+                login({ username: loginUsername });
+            });
     }
 
     function handleNextSlide() {
@@ -105,56 +132,20 @@ export function RegisterLogin() {
 
                 <article>
                     <Swiper
-                        className="swiper-gallery"
-                        modules={[Autoplay]}
-                        spaceBetween={10}
-                        slidesPerView={2.5}
-                        centeredSlides={true}
-                        loop={products.length >= 3}
-                        speed={8000}
-                        allowTouchMove={false}
-                        autoplay={{
-                            delay: 0,
-                            disableOnInteraction: false,
-                        }}
-                        breakpoints={{
-                            768: {
-                                slidesPerView: 3,
-                                spaceBetween: 9,
-                            },
-                            1024: {
-                                slidesPerView: 4,
-                                spaceBetween: 10,
-                            },
-                        }}
+                        {...swiperGalleryConfig()}
                     >
                         {products.slice(0, 20).map(product => <SwiperSlide key={product.id}><img className="w-full max-h-80 object-fill" src={bufferArrayToImageURL(product.image.data)} alt="" /></SwiperSlide>)}
                     </Swiper>
 
                     <Swiper
-                        className="swiper-gallery mt-2"
-                        modules={[Autoplay]}
-                        spaceBetween={10}
-                        slidesPerView={2.5}
-                        centeredSlides={true}
-                        loop={products.length >= 3}
-                        speed={8000}
-                        allowTouchMove={false}
-                        autoplay={{
-                            delay: 0,
-                            disableOnInteraction: false,
-                            reverseDirection: true,
-                        }}
-                        breakpoints={{
-                            768: {
-                                slidesPerView: 3,
-                                spaceBetween: 9,
+                        {...swiperGalleryConfig({
+                            className: "swiper-gallery mt-2",
+                            autoplay: {
+                                delay: 0,
+                                disableOnInteraction: false,
+                                reverseDirection: true,
                             },
-                            1024: {
-                                slidesPerView: 4,
-                                spaceBetween: 10,
-                            },
-                        }}
+                        })}
                     >
                         {products.slice(-20).map(product => <SwiperSlide key={product.id}><img className="w-full max-h-80 object-fill" src={bufferArrayToImageURL(product.image.data)} alt="" /></SwiperSlide>)}
                     </Swiper>
@@ -164,11 +155,12 @@ export function RegisterLogin() {
             {/* REGISTER / LOGIN */}
             <Swiper
                 className="section w-3/4 relative m-auto my-24 p-0 rounded-lg pointer-events-none md:w-10/12"
+                modules={[EffectFlip, Navigation]}
                 wrapperClass="swiper-wrapper swiper-wrapper-rg"
                 effect={"flip"}
                 grabCursor={false}
                 navigation={true}
-                modules={[EffectFlip, Navigation]}
+                allowTouchMove={false}
                 onSwiper={swiper => (swiperRef.current = swiper)}
             >
                 {/* REGISTER FORM */}

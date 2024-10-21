@@ -1,11 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { getAllProducts } from "@api/services/productService";
 import { Button } from "@components/dumbs/custom/Button/Button";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
+import { UserContext } from "@contexts/userContext";
 
 export function AllProducts() {
+    // CONTEXTS
+    const { user } = useContext(UserContext);
+
     // STATES
     const [productsData, setProductsData] = useState([]);
     const [productsToShow, setProductsToShow] = useState([]);
@@ -59,7 +63,7 @@ export function AllProducts() {
             </section>
 
             {/* DISCOVER */}
-            <section className="section bg-banner flex flex-col gap-8">
+            {!user && <section className="section bg-banner flex flex-col gap-8">
                 <h2>Discover Our Amazing Products Today</h2>
                 <p>Explore our wide range of high-quality products and find exactly what you need.</p>
 
@@ -67,7 +71,7 @@ export function AllProducts() {
                     <Link to="/register-login"><Button className="btn-secondary">Sign Up</Button></Link>
                     <Link to="/register-login"><Button className="btn-primary">Log In</Button></Link>
                 </div>
-            </section>
+            </section>}
         </main>
     );
 }

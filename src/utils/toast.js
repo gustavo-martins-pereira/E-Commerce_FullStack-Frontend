@@ -28,8 +28,33 @@ function toastInfo(text, customProperties) {
     toast.info(text, mergeProperties(customProperties));
 }
 
+async function toastPromise(promise, promiseMessages, customProperties) {
+    return await toast.promise(
+        promise,
+        {
+            pending: {
+                render() {
+                    return promiseMessages.pending;
+                }
+            },
+            success: {
+                render() {
+                    return promiseMessages.success;
+                }
+            },
+            error: {
+                render({ data }) {
+                    return data.response.data.error;
+                }
+            },
+        },
+        mergeProperties(customProperties)
+    )
+}
+
 export {
     toastError,
     toastSuccess,
     toastInfo,
+    toastPromise,
 };

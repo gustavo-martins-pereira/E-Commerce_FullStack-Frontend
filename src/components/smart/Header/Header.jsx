@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
-import { IoIosMenu, IoIosClose } from "react-icons/io";
+import { useContext, useEffect, useRef, useState } from "react";
+import { IoIosMenu, IoIosClose, IoIosLogOut } from "react-icons/io";
 import { Link, useLocation } from "react-router-dom";
 
 import { Button } from "@components/dumbs/custom/Button/Button";
+import { UserContext } from "@contexts/userContext";
 
 import Logo from "@assets/images/logo.svg";
 
@@ -10,6 +11,12 @@ export function Header() {
     const iconsStyle = { display: "inline-block", cursor: "pointer" };
 
     const { pathname } = useLocation();
+
+    // REFS
+    const headerRef = useRef(null);
+
+    // CONTEXTS
+    const { user, logoutUser } = useContext(UserContext);
 
     // STATES
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,13 +39,20 @@ export function Header() {
         setIsMenuOpen(false);
     }, [pathname]);
 
+    useEffect(() => {
+        if(headerRef.current) {
+            const headerHeight = headerRef.current.offsetHeight;
+            document.documentElement.style.setProperty("--toastify-toast-top", `calc(${headerHeight}px + 1rem)`);
+        }
+    }, [isMenuOpen, isMobile]);
+
     // HANDLES
     function handleOnMenuClicked() {
         setIsMenuOpen(isMenuOpen => !isMenuOpen);
     }
 
     return (
-        <header className="bg-header sticky top-0 border-b shadow-md p-4 lg:px-16 z-10">
+        <header className="bg-header sticky top-0 border-b shadow-md p-4 z-10 lg:px-16 lg:h-header" ref={headerRef}>
             <nav className="flex flex-col justify-between gap-8 lg:flex-row">
                 <div className="flex justify-between items-center">
                     <Link to="/"><img src={Logo} alt="Logotype of the Shop Wave" /></Link>
@@ -65,9 +79,24 @@ export function Header() {
                         <li><Link className="inline-block pr-4 py-2 hover:underline lg:px-4" to="/orders">Orders</Link></li>
                     </ul>
 
-                    <div className="flex flex-col justify-between gap-4 lg:flex-row">
-                        <Link to="/register-login"><Button className="btn-primary w-full">Login</Button></Link>
-                        <Link to="/register-login"><Button className="btn-secondary w-full">Sign Up</Button></Link>
+                    <hr className="-my-4 lg:hidden" />
+
+                    <div className="flex items-center gap-4 lg:flex-row">
+                        {user ? (
+                            <div className="flex items-center self-start gap-4 text-xl lg:self-auto">
+                                <p>Hello, <strong>{user.username}</strong></p>
+                                <IoIosLogOut className="text-red" size="2.5rem" style={iconsStyle} onClick={logoutUser} />
+                            </div>
+                        ) : (
+                            <>
+                                <Link to="/register-login">
+                                    <Button className="btn-primary w-full">Login</Button>
+                                </Link>
+                                <Link to="/register-login">
+                                    <Button className="btn-secondary w-full">Sign Up</Button>
+                                </Link>
+                            </>
+                        )}
                     </div>
                 </div>}
             </nav>

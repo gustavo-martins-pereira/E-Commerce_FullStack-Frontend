@@ -31,8 +31,17 @@ async function refreshToken() {
     }
 }
 
+async function logout() {
+    try {
+        await api.post("/users/logout", {}, { withCredentials: true });
+    } catch (error) {
+        throw error;
+    }
+}
+
 export {
     register,
     login,
     refreshToken,
+    logout,
 };

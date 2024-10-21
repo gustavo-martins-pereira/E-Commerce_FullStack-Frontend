@@ -17,49 +17,60 @@ import { NotFound } from "@pages/NotFound/NotFound";
 
 import { Header } from "@components/smart/Header/Header";
 import { Footer } from "@components/smart/Footer/Footer";
-import { ScrollToTop } from "@components/scripts/ScrollToTop/ScrollToTop";
+import { ScrollToTop } from "@components/scripts/ScrollToTop";
+import { AuthenticatedUseToHome } from "@components/scripts/authenticatedUserToHome";
+import { UserProvider } from "@contexts/userContext";
 
 export function App() {
     return (
         <React.Fragment>
             <BrowserRouter>
-                <ScrollToTop />
+                <UserProvider>
+                    <ScrollToTop />
+                    
+                    <Header />
 
-                <Header />
+                    <Routes>
+                        <Route path="/" element={<Home />} />
 
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/products">
-                        <Route index element={<Products />} />
-                        <Route path="all">
-                            <Route index element={<AllProducts />} />
-                            <Route path=":productId" element={<ProductDetails />} />
+                        <Route path="/products">
+                            <Route index element={<Products />} />
+                            <Route path="all">
+                                <Route index element={<AllProducts />} />
+                                <Route path=":productId" element={<ProductDetails />} />
+                            </Route>
                         </Route>
-                    </Route>
 
-                    <Route path="/orders">
-                        <Route index element={<Orders />} />
-                        <Route path=":id" element={<OrderDetails />} />
-                    </Route>
-
-                    <Route path="/register-login" element={<RegisterLogin />} />
-
-                    {/* SELLER ROUTES */}
-                    <Route path="/seller-dashboard">
-                        <Route index element={<SellerDashboard />} />
-                        <Route path="manage-products">
-                            <Route index element={<ManageProducts />} />
-                            <Route path="create" element={<CreateProduct />} />
-                            <Route path="edit" element={<EditProduct />} />
+                        <Route path="/orders">
+                            <Route index element={<Orders />} />
+                            <Route path=":id" element={<OrderDetails />} />
                         </Route>
-                    </Route>
 
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
+                        <Route
+                            path="/register-login"
+                            element={<AuthenticatedUseToHome>
+                                <RegisterLogin />
+                            </AuthenticatedUseToHome>}
+                        />
 
-                <Footer />
+                        {/* SELLER ROUTES */}
+                        <Route path="/seller-dashboard">
+                            <Route index element={<SellerDashboard />} />
 
-                <ToastContainer />
+                            <Route path="manage-products">
+                                <Route index element={<ManageProducts />} />
+                                <Route path="create" element={<CreateProduct />} />
+                                <Route path="edit" element={<EditProduct />} />
+                            </Route>
+                        </Route>
+
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
+
+                    <Footer />
+
+                    <ToastContainer />
+                </UserProvider>
             </BrowserRouter>
         </React.Fragment>
     );
