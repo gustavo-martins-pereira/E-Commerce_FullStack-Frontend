@@ -49,7 +49,7 @@ async function toastPromise(promise, promiseMessages, customProperties) {
             },
         },
         mergeProperties(customProperties)
-    )
+    );
 }
 
 export {

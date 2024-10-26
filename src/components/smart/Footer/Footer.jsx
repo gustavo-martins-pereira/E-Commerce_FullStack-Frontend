@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 import Logo from "@assets/images/logo.svg";
+import { mainMenu } from "@utils/links";
 
 export function Footer() {
     return (
@@ -9,9 +10,9 @@ export function Footer() {
 
             <nav>
                 <ul className="flex flex-col justify-between gap-4 lg:items-end">
-                    <li><Link className="inline-block pr-4 py-2 pl-0 hover:underline lg:px-4" to="/">Home</Link></li>
-                    <li><Link className="inline-block pr-4 py-2 pl-0 hover:underline lg:px-4" to="/products">Shop Now</Link></li>
-                    <li><Link className="inline-block pr-4 py-2 pl-0 hover:underline lg:px-4" to="/orders">Orders</Link></li>
+                    {mainMenu
+                        .filter(link => !link.visibleTo || link.visibleTo.includes(user?.role))
+                        .map(link => <li key={link.path}><Link className="inline-block pr-4 py-2 pl-0 hover:underline lg:px-4" to={link.path}>{link.title}</Link></li>)}
                 </ul>
             </nav>
         </footer>

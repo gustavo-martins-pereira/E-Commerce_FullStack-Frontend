@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 
 import { Button } from "@components/dumbs/custom/Button/Button";
 import { UserContext } from "@contexts/userContext";
+import { mainMenu } from "@utils/links";
 
 import Logo from "@assets/images/logo.svg";
 
@@ -73,10 +74,9 @@ export function Header() {
 
                 {(isMobile ? isMenuOpen : true) && <div id="main-menu" className="flex flex-col justify-between gap-8 lg:flex-row">
                     <ul className="flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
-                        {/* TODO: Store the "link" and "linkName" in a place and apply in "Header" and "Footer" components */}
-                        <li><Link className="inline-block pr-4 py-2 hover:underline lg:px-4" to="/">Home</Link></li>
-                        <li><Link className="inline-block pr-4 py-2 hover:underline lg:px-4" to="/products">Shop Now</Link></li>
-                        <li><Link className="inline-block pr-4 py-2 hover:underline lg:px-4" to="/orders">Orders</Link></li>
+                        {mainMenu
+                            .filter(link => !link.visibleTo || link.visibleTo.includes(user?.role))
+                            .map(link => <li key={link.path}><Link className="inline-block pr-4 py-2 hover:underline lg:px-4" to={link.path}>{link.title}</Link></li>)}
                     </ul>
 
                     <hr className="-my-4 lg:hidden" />

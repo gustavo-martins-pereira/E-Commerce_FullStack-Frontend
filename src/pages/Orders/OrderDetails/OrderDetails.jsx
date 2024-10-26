@@ -72,7 +72,6 @@ export function OrderDetails() {
                 <div className="mt-2">
                     <p><span className="font-medium">Order Number:</span> #0944</p>
                     <p><span className="font-medium">Order Date:</span> 05/09/2024 • 18:56</p>
-                    {/* TODO: Define the color for the budges in the "index.css" */}
                     <p><span className="font-medium">Order Status:</span> <span className="text-green-600">Paid</span></p>
                 </div>
             </footer>

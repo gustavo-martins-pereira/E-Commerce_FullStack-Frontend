@@ -18,7 +18,8 @@ import { NotFound } from "@pages/NotFound/NotFound";
 import { Header } from "@components/smart/Header/Header";
 import { Footer } from "@components/smart/Footer/Footer";
 import { ScrollToTop } from "@components/scripts/ScrollToTop";
-import { AuthenticatedUseToHome } from "@components/scripts/authenticatedUserToHome";
+import { AuthenticatedUserToHome } from "@components/scripts/AuthenticatedUserToHome";
+import { UnauthenticatedRedirect } from "@components/scripts/UnauthenticatedRedirect";
 import { UserProvider } from "@contexts/userContext";
 
 export function App() {
@@ -27,7 +28,7 @@ export function App() {
             <BrowserRouter>
                 <UserProvider>
                     <ScrollToTop />
-                    
+
                     <Header />
 
                     <Routes>
@@ -41,16 +42,16 @@ export function App() {
                             </Route>
                         </Route>
 
-                        <Route path="/orders">
+                        <Route path="/orders" element={<UnauthenticatedRedirect />}>
                             <Route index element={<Orders />} />
                             <Route path=":id" element={<OrderDetails />} />
                         </Route>
 
                         <Route
                             path="/register-login"
-                            element={<AuthenticatedUseToHome>
+                            element={<AuthenticatedUserToHome>
                                 <RegisterLogin />
-                            </AuthenticatedUseToHome>}
+                            </AuthenticatedUserToHome>}
                         />
 
                         {/* SELLER ROUTES */}

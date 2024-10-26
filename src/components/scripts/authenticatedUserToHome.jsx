@@ -1,9 +1,10 @@
-import { UserContext } from "@contexts/userContext";
 import { useContext } from "react";
 import { Navigate } from "react-router-dom";
 
-export function AuthenticatedUseToHome({ children }) {
+import { UserContext } from "@contexts/userContext";
+
+export function AuthenticatedUserToHome({ children }) {
     const { user } = useContext(UserContext);
 
-    return user ? <Navigate to="/" /> : children;
+    return user ? <Navigate to="/" replace /> : children;
 }

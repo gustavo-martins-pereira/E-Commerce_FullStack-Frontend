@@ -109,7 +109,8 @@ export function RegisterLogin() {
             .then(response => {
                 localStorage.setItem("accessToken", response.data.accessToken);
 
-                login({ username: loginUsername });
+                const user = response.data.user;
+                login({ username: user.username, role: user.role });
             });
     }
 
