@@ -1,9 +1,14 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import Logo from "@assets/images/logo.svg";
 import { mainMenu } from "@utils/links";
+import { UserContext } from "@contexts/userContext";
 
 export function Footer() {
+    // CONTEXTS
+    const { user } = useContext(UserContext);
+
     return (
         <footer className="bg-footer flex flex-col justify-between items-start gap-8 border-t p-4 lg:flex-row lg:p-16">
             <Link to="/"><img className="lg:scale-150" src={Logo} alt="" /></Link>
