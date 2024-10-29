@@ -152,6 +152,10 @@ export function Products() {
                                 slidesPerView: 3.25,
                                 centeredSlides: false,
                             },
+                            1280: {
+                                slidesPerView: 4.5,
+                                centeredSlides: false,
+                            },
                         }}
                     >
                         {products.slice(0, 10).map(product => (

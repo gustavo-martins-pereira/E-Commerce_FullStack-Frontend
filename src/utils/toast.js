@@ -16,16 +16,20 @@ function mergeProperties(customProperties = {}) {
     return { ...toastProperties, ...customProperties };
 }
 
-function toastError(text, customProperties) {
-    toast.error(text, mergeProperties(customProperties));
+function toastError(content, customProperties) {
+    toast.error(content, mergeProperties(customProperties));
 }
 
-function toastSuccess(text, customProperties) {
-    toast.success(text, mergeProperties(customProperties));
+function toastSuccess(content, customProperties) {
+    toast.success(content, mergeProperties(customProperties));
 }
 
-function toastInfo(text, customProperties) {
-    toast.info(text, mergeProperties(customProperties));
+function toastInfo(content, customProperties) {
+    toast.info(content, mergeProperties(customProperties));
+}
+
+function toastWarning(content, customProperties) {
+    toast.warning(content, mergeProperties(customProperties));
 }
 
 async function toastPromise(promise, promiseMessages, customProperties) {
@@ -56,5 +60,6 @@ export {
     toastError,
     toastSuccess,
     toastInfo,
+    toastWarning,
     toastPromise,
 };

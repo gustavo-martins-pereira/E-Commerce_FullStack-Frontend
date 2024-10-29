@@ -11,6 +11,7 @@ import { SubmitButton } from "@components/dumbs/custom/inputs/SubmitButton/Submi
 import { UserContext } from "@contexts/userContext";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 import { toastError, toastSuccess, toastInfo, toastPromise } from "@utils/toast";
+import { getUserByToken } from "@utils/jwt";
 
 import Register from "./assets/images/register.svg";
 import Login from "./assets/images/login.svg";
@@ -107,10 +108,10 @@ export function RegisterLogin() {
         
         toastPromise(loginApi(loginUsername, loginPassword), { pending: "Logging...", success: "Login successful!" })
             .then(response => {
-                localStorage.setItem("accessToken", response.data.accessToken);
+                const accessToken = response.data.accessToken;
+                localStorage.setItem("accessToken", accessToken);
 
-                const user = response.data.user;
-                login({ username: user.username, role: user.role });
+                login(getUserByToken(accessToken), response.data.loginMaxAge);
             });
     }
 
