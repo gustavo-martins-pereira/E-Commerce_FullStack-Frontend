@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import Logo from "@assets/images/logo.svg";
-import { mainMenu } from "@utils/links";
+import { mainMenu } from "@utils/appLinksVisibility";
 import { UserContext } from "@contexts/userContext";
 
 export function Footer() {

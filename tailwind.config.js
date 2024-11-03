@@ -19,7 +19,13 @@ export default {
                 "fair-pink": "hsl(11, 100%, 95%)",
                 "negroni-20": "hsla(25, 100%, 88%, 0.2)",
                 "negroni-50": "hsla(25, 100%, 88%, 0.5)",
+                "korma": "hsl(32, 81%, 29%)",
+                "beeswax": "hsl(55, 97%, 88%)",
+                "scandal": "hsl(141, 84%, 93%)",
+                "jewel": "hsl(143, 64%, 24%)",
                 "pickled-bluewood": "hsl(210, 29%, 24%)",
+                "pattens-blue": "hsl(214, 95%, 93%)",
+                "persian-blue": "hsl(226, 71%, 40%)",
             },
             backgroundColor: theme => ({
                 // ========== DUMB COMPONENTS ==========
@@ -35,6 +41,9 @@ export default {
                 "header": theme("colors.white"),
                 "page": theme("colors.alabaster"),
                 "banner": theme("colors.fair-pink"),
+                "order-card-pending-badge": theme("colors.beeswax"),
+                "order-card-shipped-badge": theme("colors.pattens-blue"),
+                "order-card-delivered-badge": theme("colors.scandal"),
                 "order-details-table-header": theme("colors.sunset-orange"),
                 "order-details-table-footer": theme("colors.sunset-orange"),
                 "order-details-table-odd-line": theme("colors.negroni-20"),
@@ -72,6 +81,10 @@ export default {
                 "link-primary": theme("colors.sunset-orange"),
 
                 // ========== MAIN COMPONENTS ==========
+                "order-card-pending-badge": theme("colors.korma"),
+                "order-card-shipped-badge": theme("colors.persian-blue"),
+                "order-card-delivered-badge": theme("colors.jewel"),
+
                 // ===== SWIPER =====
                 "swiper-navigation-arrow": theme("colors.sunset-orange"),
             }),

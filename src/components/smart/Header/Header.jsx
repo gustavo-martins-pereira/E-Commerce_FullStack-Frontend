@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 
 import { Button } from "@components/dumbs/custom/Button/Button";
 import { UserContext } from "@contexts/userContext";
-import { mainMenu } from "@utils/links";
+import { mainMenu } from "@utils/appLinksVisibility";
 
 import Logo from "@assets/images/logo.svg";
 
