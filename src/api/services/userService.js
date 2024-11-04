@@ -25,7 +25,9 @@ async function login(username, password) {
 
 async function refreshToken() {
     try {
-        return await api.post("/login/refresh", {}, { withCredentials: true });
+        const response = await api.post("/login/refresh", {}, { withCredentials: true });
+
+        return response.data;
     } catch (error) {
         throw error;
     }
@@ -39,9 +41,20 @@ async function logout() {
     }
 }
 
+async function getUserByUsername(username) {
+    try {
+        const response = await api.get(`/users/${username}`);
+
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export {
     register,
     login,
     refreshToken,
     logout,
+    getUserByUsername,
 };

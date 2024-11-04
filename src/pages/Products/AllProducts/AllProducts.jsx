@@ -18,7 +18,7 @@ export function AllProducts() {
     // EFFECTS
     useEffect(() => {
         async function fetchAllProducts() {
-            let products = await getAllProducts();
+            const products = await getAllProducts();
 
             setProductsData(products);
             setProductsToShow(products.slice(0, 10));
@@ -59,7 +59,7 @@ export function AllProducts() {
                     })}
                 </section>
 
-                {!isAllProducts && <Button className="btn-primary w-fit m-auto" onClick={handleShowAllProducts}>View All</Button>}
+                {productsData.length > 1 && !isAllProducts && <Button className="btn-primary w-fit m-auto" onClick={handleShowAllProducts}>View All</Button>}
             </section>
 
             {/* DISCOVER */}
