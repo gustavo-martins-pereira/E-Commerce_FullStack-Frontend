@@ -35,7 +35,6 @@ export function OrderDetails() {
 
     // HANDLES
     const handleOnChangeWindowSize = () => {
-        // TODO: Existing a way to change this behavior?
         if (window.innerWidth >= 768) {
             setColSpan(4);
         } else {
@@ -51,7 +50,7 @@ export function OrderDetails() {
             </header>
 
             {/* PRODUCTS PURCHASED */}
-            <section className="mt-8">
+            <section className="mt-8 overflow-x-auto">
                 <table className="w-full border-collapse">
                     <caption className="pb-4 font-semibold text-lg text-left">Order summary</caption>
 
@@ -59,8 +58,8 @@ export function OrderDetails() {
                         <tr className="bg-order-details-table-header text-white text-left">
                             <th scope="col" className="px-4 py-2 hidden md:table-cell">Product Image</th>
                             <th scope="col" className="px-4 py-2">Product Name</th>
-                            <th scope="col" className="px-4 py-2">Product Price</th>
-                            <th scope="col" className="px-4 py-2">Quantity</th>
+                            <th scope="col" className="px-4 py-2 text-center">Product Price</th>
+                            <th scope="col" className="px-4 py-2 text-center">Quantity</th>
                             <th scope="col" className="px-4 py-2">Sub-total</th>
                         </tr>
                     </thead>
@@ -72,8 +71,8 @@ export function OrderDetails() {
                                     <img src={bufferArrayToImageURL(orderItem.product.image.data)} alt="Product 1" className="w-16 h-16 object-cover" />
                                 </td>
                                 <td className="px-4 py-2">{orderItem.product.name}</td>
-                                <td className="px-4 py-2">${orderItem.product.price}</td>
-                                <td className="px-4 py-2">{orderItem.quantity}</td>
+                                <td className="px-4 py-2 text-center">${orderItem.product.price}</td>
+                                <td className="px-4 py-2 text-center">{orderItem.quantity}</td>
                                 <td className="px-4 py-2">${(orderItem.quantity * orderItem.product.price).toFixed(2)}</td>
                             </tr>
                         })}
