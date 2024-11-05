@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { logout } from "@api/services/userService";
 import { Button } from "@components/dumbs/custom/Button/Button";
@@ -19,6 +19,8 @@ const LogoutMessage = ({ closeToast }) => (
 );
 
 export const UserProvider = ({ children }) => {
+    const navigate = useNavigate();
+
     // STATES
     const [user, setUser] = useState(null);
 
@@ -48,6 +50,8 @@ export const UserProvider = ({ children }) => {
     async function logoutUser() {
         toastPromise(logout(), { pending: "Logging out...", success: "Successfully logged out!" })
             .then(clearUserStorage);
+
+        navigate("/");
     };
 
     function forceLogout() {

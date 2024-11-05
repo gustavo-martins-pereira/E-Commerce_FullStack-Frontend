@@ -1,13 +1,13 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { getProductById } from "@api/services/productService";
 import { getUSFormatFromDate } from "@utils/dateTime";
-import { useEffect, useState } from "react";
 
 export function OrderCard({ date, total, status, orderId, itemsCount, orderItems }) {
     const PRODUCTS_TO_SHOW = 3;
 
-    const statusColors = {
+    const statusStyles = {
         PENDING: "bg-order-card-pending-badge text-order-card-pending-badge",
         SHIPPED: "bg-order-card-shipped-badge text-order-card-shipped-badge",
         DELIVERED: "bg-order-card-delivered-badge text-order-card-delivered-badge"
@@ -41,7 +41,7 @@ export function OrderCard({ date, total, status, orderId, itemsCount, orderItems
                             <p className="text-sm">{getUSFormatFromDate(new Date(date))}</p>
                         </div>
 
-                        <span className={`rounded-full px-3 py-1 text-sm font-semibold ${statusColors[status]}`}>
+                        <span className={`rounded-full px-3 py-1 text-sm font-semibold ${statusStyles[status]}`}>
                             {status.charAt(0) + status.slice(1).toLowerCase()}
                         </span>
                     </div>

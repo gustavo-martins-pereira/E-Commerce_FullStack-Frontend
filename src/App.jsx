@@ -44,7 +44,7 @@ export function App() {
 
                         <Route path="/orders" element={<UnauthenticatedRedirect />}>
                             <Route index element={<Orders />} />
-                            <Route path=":id" element={<OrderDetails />} />
+                            <Route path=":orderId" element={<OrderDetails />} />
                         </Route>
 
                         <Route
