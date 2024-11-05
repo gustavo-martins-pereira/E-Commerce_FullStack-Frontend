@@ -17,6 +17,7 @@ import { NotFound } from "@pages/NotFound/NotFound";
 
 import { Header } from "@components/smart/Header/Header";
 import { Footer } from "@components/smart/Footer/Footer";
+import { Breadcrumb } from "@components/smart/Breadcrumbs/Breadcrumbs";
 import { ScrollToTop } from "@components/scripts/ScrollToTop";
 import { AuthenticatedUserToHome } from "@components/scripts/AuthenticatedUserToHome";
 import { UnauthenticatedRedirect } from "@components/scripts/UnauthenticatedRedirect";
@@ -30,6 +31,8 @@ export function App() {
                     <ScrollToTop />
 
                     <Header />
+
+                    <Breadcrumb />
 
                     <Routes>
                         <Route path="/" element={<Home />} />

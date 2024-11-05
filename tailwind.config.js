@@ -86,6 +86,9 @@ export default {
                 "order-card-delivered-badge": theme("colors.jewel"),
 
                 // ===== SWIPER =====
+                "breadcrumb-inactive": theme("colors.black-50"),
+
+                // ===== SWIPER =====
                 "swiper-navigation-arrow": theme("colors.sunset-orange"),
             }),
             outlineColor: theme => ({
