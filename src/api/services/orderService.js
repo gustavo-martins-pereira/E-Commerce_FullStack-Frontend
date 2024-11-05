@@ -1,8 +1,9 @@
 import { api } from "@api/apiClient";
-import { getUserByUsername, refreshToken } from "./userService";
+import { withTokenRefresh } from "@api/authHelper";
+import { getUserByUsername } from "./userService";
 
 async function getOrderById(orderId) {
-    try {
+    return await withTokenRefresh(async () => {
         const accessToken = localStorage.getItem("accessToken");
         const response = await api.get(`/orders/${orderId}`, {
             headers: {
@@ -11,20 +12,11 @@ async function getOrderById(orderId) {
         });
 
         return response.data;
-    } catch (error) {
-        if(error.response.data?.error == "Token expired") {
-            const { accessToken } = await refreshToken();
-            localStorage.setItem("accessToken", accessToken);
-
-            return await getOrderById(orderId);
-        }
-
-        console.error(error.response.data?.error);
-    }
+    });
 }
 
 async function getOrdersByUsername(username) {
-    try {
+    return await withTokenRefresh(async () => {
         const user = await getUserByUsername(username);
 
         const accessToken = localStorage.getItem("accessToken");
@@ -33,18 +25,8 @@ async function getOrdersByUsername(username) {
                 Authorization: `Bearer ${accessToken}`,
             },
         });
-
         return response.data;
-    } catch (error) {
-        if(error.response.data?.error == "Token expired") {
-            const { accessToken } = await refreshToken();
-            localStorage.setItem("accessToken", accessToken);
-
-            return await getOrdersByUsername(username);
-        }
-
-        console.error(error.response.data?.error);
-    }
+    });
 }
 
 export {
