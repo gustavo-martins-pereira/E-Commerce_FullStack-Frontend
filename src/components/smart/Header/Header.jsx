@@ -57,6 +57,8 @@ export function Header() {
             <nav className="flex flex-col justify-between gap-8 lg:flex-row">
                 <div className="flex justify-between items-center">
                     <Link to="/"><img src={Logo} alt="Logotype of the Shop Wave" /></Link>
+
+                    {/* OPEN/CLOSE MENU BUTTON */}
                     {isMobile ?
                         <button
                             aria-label="Main menu"
@@ -73,14 +75,16 @@ export function Header() {
                 </div>
 
                 {(isMobile ? isMenuOpen : true) && <div id="main-menu" className="flex flex-col justify-between gap-8 lg:flex-row">
+                    {/* LINKS */}
                     <ul className="flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
                         {mainMenu
                             .filter(link => !link.visibleTo || link.visibleTo.includes(user?.role))
-                            .map(link => <li key={link.path}><Link className="inline-block pr-4 py-2 hover:underline lg:px-4" to={link.path}>{link.title}</Link></li>)}
+                            .map(link => <li key={link.path}><Link className={`inline-block pr-4 py-2 text-center hover:underline lg:px-4 ${link.styles}`} to={link.path}>{link.title}</Link></li>)}
                     </ul>
 
                     <hr className="-my-4 lg:hidden" />
 
+                    {/* PROFILE */}
                     <div className="flex items-center gap-4 lg:flex-row">
                         {user ? (
                             <div className="flex items-center self-start gap-4 text-xl lg:self-auto">

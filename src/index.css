@@ -8,9 +8,24 @@
     --toastify-toast-width: 450px;
 }
 
+/*=============== KEYFRAMES ===============*/
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
 @layer utilities {
     .px-section {
         @apply px-4 md:px-16 lg:px-20;
+    }
+
+    .popup-scale {
+        animation: scaleIn 0.3s ease-out;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.2);
     }
 }
 

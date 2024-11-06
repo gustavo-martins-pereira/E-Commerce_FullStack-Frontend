@@ -15,6 +15,7 @@ export default {
                 "red": "hsl(0, 100%, 50%)",
                 "cosmos": "hsl(0, 100%, 91%)",
                 "sunset-orange": "hsl(5, 100%, 62%)",
+                "sunset-orange-25": "hsla(5, 100%, 62%, 0.33)",
                 "sunset-orange-33": "hsla(5, 100%, 62%, 0.33)",
                 "sunset-orange-50": "hsla(5, 100%, 62%, 0.50)",
                 "fair-pink": "hsl(11, 100%, 95%)",
@@ -25,6 +26,7 @@ export default {
                 "jewel": "hsl(143, 64%, 24%)",
                 "pickled-bluewood": "hsl(210, 29%, 24%)",
                 "pattens-blue": "hsl(214, 95%, 93%)",
+                "ebony": "hsl(221, 39%, 11%)",
                 "persian-blue": "hsl(226, 71%, 40%)",
             },
             backgroundColor: theme => ({
@@ -49,6 +51,8 @@ export default {
                 "order-details-table-odd-line": theme("colors.concrete"),
                 "order-details-table-even-line": theme("colors.white"),
                 "login-form": theme("colors.white"),
+                "popup-overlay": theme("colors.ebony"),
+                "popup": theme("colors.white"),
                 "footer": theme("colors.white"),
 
                 // ===== SWIPER =====
@@ -56,6 +60,8 @@ export default {
                 "swiper-navigation-arrow": theme("colors.sunset-orange-33"),
             }),
             borderColor: theme => ({
+                "primary": theme("colors.sunset-orange-25"),
+
                 // ========== DUMB COMPONENTS ==========
                 // BUTTONS
                 "btn-primary": theme("colors.sunset-orange"),

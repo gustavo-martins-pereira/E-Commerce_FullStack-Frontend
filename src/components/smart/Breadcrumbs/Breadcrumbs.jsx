@@ -10,7 +10,7 @@ function Breadcrumb() {
         .split("/")
         .filter((path) => path) // Remove empty paths
         .map((path, index, array) => ({
-            name: path.charAt(0).toUpperCase() + path.slice(1),
+            name: path.charAt(0).toUpperCase() + path.replace("-", " ").slice(1),
             link: `/${array.slice(0, index + 1).join("/")}`
         }));
 
