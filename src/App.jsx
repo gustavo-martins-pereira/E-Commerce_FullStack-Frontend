@@ -64,7 +64,7 @@ export function App() {
                             <Route path="manage-products">
                                 <Route index element={<ManageProducts />} />
                                 <Route path="create" element={<CreateProduct />} />
-                                <Route path="edit" element={<EditProduct />} />
+                                <Route path="edit/:productId" element={<EditProduct />} />
                             </Route>
                         </Route>
 

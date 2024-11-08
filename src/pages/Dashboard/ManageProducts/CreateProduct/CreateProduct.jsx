@@ -5,6 +5,7 @@ import { createProduct } from "@api/services/productService";
 import { InputText } from "@components/dumbs/custom/inputs/InputText/InputText";
 import { TextArea } from "@components/dumbs/custom/inputs/TextArea/TextArea";
 import { InputFile } from "@components/dumbs/custom/inputs/InputFile/InputFile";
+import { SubmitButton } from "@components/dumbs/custom/inputs/SubmitButton/SubmitButton";
 import { toastPromise } from "@utils/toast";
 
 export function CreateProduct() {
@@ -91,7 +92,7 @@ export function CreateProduct() {
                             errorMessage={newProductErrors.createProductImage?.message}
                         />
 
-                        <input className="btn btn-primary w-full" type="submit" value="Create Product" />
+                        <SubmitButton className="btn-primary" value="Create Product" />
                     </form>
                 </section>
             </header>

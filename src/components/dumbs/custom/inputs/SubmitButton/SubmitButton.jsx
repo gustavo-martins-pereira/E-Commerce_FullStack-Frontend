@@ -1,5 +1,5 @@
-export function SubmitButton({ className, value }) {
+export function SubmitButton({ className, value, disabled }) {
     return (
-        <input className={`btn ${className}`} type="submit" value={value} />
+        <input className={`btn disabled:opacity-75 ${className}`} type="submit" value={value} disabled={disabled} />
     );
 }

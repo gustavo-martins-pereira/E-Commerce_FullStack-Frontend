@@ -68,7 +68,7 @@ export function ManageProducts() {
                                 <p className="text-xl font-bold">${product.price}</p>
 
                                 <div className="flex gap-4">
-                                    <Link to="/dashboard/manage-products/edit"><Button className="btn btn-primary">Edit</Button></Link>
+                                    <Link to={`/dashboard/manage-products/edit/${product.id}`}><Button className="btn btn-primary">Edit</Button></Link>
                                     <Button className="btn btn-secondary" onClick={() => handleOpenDeletePopup(product.id)}>Delete</Button>
                                 </div>
                             </div>

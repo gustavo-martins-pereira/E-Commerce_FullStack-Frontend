@@ -55,6 +55,21 @@ async function getProductsBySellerId(sellerId) {
     }
 }
 
+async function editProductById(productId, name, description, price) {
+    return await withTokenRefresh(async () => {
+        const accessToken = localStorage.getItem("accessToken");
+        await api.put(`/products/${productId}`, {
+            name,
+            description,
+            price,
+        }, {
+            headers: {
+                "Authorization": `Bearer ${accessToken}`,
+            },
+        });
+    });
+}
+
 async function deleteProductById(productId) {
     return await withTokenRefresh(async () => {
         const accessToken = localStorage.getItem("accessToken");
@@ -71,5 +86,6 @@ export {
     getAllProducts,
     getProductById,
     getProductsBySellerId,
+    editProductById,
     deleteProductById,
 };

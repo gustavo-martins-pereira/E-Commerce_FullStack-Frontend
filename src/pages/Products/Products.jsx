@@ -6,6 +6,7 @@ import { FaStar, FaClock, FaHeart, FaListUl, FaDollarSign, FaChartLine } from "r
 
 import { FeaturesSection } from "@components/dumbs/custom/FeaturesSection/FeaturesSection";
 import { Button } from "@components/dumbs/custom/Button/Button";
+import { SubmitButton } from "@components/dumbs/custom/inputs/SubmitButton/SubmitButton";
 import { getAllProducts } from "@api/services/productService";
 import { paginationRenderBulletConfig } from "@utils/swiper";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
@@ -107,7 +108,7 @@ export function Products() {
                     <input className="w-20 border border-input p-2 focus:outline-input" type="number" name="quantity" id="quantity" />
                 </div>
 
-                <input className="btn btn-primary" type="submit" value="Add to Cart" />
+                <button className="btn btn-primary">Add to Cart</button>
             </section>
 
             {/* ARRIVALS */}
