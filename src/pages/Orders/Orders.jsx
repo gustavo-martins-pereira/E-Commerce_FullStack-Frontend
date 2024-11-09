@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { getUserByUsername } from "@api/services/userService";
 import { getOrdersByClientId } from "@api/services/orderService";
 import { OrderCard } from "@components/smart/OrderCard/OrderCard";
-import { Button } from "@components/dumbs/custom/Button/Button";
+import { Button } from "@components/dumbs/Button/Button";
 import { getUserByLoggedUser } from "@utils/localstorage";
 
 export function Orders() {

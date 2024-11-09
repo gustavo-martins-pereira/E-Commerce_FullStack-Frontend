@@ -2,9 +2,9 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { FaShippingFast, FaHeadset, FaAward, FaSearch, FaShoppingCart, FaTag } from "react-icons/fa";
 
-import { FeaturesSection } from "@components/dumbs/custom/FeaturesSection/FeaturesSection";
-import { Button } from "@components/dumbs/custom/Button/Button";
-import { LinkArrow } from "@components/dumbs/custom/LinkArrow/LinkArrow";
+import { FeaturesSection } from "@components/dumbs/FeaturesSection/FeaturesSection";
+import { Button } from "@components/dumbs/Button/Button";
+import { LinkArrow } from "@components/dumbs/LinkArrow/LinkArrow";
 import { UserContext } from "@contexts/userContext";
 
 import OnlineShopping from "./images/online-shopping.svg";

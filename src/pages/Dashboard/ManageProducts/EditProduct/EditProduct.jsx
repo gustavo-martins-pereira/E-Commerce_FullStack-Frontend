@@ -3,9 +3,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import { getProductById, editProductById } from "@api/services/productService";
-import { InputText } from "@components/dumbs/custom/inputs/InputText/InputText";
-import { TextArea } from "@components/dumbs/custom/inputs/TextArea/TextArea";
-import { SubmitButton } from "@components/dumbs/custom/inputs/SubmitButton/SubmitButton";
+import { InputText } from "@components/dumbs/inputs/InputText/InputText";
+import { TextArea } from "@components/dumbs/inputs/TextArea/TextArea";
+import { SubmitButton } from "@components/dumbs/inputs/SubmitButton/SubmitButton";
 import { toastPromise } from "@utils/toast";
 
 export function EditProduct() {

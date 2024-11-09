@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import { Button } from "@components/dumbs/custom/Button/Button";
+import { Button } from "@components/dumbs/Button/Button";
 
 export function LinkArrow({ url, text }) {
     return (

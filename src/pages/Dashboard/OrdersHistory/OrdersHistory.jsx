@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 
 import { getOrdersBySellerId, updateOrderStatusById } from "@api/services/orderService";
 import { getUserById, getUserByUsername } from "@api/services/userService";
-import { Modal } from "@components/dumbs/custom/Modal/Modal";
-import { Button } from "@components/dumbs/custom/Button/Button";
+import { Modal } from "@components/dumbs/Modal/Modal";
+import { Button } from "@components/dumbs/Button/Button";
 import { getUserByLoggedUser } from "@utils/localstorage";
 import { getUSFormatFromDate } from "@utils/dateTime";
 import { toastPromise } from "@utils/toast";

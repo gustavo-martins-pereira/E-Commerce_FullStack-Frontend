@@ -2,7 +2,7 @@ import { createContext, useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 
 import { logout } from "@api/services/userService";
-import { Button } from "@components/dumbs/custom/Button/Button";
+import { Button } from "@components/dumbs/Button/Button";
 import { toastWarning, toastPromise } from "@utils/toast";
 
 export const UserContext = createContext(null);

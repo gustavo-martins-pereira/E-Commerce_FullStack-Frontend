@@ -4,9 +4,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from "swiper/modules";
 import { FaStar, FaClock, FaHeart, FaListUl, FaDollarSign, FaChartLine } from "react-icons/fa";
 
-import { FeaturesSection } from "@components/dumbs/custom/FeaturesSection/FeaturesSection";
-import { Button } from "@components/dumbs/custom/Button/Button";
-import { SubmitButton } from "@components/dumbs/custom/inputs/SubmitButton/SubmitButton";
+import { FeaturesSection } from "@components/dumbs/FeaturesSection/FeaturesSection";
+import { Button } from "@components/dumbs/Button/Button";
+import { SubmitButton } from "@components/dumbs/inputs/SubmitButton/SubmitButton";
 import { getAllProducts } from "@api/services/productService";
 import { paginationRenderBulletConfig } from "@utils/swiper";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";

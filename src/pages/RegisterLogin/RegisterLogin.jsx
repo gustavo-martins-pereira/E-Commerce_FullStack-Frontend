@@ -5,9 +5,9 @@ import { useForm } from "react-hook-form";
 
 import { getAllProducts } from "@api/services/productService";
 import { register, login as loginApi } from "@api/services/userService";
-import { InputText } from "@components/dumbs/custom/inputs/InputText/InputText";
-import { InputRadius } from "@components/dumbs/custom/inputs/InputRadius/InputRadius";
-import { SubmitButton } from "@components/dumbs/custom/inputs/SubmitButton/SubmitButton";
+import { InputText } from "@components/dumbs/inputs/InputText/InputText";
+import { InputRadius } from "@components/dumbs/inputs/InputRadius/InputRadius";
+import { SubmitButton } from "@components/dumbs/inputs/SubmitButton/SubmitButton";
 import { UserContext } from "@contexts/userContext";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 import { toastError, toastSuccess, toastInfo, toastPromise } from "@utils/toast";

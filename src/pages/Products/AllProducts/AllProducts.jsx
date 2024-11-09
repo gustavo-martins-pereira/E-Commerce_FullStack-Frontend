@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { getAllProducts } from "@api/services/productService";
-import { Button } from "@components/dumbs/custom/Button/Button";
+import { Button } from "@components/dumbs/Button/Button";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 import { UserContext } from "@contexts/userContext";
 

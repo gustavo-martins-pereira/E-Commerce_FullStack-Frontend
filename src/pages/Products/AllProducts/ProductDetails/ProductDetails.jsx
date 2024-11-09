@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import { getProductById } from "@api/services/productService";
-import { Button } from "@components/dumbs/custom/Button/Button";
-import Accordion from "@components/dumbs/windui/Accordion/Accordion";
+import { Button } from "@components/dumbs/Button/Button";
+import Accordion from "@components/dumbs/Accordion/Accordion";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 
 export function ProductDetails() {

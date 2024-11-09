@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { IoIosMenu, IoIosClose, IoIosLogOut } from "react-icons/io";
 import { Link, useLocation } from "react-router-dom";
 
-import { Button } from "@components/dumbs/custom/Button/Button";
+import { Button } from "@components/dumbs/Button/Button";
 import { UserContext } from "@contexts/userContext";
 import { mainMenu } from "@utils/appLinksVisibility";
 
