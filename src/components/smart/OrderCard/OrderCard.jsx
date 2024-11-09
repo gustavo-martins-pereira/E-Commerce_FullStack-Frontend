@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { getProductById } from "@api/services/productService";
 import { getUSFormatFromDate } from "@utils/dateTime";
 
-export function OrderCard({ date, total, status, orderId, itemsCount, orderItems }) {
+export function OrderCard({ orderId, date, total, status, itemsCount, orderItems }) {
     const PRODUCTS_TO_SHOW = 3;
 
     const statusStyles = {
@@ -18,15 +17,10 @@ export function OrderCard({ date, total, status, orderId, itemsCount, orderItems
 
     // EFFECTS
     useEffect(() => {
-        (async function getProductsNames() {
-            const names = {};
-            await Promise.all(orderItems.map(async orderItem => {
-                const product = await getProductById(orderItem.productId);
-                names[orderItem.productId] = product.name;
-            }));
+        const names = {};
+        orderItems.forEach(orderItem => names[orderItem.product.id] = orderItem.product.name);
 
-            setProductsNames(names);
-        }());
+        setProductsNames(names);
     }, []);
 
     return (
@@ -54,9 +48,9 @@ export function OrderCard({ date, total, status, orderId, itemsCount, orderItems
                     <p className="text-sm">Items: <span className="font-semibold">{itemsCount}</span></p>
 
                     <section>
-                        {orderItems.slice(0, PRODUCTS_TO_SHOW).map(orderItem => <article key={orderItem.productId} className="flex justify-between items-baseline gap-4">
+                        {orderItems.slice(0, PRODUCTS_TO_SHOW).map(orderItem => <article key={orderItem.product.id} className="flex justify-between items-baseline gap-4">
                             <p className="text-xs opacity-75">x{orderItem.quantity}</p>
-                            <h3 className="text-xl font-semibold">{productsNames[orderItem.productId]}</h3>
+                            <h3 className="text-xl font-semibold">{productsNames[orderItem.product.id]}</h3>
                         </article>)}
                         {orderItems.length > PRODUCTS_TO_SHOW && <p className="mt-2 text-end text-sm opacity-50">+{orderItems.length - PRODUCTS_TO_SHOW} more items</p>}
                     </section>

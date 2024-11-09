@@ -1,6 +1,7 @@
+import { getUserByUsername } from "./userService";
 import { api } from "@api/apiClient";
 import { withTokenRefresh } from "@api/authHelper";
-import { getUserByUsername } from "./userService";
+import { getUserByLoggedUser } from "@utils/localstorage";
 
 async function createProduct(name, description, price, image) {
     return await withTokenRefresh(async () => {
@@ -10,8 +11,7 @@ async function createProduct(name, description, price, image) {
         formData.append("price", price);
         formData.append("image", image);
 
-        const username = JSON.parse(localStorage.getItem("loggedInUser")).username;
-        const user = await getUserByUsername(username);
+        const user = await getUserByUsername(getUserByLoggedUser().username);
 
         formData.append("ownerId", user.id);
 

@@ -13,6 +13,7 @@ import { Dashboard } from "@pages/Dashboard/Dashboard";
 import { ManageProducts } from "@pages/Dashboard/ManageProducts/ManageProducts";
 import { CreateProduct } from "@pages/Dashboard/ManageProducts/CreateProduct/CreateProduct";
 import { EditProduct } from "@pages/Dashboard/ManageProducts/EditProduct/EditProduct";
+import { OrdersHistory } from "@pages/Dashboard/OrdersHistory/OrdersHistory";
 import { NotFound } from "@pages/NotFound/NotFound";
 
 import { Header } from "@components/smart/Header/Header";
@@ -65,6 +66,10 @@ export function App() {
                                 <Route index element={<ManageProducts />} />
                                 <Route path="create" element={<CreateProduct />} />
                                 <Route path="edit/:productId" element={<EditProduct />} />
+                            </Route>
+
+                            <Route path="orders-history">
+                                <Route index element={<OrdersHistory />} />
                             </Route>
                         </Route>
 

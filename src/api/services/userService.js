@@ -41,9 +41,19 @@ async function logout() {
     }
 }
 
+async function getUserById(id) {
+    try {
+        const response = await api.get(`/users/${id}`);
+
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
 async function getUserByUsername(username) {
     try {
-        const response = await api.get(`/users/${username}`);
+        const response = await api.get(`/users/usernames/${username}`);
 
         return response.data;
     } catch (error) {
@@ -56,5 +66,6 @@ export {
     login,
     refreshToken,
     logout,
+    getUserById,
     getUserByUsername,
 };

@@ -38,6 +38,10 @@ export default {
 
                 // INPUTS
                 "input-radius--checked": theme("colors.sunset-orange-50"),
+                
+                // ICONS
+                "icon-primary--hover": theme("colors.sunset-orange-25"),
+                "icon-primary--focus": theme("colors.sunset-orange-25"),
 
                 // ========== MAIN COMPONENTS ==========
                 "header": theme("colors.white"),
@@ -78,6 +82,8 @@ export default {
                 // BUTTONS
                 "btn-primary": theme("colors.white"),
                 "accordion-arrow": theme("colors.sunset-orange"),
+
+                // ICONS
                 "icon-primary": theme("colors.sunset-orange"),
 
                 // INPUTS
@@ -87,6 +93,7 @@ export default {
                 "link-primary": theme("colors.sunset-orange"),
 
                 // ========== MAIN COMPONENTS ==========
+                // TODO: CHANGE TO GENERIC ORDER STATUS
                 "order-card-pending-badge": theme("colors.korma"),
                 "order-card-shipped-badge": theme("colors.persian-blue"),
                 "order-card-delivered-badge": theme("colors.jewel"),
