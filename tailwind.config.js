@@ -49,9 +49,9 @@ export default {
                 "header": theme("colors.custom-white"),
                 "page": theme("colors.alabaster"),
                 "banner": theme("colors.fair-pink"),
-                "order-card-pending-badge": theme("colors.beeswax"),
-                "order-card-shipped-badge": theme("colors.pattens-blue"),
-                "order-card-delivered-badge": theme("colors.scandal"),
+                "status-pending": theme("colors.beeswax"),
+                "status-shipped": theme("colors.pattens-blue"),
+                "status-delivered": theme("colors.scandal"),
                 "order-details-table-header": theme("colors.sunset-orange"),
                 "order-details-table-footer": theme("colors.sunset-orange"),
                 "order-details-table-odd-line": theme("colors.concrete"),
@@ -101,10 +101,9 @@ export default {
                 "link-primary": theme("colors.sunset-orange"),
 
                 // ========== MAIN COMPONENTS ==========
-                // TODO: CHANGE TO GENERIC ORDER STATUS
-                "order-card-pending-badge": theme("colors.korma"),
-                "order-card-shipped-badge": theme("colors.persian-blue"),
-                "order-card-delivered-badge": theme("colors.jewel"),
+                "status-pending": theme("colors.korma"),
+                "status-shipped": theme("colors.persian-blue"),
+                "status-delivered": theme("colors.jewel"),
 
                 // ===== SWIPER =====
                 "breadcrumb-inactive": theme("colors.black-50"),

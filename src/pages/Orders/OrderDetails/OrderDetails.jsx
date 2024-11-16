@@ -7,9 +7,9 @@ import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 
 export function OrderDetails() {
     const statusStyles = {
-        PENDING: "text-order-card-pending-badge",
-        SHIPPED: "text-order-card-shipped-badge",
-        DELIVERED: "text-order-card-delivered-badge"
+        PENDING: "text-status-pending",
+        SHIPPED: "text-status-shipped",
+        DELIVERED: "text-status-delivered",
     };
 
     const { orderId } = useParams();

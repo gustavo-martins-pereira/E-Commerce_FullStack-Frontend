@@ -7,9 +7,9 @@ export function OrderCard({ orderId, date, total, status, itemsCount, orderItems
     const PRODUCTS_TO_SHOW = 3;
 
     const statusStyles = {
-        PENDING: "bg-order-card-pending-badge text-order-card-pending-badge",
-        SHIPPED: "bg-order-card-shipped-badge text-order-card-shipped-badge",
-        DELIVERED: "bg-order-card-delivered-badge text-order-card-delivered-badge"
+        PENDING: "bg-status-pending text-status-pending",
+        SHIPPED: "bg-status-shipped text-status-shipped",
+        DELIVERED: "bg-status-delivered text-status-delivered",
     };
 
     // STATES
