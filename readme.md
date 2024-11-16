@@ -1,4 +1,4 @@
-# Frontend do E-commerce FullStack
+# Frontend do E-Commerce FullStack
 
 Frontend desenvolvido para o E-commerce *FullStack*, utilizando **React** para criar a interface e gerenciar a interação com o usuário.
 
@@ -70,6 +70,8 @@ yarn dev
 ```
 
 Isso iniciará o projeto em modo de desenvolvimento, e o site estará disponível em http://localhost:3000.
+
+> Obs.: Quando um pedido for criado, por padrão ele irá ter o "sellerId" do primeiro produto do carrinho, isso foi feito para o usuário ter a liberdade de comprar qualquer produto de qualquer *seller* dentro do E-Commerce e outros fatores de complexidade na construção do site
 
 ## &#x1F4C1; Estrutura do Projeto
 
