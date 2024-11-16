@@ -89,7 +89,7 @@ export function Header() {
                         {user ? (
                             <div className="flex items-center self-start gap-4 text-xl lg:self-auto">
                                 <p>Hello, <strong>{user.username}</strong></p>
-                                <IoIosLogOut className="text-custom-red" size="2.5rem" style={iconsStyle} onClick={logoutUser} />
+                                <IoIosLogOut color="red" size="2.5rem" style={iconsStyle} onClick={logoutUser} />
                             </div>
                         ) : (
                             <>

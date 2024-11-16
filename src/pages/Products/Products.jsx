@@ -60,8 +60,9 @@ export function Products() {
 
     // STATES
     const [products, setProducts] = useState([]);
-    const [selectedProduct, setSelectedProduct] = useState();
-    const [quantity, setQuantity] = useState(1);
+    const [isProductsLoaded, setIsProductsLoaded] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState({});
+    const [productQuantity, setProductQuantity] = useState(1);
 
     // CONTEXTS
     const { addToCart } = useContext(CartContext);
@@ -72,6 +73,8 @@ export function Products() {
             const products = await getAllProducts();
 
             setProducts(products);
+            setIsProductsLoaded(true);
+            setSelectedProduct(products[0]);
         }());
     }, []);
 
@@ -89,7 +92,6 @@ export function Products() {
                             renderBullet: paginationRenderBulletConfig,
                         }}
                         onSlideChange={swiper => setSelectedProduct(products[swiper.activeIndex])}
-                        onInit={() => setSelectedProduct(products[0])}
                     >
                         {products.slice(0, 3).map(product => (
                             <SwiperSlide className="lg:grid lg:grid-cols-2 lg:gap-8" tag="article" key={product.id}>
@@ -113,11 +115,19 @@ export function Products() {
                     inputNumberStyles="-mt-12"
                     label="Quantity"
                     id="quantity"
-                    inputStyles="w-20 border border-input p-2 focus:outline-input"
-                    min={0}
+                    inputStyles="w-20"
+                    min={1}
+                    value={productQuantity}
+                    onChange={event => setProductQuantity(Number(event.target.value))}
                 />
 
-                <button className="btn btn-primary">Add to Cart</button>
+                <Button
+                    className="btn-primary"
+                    disabled={!isProductsLoaded}
+                    onClick={() => addToCart(selectedProduct, quantity)}
+                >
+                    Add to Cart
+                </Button>
             </section>
 
             {/* ARRIVALS */}
@@ -179,7 +189,13 @@ export function Products() {
                                     <h3 className="text-xl">{product.name}</h3>
                                     <p className="text-xl">${product.price}</p>
                                 </div>
-                                <Button className="btn-secondary w-full mt-4">Add to Cart</Button>
+                                <Button
+                                    className="btn-secondary w-full mt-4"
+                                    disabled={!isProductsLoaded}
+                                    onClick={() => addToCart(product, 1)}
+                                >
+                                    Add to Cart
+                                </Button>
                             </SwiperSlide>
                         ))}
                     </Swiper>

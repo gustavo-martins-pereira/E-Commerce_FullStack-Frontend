@@ -22,6 +22,7 @@ export default {
                 "fair-pink": "hsl(11, 100%, 95%)",
                 "negroni-50": "hsla(25, 100%, 88%, 0.5)",
                 "korma": "hsl(32, 81%, 29%)",
+                "supernova": "hsl(48, 100%, 50%)",
                 "beeswax": "hsl(55, 97%, 88%)",
                 "scandal": "hsl(141, 84%, 93%)",
                 "jewel": "hsl(143, 64%, 24%)",
@@ -58,6 +59,7 @@ export default {
                 "login-form": theme("colors.custom-white"),
                 "popup-overlay": theme("colors.ebony"),
                 "popup": theme("colors.custom-white"),
+                "badge": theme("colors.supernova"),
                 "footer": theme("colors.custom-white"),
 
                 // ===== SWIPER =====

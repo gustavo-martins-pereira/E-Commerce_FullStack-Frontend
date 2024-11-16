@@ -7,17 +7,13 @@ export function CartProvider({ children }) {
 
     function addToCart(product, quantity) {
         setCartItems(oldCartItems => {
-            const newCartItems = new Map();
-            console.log(product);
+            const newCartItems = new Map(oldCartItems);
 
             const existingProduct = oldCartItems.get(product.id);
 
-            return existingProduct ?
-                newCartItems.set(product.id, { ...existingProduct, quantity: existingProduct.quantity + quantity }) :
+            return existingProduct ? newCartItems.set(product.id, { ...existingProduct, quantity: existingProduct.quantity + quantity }) :
                 newCartItems.set(product.id, { ...product, quantity });
         });
-
-        setTimeout(() => console.log(cartItems), 2000);
     };
 
     return (

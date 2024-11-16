@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import { getProductById } from "@api/services/productService";
 import { Button } from "@components/dumbs/Button/Button";
-import Accordion from "@components/dumbs/Accordion/Accordion";
+import { Accordion } from "@components/dumbs/Accordion/Accordion";
+import { InputNumber } from "@components/dumbs/inputs/InputNumber/InputNumber";
+import { CartContext } from "@contexts/cartContext";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 
 export function ProductDetails() {
@@ -11,16 +13,18 @@ export function ProductDetails() {
 
     // STATES
     const [product, setProduct] = useState({});
+    const [productQuantity, setProductQuantity] = useState(1);
+
+    // CONTEXTS
+    const { addToCart } = useContext(CartContext);
 
     // EFFECTS
     useEffect(() => {
-        async function fetchProductById() {
+        (async function fetchProductById() {
             const product = await getProductById(productId);
 
             setProduct(product);
-        }
-
-        fetchProductById();
+        })();
     }, []);
 
     return (
@@ -33,7 +37,22 @@ export function ProductDetails() {
                     <h2>{product.name}</h2>
                     <h3>${product.price}</h3>
                     <p>{product.description}.</p>
-                    <Button className="btn-secondary">Add to Cart</Button>
+
+                    <InputNumber
+                        label="Quantity"
+                        id="quantity"
+                        inputStyles="w-20"
+                        min={1}
+                        value={productQuantity}
+                        onChange={event => setProductQuantity(Number(event.target.value))}
+                    />
+                    <Button
+                        className="btn-secondary"
+                        disabled={!product}
+                        onClick={() => addToCart(product, productQuantity)}
+                    >
+                        Add to Cart
+                    </Button>
                 </div>
             </section>
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaAngleDown } from "react-icons/fa6";
 
-export default function Accordion({ question, answer }) {
+export function Accordion({ question, answer }) {
     // STATES
     const [isOpen, setIsOpen] = useState(false);
 
