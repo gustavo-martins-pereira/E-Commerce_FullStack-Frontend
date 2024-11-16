@@ -1,6 +1,35 @@
 import { api } from "@api/apiClient";
 import { withTokenRefresh } from "@api/authHelper";
+import { getUserByLoggedUser } from "@utils/localstorage";
 import { getUserByUsername } from "./userService";
+
+async function createOrder(total, orderItems) {
+    return await withTokenRefresh(async () => {
+        const user = await getUserByUsername(getUserByLoggedUser().username);
+
+        const accessToken = localStorage.getItem("accessToken");
+        const response = await api.post("/orders/", {
+            clientId: user.id,
+            sellerId: orderItems[0].ownerId,
+            total,
+            status: "PENDING",
+            orderItems: orderItems.map(orderItem => {
+                return {
+                    quantity: orderItem.quantity,
+                    price: orderItem.price,
+                    subtotal: orderItem.price * orderItem.quantity,
+                    productId: orderItem.id,
+                };
+            }),
+        }, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+
+        return response.data;
+    });
+}
 
 async function getOrderById(orderId) {
     return await withTokenRefresh(async () => {
@@ -68,6 +97,7 @@ async function updateOrderStatusById(orderId, status) {
 }
 
 export {
+    createOrder,
     getOrderById,
     getOrdersByUsername,
     getOrdersByClientId,

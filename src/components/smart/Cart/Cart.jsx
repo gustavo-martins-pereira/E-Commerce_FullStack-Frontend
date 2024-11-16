@@ -1,18 +1,30 @@
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { IoIosClose, IoMdCart } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 
+import { createOrder } from "@api/services/orderService";
 import { CartContext } from "@contexts/cartContext";
 import { BadgeNumber } from "@components/dumbs/BadgeNumber/BadgeNumber";
 import { Button } from "@components/dumbs/Button/Button";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
+import { toastPromise } from "@utils/toast";
 
 export function Cart() {
+    const navigate = useNavigate();
+
     // STATES
     const [isCartOpen, setIsCartOpen] = useState(false);
 
     // CONTEXTS
     const { cartItems, updateCartQuantity, removeItemFromCart } = useContext(CartContext);
+
+    // HANDLES
+    async function handleOnBuy() {
+        await toastPromise(createOrder(totalPrice(), Array.from(cartItems.values())), { pending: "Buying", success: "Order placed!" });
+
+        navigate("/orders");
+    }
 
     function totalPrice() {
         return Array.from(cartItems.values())
@@ -77,6 +89,10 @@ export function Cart() {
                 <p className="text-2xl font-semibold">Total</p>
                 <p className="text-2xl font-bold">${totalPrice()}</p>
             </footer>
+
+            <div className="mt-auto">
+                <Button className="btn-primary w-full" onClick={handleOnBuy}>Buy</Button>
+            </div>
 
             {!isCartOpen && (
                 <div

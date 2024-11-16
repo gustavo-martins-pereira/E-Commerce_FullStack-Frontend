@@ -124,7 +124,7 @@ export function Products() {
                 <Button
                     className="btn-primary"
                     disabled={!isProductsLoaded}
-                    onClick={() => addToCart(selectedProduct, quantity)}
+                    onClick={() => addToCart(selectedProduct, productQuantity)}
                 >
                     Add to Cart
                 </Button>
