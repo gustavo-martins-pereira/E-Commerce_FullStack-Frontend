@@ -53,7 +53,7 @@ export function Header() {
     }
 
     return (
-        <header className="bg-header sticky top-0 border-b shadow-md p-4 z-10 lg:px-16 lg:h-header" ref={headerRef}>
+        <header className="bg-header sticky top-0 border-b shadow-md p-4 z-10 lg:px-16" ref={headerRef}>
             <nav className="flex flex-col justify-between gap-8 lg:flex-row">
                 <div className="flex justify-between items-center">
                     <Link to="/"><img src={Logo} alt="Logotype of the Shop Wave" /></Link>
@@ -89,7 +89,7 @@ export function Header() {
                         {user ? (
                             <div className="flex items-center self-start gap-4 text-xl lg:self-auto">
                                 <p>Hello, <strong>{user.username}</strong></p>
-                                <IoIosLogOut className="text-red" size="2.5rem" style={iconsStyle} onClick={logoutUser} />
+                                <IoIosLogOut className="text-custom-red" size="2.5rem" style={iconsStyle} onClick={logoutUser} />
                             </div>
                         ) : (
                             <>

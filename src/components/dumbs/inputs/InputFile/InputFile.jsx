@@ -20,9 +20,7 @@ export function InputFile({ id, fileList, register, errorMessage }) {
 
                 <p className="flex flex-col items-center justify-center gap-1 text-sm">
                     {fileList?.length ? <span className="text-link-primary">File uploaded!</span> : <>
-                        <span className="text-link-primary">
-                            Upload media <span className="text-slate-500"> or drag and drop </span>
-                        </span>
+                        <span className="text-link-primary">Upload media</span>
                         <span className="text-slate-600"> PNG, JPG or GIF</span>
                     </>}
                 </p>

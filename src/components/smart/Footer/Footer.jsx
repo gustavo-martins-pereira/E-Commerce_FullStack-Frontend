@@ -11,6 +11,7 @@ export function Footer() {
 
     return (
         <footer className="bg-footer flex flex-col justify-between items-start gap-8 border-t p-4 lg:flex-row lg:p-16">
+            {/* FIXME: In largers screens, the image overflows the "a" */}
             <Link to="/"><img className="lg:scale-150" src={Logo} alt="" /></Link>
 
             <nav>

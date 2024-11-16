@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { createProduct } from "@api/services/productService";
 import { InputText } from "@components/dumbs/inputs/InputText/InputText";
 import { TextArea } from "@components/dumbs/inputs/TextArea/TextArea";
+import { InputNumber } from "@components/dumbs/inputs/InputNumber/InputNumber";
 import { InputFile } from "@components/dumbs/inputs/InputFile/InputFile";
 import { SubmitButton } from "@components/dumbs/inputs/SubmitButton/SubmitButton";
 import { toastPromise } from "@utils/toast";
@@ -45,16 +46,15 @@ export function CreateProduct() {
                             label="Name"
                             id="name"
                             placeholder="Your product name"
-                            type="text"
                             register={register("createProductName", {
                                 required: "The name is required",
                                 minLength: {
                                     value: 5,
-                                    message: "The product name must be greater than 5",
+                                    message: "The product name must be greater than 5 characters",
                                 },
                                 maxLength: {
                                     value: 100,
-                                    message: "The product name must be less than 100",
+                                    message: "The product name must be less than 100 characters",
                                 },
                             })}
                             errorMessage={newProductErrors.createProductName?.message}
@@ -68,11 +68,11 @@ export function CreateProduct() {
                             errorMessage={newProductErrors.createProductDescription?.message}
                         />
 
-                        <InputText
+                        <InputNumber
                             label="Price"
                             id="price"
+                            step={0.01}
                             placeholder="Product price"
-                            type="number"
                             register={register("createProductPrice", {
                                 required: "The price is required",
                                 min: {

@@ -6,6 +6,11 @@
 :root {
     /*=============== TOAST ===============*/
     --toastify-toast-width: 450px;
+
+    /*=============== SCROLLBAR ===============*/
+    --scrollbar-width: 0.5rem;
+    --scrollbar-thumb-bg: theme("boxShadowColor.scrollbar-thumb");
+    --scrollbar-track-bg: theme("boxShadowColor.scrollbar-track");
 }
 
 /*=============== KEYFRAMES ===============*/
@@ -15,17 +20,6 @@
     }
     to {
         transform: scale(1);
-    }
-}
-
-@layer utilities {
-    .px-section {
-        @apply px-4 md:px-16 lg:px-20;
-    }
-
-    .popup-scale {
-        animation: scaleIn 0.3s ease-out;
-        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.2);
     }
 }
 
@@ -66,7 +60,46 @@
     }
 }
 
+/* SCROLLBAR */
+@layer utilities {
+    /* DEFAULT */
+    ::-webkit-scrollbar {
+        width: var(--scrollbar-width);
+    }
+
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 var(--scrollbar-width) var(--scrollbar-width) var(--scrollbar-track-bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        box-shadow: inset 0 0 var(--scrollbar-width) var(--scrollbar-width) var(--scrollbar-thumb-bg);
+    }
+
+    .scrollbar--left-margin {
+        --scrollbar-width: 1.5rem;
+
+        &::-webkit-scrollbar-track {
+            border-left: solid 1rem transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-left: solid 1rem transparent;
+        }
+    }
+}
+
 /*============================== GENERIC CLASSES ==============================*/
+@layer utilities {
+    .px-section {
+        @apply px-4 md:px-16 lg:px-20;
+    }
+
+    .popup-scale {
+        animation: scaleIn 0.3s ease-out;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+}
+
 @layer components {
     /* DEFAULT SECTION */
     .section {

@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import { Home } from "@pages/Home/Home";
+import { ProductsLayout } from "@pages/Products/ProductsLayout";
 import { Products } from "@pages/Products/Products";
 import { AllProducts } from "@pages/Products/AllProducts/AllProducts";
 import { ProductDetails } from "@pages/Products/AllProducts/ProductDetails/ProductDetails";
@@ -38,7 +39,7 @@ export function App() {
                     <Routes>
                         <Route path="/" element={<Home />} />
 
-                        <Route path="/products">
+                        <Route path="/products" element={<ProductsLayout />} >
                             <Route index element={<Products />} />
                             <Route path="all">
                                 <Route index element={<AllProducts />} />

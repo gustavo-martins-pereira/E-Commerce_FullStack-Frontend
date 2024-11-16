@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from "swiper/modules";
 import { FaStar, FaClock, FaHeart, FaListUl, FaDollarSign, FaChartLine } from "react-icons/fa";
 
+import { getAllProducts } from "@api/services/productService";
 import { FeaturesSection } from "@components/dumbs/FeaturesSection/FeaturesSection";
 import { Button } from "@components/dumbs/Button/Button";
-import { SubmitButton } from "@components/dumbs/inputs/SubmitButton/SubmitButton";
-import { getAllProducts } from "@api/services/productService";
+import { InputNumber } from "@components/dumbs/inputs/InputNumber/InputNumber";
+import { CartContext } from "@contexts/cartContext";
 import { paginationRenderBulletConfig } from "@utils/swiper";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 
@@ -59,16 +60,19 @@ export function Products() {
 
     // STATES
     const [products, setProducts] = useState([]);
+    const [selectedProduct, setSelectedProduct] = useState();
+    const [quantity, setQuantity] = useState(1);
+
+    // CONTEXTS
+    const { addToCart } = useContext(CartContext);
 
     // EFFECTS
     useEffect(() => {
-        async function fetchAllProducts() {
+        (async function fetchAllProducts() {
             const products = await getAllProducts();
 
             setProducts(products);
-        }
-
-        fetchAllProducts();
+        }());
     }, []);
 
     return (
@@ -84,6 +88,8 @@ export function Products() {
                             clickable: true,
                             renderBullet: paginationRenderBulletConfig,
                         }}
+                        onSlideChange={swiper => setSelectedProduct(products[swiper.activeIndex])}
+                        onInit={() => setSelectedProduct(products[0])}
                     >
                         {products.slice(0, 3).map(product => (
                             <SwiperSlide className="lg:grid lg:grid-cols-2 lg:gap-8" tag="article" key={product.id}>
@@ -103,10 +109,13 @@ export function Products() {
                     </Swiper>
                 </section>
 
-                <div className="flex flex-col gap-2 -mt-12">
-                    <label htmlFor="quantity">Quantity</label>
-                    <input className="w-20 border border-input p-2 focus:outline-input" type="number" name="quantity" id="quantity" />
-                </div>
+                <InputNumber
+                    inputNumberStyles="-mt-12"
+                    label="Quantity"
+                    id="quantity"
+                    inputStyles="w-20 border border-input p-2 focus:outline-input"
+                    min={0}
+                />
 
                 <button className="btn btn-primary">Add to Cart</button>
             </section>

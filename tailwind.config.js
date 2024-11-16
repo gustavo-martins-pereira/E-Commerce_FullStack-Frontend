@@ -9,12 +9,13 @@ export default {
             colors: {
                 // PRIMITIVE COLORS
                 "black-50": "hsla(0, 0%, 0%, 0.5)",
+                "alto": "hsl(0, 0%, 85%)",
                 "concrete": "hsl(0, 0%, 95%)",
                 "alabaster": "hsl(0, 0%, 98%)",
-                "white": "hsl(0, 0%, 100%)",
-                "red": "hsl(0, 100%, 50%)",
+                "custom-white": "hsl(0, 0%, 100%)",
+                "custom-red": "hsl(0, 100%, 50%)",
                 "cosmos": "hsl(0, 100%, 91%)",
-                "sunset-orange": "hsl(5, 100%, 62%)",
+                "sunset-orange": "hsl(5, 100%, 62%)", // MAIN COLOR
                 "sunset-orange-25": "hsla(5, 100%, 62%, 0.33)",
                 "sunset-orange-33": "hsla(5, 100%, 62%, 0.33)",
                 "sunset-orange-50": "hsla(5, 100%, 62%, 0.50)",
@@ -44,7 +45,7 @@ export default {
                 "icon-primary--focus": theme("colors.sunset-orange-25"),
 
                 // ========== MAIN COMPONENTS ==========
-                "header": theme("colors.white"),
+                "header": theme("colors.custom-white"),
                 "page": theme("colors.alabaster"),
                 "banner": theme("colors.fair-pink"),
                 "order-card-pending-badge": theme("colors.beeswax"),
@@ -53,11 +54,11 @@ export default {
                 "order-details-table-header": theme("colors.sunset-orange"),
                 "order-details-table-footer": theme("colors.sunset-orange"),
                 "order-details-table-odd-line": theme("colors.concrete"),
-                "order-details-table-even-line": theme("colors.white"),
-                "login-form": theme("colors.white"),
+                "order-details-table-even-line": theme("colors.custom-white"),
+                "login-form": theme("colors.custom-white"),
                 "popup-overlay": theme("colors.ebony"),
-                "popup": theme("colors.white"),
-                "footer": theme("colors.white"),
+                "popup": theme("colors.custom-white"),
+                "footer": theme("colors.custom-white"),
 
                 // ===== SWIPER =====
                 "swiper-pagination-bullet": theme("colors.sunset-orange"),
@@ -77,17 +78,22 @@ export default {
                 // ========== MAIN COMPONENTS ==========
                 "order-card": theme("colors.negroni-50"),
             }),
+            boxShadowColor: theme => ({
+                // SCROLLBAR
+                "scrollbar-thumb": theme("colors.sunset-orange"),
+                "scrollbar-track": theme("colors.alto"),
+            }),
             textColor: theme => ({
                 // ========== DUMB COMPONENTS ==========
                 // BUTTONS
-                "btn-primary": theme("colors.white"),
+                "btn-primary": theme("colors.custom-white"),
                 "accordion-arrow": theme("colors.sunset-orange"),
 
                 // ICONS
                 "icon-primary": theme("colors.sunset-orange"),
 
                 // INPUTS
-                "input-error": theme("colors.red"),
+                "input-error": theme("colors.custom-red"),
 
                 // LINKS
                 "link-primary": theme("colors.sunset-orange"),
