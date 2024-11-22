@@ -8,6 +8,7 @@ import { getAllProducts } from "@api/services/productService";
 import { FeaturesSection } from "@components/dumbs/FeaturesSection/FeaturesSection";
 import { Button } from "@components/dumbs/Button/Button";
 import { InputNumber } from "@components/dumbs/inputs/InputNumber/InputNumber";
+import { Skeleton } from "@components/smart/Skeleton/Skeleton";
 import { CartContext } from "@contexts/cartContext";
 import { paginationRenderBulletConfig } from "@utils/swiper";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
@@ -59,7 +60,7 @@ export function Products() {
     ];
 
     // STATES
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState(null);
     const [isProductsLoaded, setIsProductsLoaded] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState({});
     const [productQuantity, setProductQuantity] = useState(1);
@@ -83,36 +84,46 @@ export function Products() {
             {/* PRODUCTS CAROUSEL */}
             <section className="section flex flex-col gap-8">
                 <section>
-                    <Swiper
-                        className="pb-12 lg:pb-12"
-                        modules={[Pagination]}
-                        spaceBetween={"50px"}
-                        pagination={{
-                            clickable: true,
-                            renderBullet: paginationRenderBulletConfig,
-                        }}
-                        onSlideChange={swiper => setSelectedProduct(products[swiper.activeIndex])}
-                    >
-                        {products.slice(0, 3).map(product => (
-                            <SwiperSlide className="lg:grid lg:grid-cols-2 lg:gap-8" tag="article" key={product.id}>
-                                <img
-                                    className="w-full max-h-[30rem] object-contain sm:w-1/2 sm:m-auto lg:w-full"
-                                    src={bufferArrayToImageURL(product.image.data)}
-                                    alt={product.name}
-                                />
+                    {products ?
+                        <Swiper
+                            className="pb-12 lg:pb-12"
+                            modules={[Pagination]}
+                            spaceBetween={"50px"}
+                            pagination={{
+                                clickable: true,
+                                renderBullet: paginationRenderBulletConfig,
+                            }}
+                            onSlideChange={swiper => setSelectedProduct(products[swiper.activeIndex])}
+                        >
+                            {products.slice(0, 3).map(product => (
+                                <SwiperSlide className="lg:grid lg:grid-cols-2 lg:gap-8" tag="article" key={product.id}>
+                                    <img
+                                        className="w-full max-h-[30rem] object-contain sm:w-1/2 sm:m-auto lg:w-full"
+                                        src={bufferArrayToImageURL(product.image.data)}
+                                        alt={product.name}
+                                    />
 
-                                <header className="flex flex-col gap-4 mt-4">
-                                    <h2>{product.name}</h2>
-                                    <p className="text-2xl font-bold">${product.price}</p>
-                                    <p>{product.description}</p>
-                                </header>
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
+                                    <header className="flex flex-col gap-4 mt-4">
+                                        <h2>{product.name}</h2>
+                                        <p className="text-2xl font-bold">${product.price}</p>
+                                        <p>{product.description}</p>
+                                    </header>
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+                        :
+                        <Skeleton className="flex flex-col gap-2 lg:grid lg:grid-cols-2">
+                            <div className="h-[30rem]"></div>
+                            <div className="flex flex-col gap-4">
+                                <div className="h-[3rem]"></div>
+                                <div className="h-[3rem]"></div>
+                                <div className="h-2/6"></div>
+                            </div>
+                        </Skeleton>
+                    }
                 </section>
 
                 <InputNumber
-                    inputNumberStyles="-mt-12"
                     label="Quantity"
                     id="quantity"
                     inputStyles="w-20"
@@ -178,26 +189,37 @@ export function Products() {
                             },
                         }}
                     >
-                        {products.slice(0, 10).map(product => (
-                            <SwiperSlide className="h-auto flex flex-col justify-between" tag="article" key={product.id}>
-                                <img
-                                    className="max-h-80"
-                                    src={bufferArrayToImageURL(product.image.data)}
-                                    alt=""
-                                />
-                                <div className="flex justify-between items-center gap-4 mt-auto font-bold">
-                                    <h3 className="text-xl">{product.name}</h3>
-                                    <p className="text-xl">${product.price}</p>
-                                </div>
-                                <Button
-                                    className="btn-secondary w-full mt-4"
-                                    disabled={!isProductsLoaded}
-                                    onClick={() => addToCart(product, 1)}
-                                >
-                                    Add to Cart
-                                </Button>
+                        {products ?
+                            products.slice(0, 10).map(product => (
+                                <SwiperSlide className="h-auto flex flex-col justify-between" tag="article" key={product.id}>
+                                    <img
+                                        className="max-h-80"
+                                        src={bufferArrayToImageURL(product.image.data)}
+                                        alt=""
+                                    />
+                                    <div className="flex justify-between items-center gap-4 mt-auto font-bold">
+                                        <h3 className="text-xl">{product.name}</h3>
+                                        <p className="text-xl">${product.price}</p>
+                                    </div>
+                                    <Button
+                                        className="btn-secondary w-full mt-4"
+                                        disabled={!isProductsLoaded}
+                                        onClick={() => addToCart(product, 1)}
+                                    >
+                                        Add to Cart
+                                    </Button>
+                                </SwiperSlide>
+                            ))
+                            :
+                            Array.from({ length: 5 }).map((_, index) => <SwiperSlide key={index}>
+                                <Skeleton className="flex flex-col gap-2">
+                                    <div className="h-80"></div>
+                                    <div className="h-[3rem]"></div>
+                                    <div className="h-[2rem]"></div>
+                                </Skeleton>
                             </SwiperSlide>
-                        ))}
+                            )
+                        }
                     </Swiper>
                 </div>
 

@@ -14,12 +14,25 @@
 }
 
 /*=============== KEYFRAMES ===============*/
+/* GENERIC */
 @keyframes scaleIn {
     from {
         transform: scale(0);
     }
+
     to {
         transform: scale(1);
+    }
+}
+
+/* SKELETON */
+@keyframes skeleton-pulse {
+    from {
+        background-position: 200% 0;
+    }
+
+    to {
+        background-position: -200%;
     }
 }
 
@@ -90,6 +103,7 @@
 
 /*============================== GENERIC CLASSES ==============================*/
 @layer utilities {
+    /* GENERIC */
     .px-section {
         @apply px-4 md:px-16 lg:px-20;
     }
@@ -130,5 +144,19 @@
     /* ICONS */
     .icon-primary {
         @apply text-5xl text-icon-primary;
+    }
+
+    /* SKELETON */
+    .skeleton *:empty {
+        background: linear-gradient(
+            to right,
+            #d1d5db 0%,
+            #e5e7eb 20%,
+            #d1d5db 40%,
+            #e5e7eb 60%,
+            #d1d5db 100%
+        );
+        background-size: 200% 100%;
+        animation: skeleton-pulse 1.5s linear infinite;
     }
 }

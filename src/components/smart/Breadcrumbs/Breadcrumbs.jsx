@@ -6,6 +6,7 @@ import { useLocation, Link } from "react-router-dom";
 function Breadcrumb() {
     const location = useLocation();
 
+    // FIXME: Verify unknown paths (/dashboard/edit)
     const breadcrumbs = location.pathname
         .split("/")
         .filter((path) => path) // Remove empty paths
