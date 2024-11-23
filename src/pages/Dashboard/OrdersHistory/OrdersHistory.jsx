@@ -4,13 +4,14 @@ import { getOrdersBySellerId, updateOrderStatusById } from "@api/services/orderS
 import { getUserById, getUserByUsername } from "@api/services/userService";
 import { Modal } from "@components/dumbs/Modal/Modal";
 import { Button } from "@components/dumbs/Button/Button";
+import { Skeleton } from "@components/smart/Skeleton/Skeleton";
 import { getUserByLoggedUser } from "@utils/localstorage";
 import { getUSFormatFromDate } from "@utils/dateTime";
 import { toastPromise } from "@utils/toast";
 
 export function OrdersHistory() {
     // STATES
-    const [orders, setOrders] = useState([]);
+    const [orders, setOrders] = useState();
     const [clients, setClients] = useState({});
     const [selectedOrder, setSelectedOrder] = useState(null);
 
@@ -60,31 +61,41 @@ export function OrdersHistory() {
                     </thead>
 
                     <tbody>
-                        {orders.map(order => <tr key={order.id}>
-                            <td className="px-4 py-2">{order.id}</td>
-                            <td className="px-4 py-2">{clients[order.id]?.username}</td>
-                            <td className="px-4 py-2">{getUSFormatFromDate(new Date(order.createdAt))}</td>
-                            <td className="px-4 py-2">${order.total}</td>
-                            <th scope="col" className="px-4 py-2">
-                                <select
-                                    className="p-2 border"
-                                    value={order.status}
-                                    onChange={(e) => handleStatusChange(order.id, e.target.value)}
-                                >
-                                    <option value="PENDING">PENDING</option>
-                                    <option value="SHIPPED">SHIPPED</option>
-                                    <option value="DELIVERED">DELIVERED</option>
-                                </select>
-                            </th>
-                            <td className="px-4 py-2">
-                                <Button
-                                    className="btn-primary rounded p-1 text-sm"
-                                    onClick={() => handleShowOrderDetails(order)}
-                                >
-                                    Show Details
-                                </Button>
-                            </td>
-                        </tr>)}
+                        {orders ?
+                            orders.map(order => <tr key={order.id}>
+                                <td className="px-4 py-2">{order.id}</td>
+                                <td className="px-4 py-2">{clients[order.id]?.username}</td>
+                                <td className="px-4 py-2">{getUSFormatFromDate(new Date(order.createdAt))}</td>
+                                <td className="px-4 py-2">${order.total}</td>
+                                <th scope="col" className="px-4 py-2">
+                                    <select
+                                        className="p-2 border"
+                                        value={order.status}
+                                        onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                                    >
+                                        <option value="PENDING">PENDING</option>
+                                        <option value="SHIPPED">SHIPPED</option>
+                                        <option value="DELIVERED">DELIVERED</option>
+                                    </select>
+                                </th>
+                                <td className="px-4 py-2">
+                                    <Button
+                                        className="btn-primary rounded p-1 text-sm"
+                                        onClick={() => handleShowOrderDetails(order)}
+                                    >
+                                        Show Details
+                                    </Button>
+                                </td>
+                            </tr>)
+                            :
+                            Array.from({ length: 3 }).map((_, index) => <tr key={index}>
+                                <td colSpan="999">
+                                    <Skeleton>
+                                        <div className="h-20"></div>
+                                    </Skeleton>
+                                </td>
+                            </tr>)
+                        }
                     </tbody>
                 </table>
             </section>
