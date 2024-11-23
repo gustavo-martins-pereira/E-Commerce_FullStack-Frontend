@@ -6,14 +6,29 @@ import { useLocation, Link } from "react-router-dom";
 function Breadcrumb() {
     const location = useLocation();
 
-    // FIXME: Verify unknown paths (/dashboard/edit)
+    const blacklist = [
+        {
+            invalidPath: "/dashboard/manage-products/edit",
+            replacement: "/dashboard/manage-products",
+        },
+    ];
+
     const breadcrumbs = location.pathname
         .split("/")
         .filter((path) => path) // Remove empty paths
-        .map((path, index, array) => ({
-            name: path.charAt(0).toUpperCase() + path.replace("-", " ").slice(1),
-            link: `/${array.slice(0, index + 1).join("/")}`
-        }));
+        .map((path, index, array) => {
+            let fullPath = `/${array.slice(0, index + 1).join("/")}`;
+
+            return {
+                name: path.charAt(0).toUpperCase() + path.replace("-", " ").slice(1),
+                link: fullPath,
+            };
+        })
+        .filter(path => {
+            for(let item of blacklist) {
+                return path.link !== item.invalidPath;
+            }
+        });
 
     return (
         <nav className="p-6 px-section overflow-auto" aria-label="Breadcrumb">
