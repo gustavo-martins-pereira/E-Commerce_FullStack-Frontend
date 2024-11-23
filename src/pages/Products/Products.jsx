@@ -8,7 +8,7 @@ import { getAllProducts } from "@api/services/productService";
 import { FeaturesSection } from "@components/dumbs/FeaturesSection/FeaturesSection";
 import { Button } from "@components/dumbs/Button/Button";
 import { InputNumber } from "@components/dumbs/inputs/InputNumber/InputNumber";
-import { Skeleton } from "@components/smart/Skeleton/Skeleton";
+import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
 import { CartContext } from "@contexts/cartContext";
 import { paginationRenderBulletConfig } from "@utils/swiper";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";

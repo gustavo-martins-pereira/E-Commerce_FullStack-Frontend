@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { getOrderById } from "@api/services/orderService";
-import { Skeleton } from "@components/smart/Skeleton/Skeleton";
+import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
 import { getUSFormatFromDate } from "@utils/dateTime";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 

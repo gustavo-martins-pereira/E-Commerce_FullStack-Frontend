@@ -4,7 +4,7 @@ import { getUserByUsername } from "@api/services/userService";
 import { getOrdersByClientId } from "@api/services/orderService";
 import { Button } from "@components/dumbs/Button/Button";
 import { OrderCard } from "@components/smart/OrderCard/OrderCard";
-import { Skeleton } from "@components/smart/Skeleton/Skeleton";
+import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
 import { getUserByLoggedUser } from "@utils/localstorage";
 
 export function Orders() {

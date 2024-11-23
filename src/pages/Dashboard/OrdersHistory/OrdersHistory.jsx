@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 
 import { getOrdersBySellerId, updateOrderStatusById } from "@api/services/orderService";
 import { getUserById, getUserByUsername } from "@api/services/userService";
-import { Modal } from "@components/dumbs/Modal/Modal";
 import { Button } from "@components/dumbs/Button/Button";
-import { Skeleton } from "@components/smart/Skeleton/Skeleton";
+import { Modal } from "@components/smart/Modal/Modal";
+import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
 import { getUserByLoggedUser } from "@utils/localstorage";
 import { getUSFormatFromDate } from "@utils/dateTime";
 import { toastPromise } from "@utils/toast";

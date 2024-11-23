@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { getUserByUsername } from "@api/services/userService";
 import { getProductsBySellerId, deleteProductById } from "@api/services/productService";
 import { Button } from "@components/dumbs/Button/Button";
-import { Skeleton } from "@components/smart/Skeleton/Skeleton";
+import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 import { toastPromise } from "@utils/toast";
 

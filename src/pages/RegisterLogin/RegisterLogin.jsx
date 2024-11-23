@@ -8,7 +8,7 @@ import { register, login as loginApi } from "@api/services/userService";
 import { InputText } from "@components/dumbs/inputs/InputText/InputText";
 import { InputRadius } from "@components/dumbs/inputs/InputRadius/InputRadius";
 import { SubmitButton } from "@components/dumbs/inputs/SubmitButton/SubmitButton";
-import { Skeleton } from "@components/smart/Skeleton/Skeleton";
+import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
 import { UserContext } from "@contexts/userContext";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 import { toastError, toastSuccess, toastInfo, toastPromise } from "@utils/toast";

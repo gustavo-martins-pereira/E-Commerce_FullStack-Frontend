@@ -5,7 +5,7 @@ import { getProductById } from "@api/services/productService";
 import { Button } from "@components/dumbs/Button/Button";
 import { Accordion } from "@components/dumbs/Accordion/Accordion";
 import { InputNumber } from "@components/dumbs/inputs/InputNumber/InputNumber";
-import { Skeleton } from "@components/smart/Skeleton/Skeleton";
+import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
 import { CartContext } from "@contexts/cartContext";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 

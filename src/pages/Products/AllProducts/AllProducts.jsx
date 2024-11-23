@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { getAllProducts } from "@api/services/productService";
 import { Button } from "@components/dumbs/Button/Button";
-import { Skeleton } from "@components/smart/Skeleton/Skeleton";
+import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 import { UserContext } from "@contexts/userContext";
 
