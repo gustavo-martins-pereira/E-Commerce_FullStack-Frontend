@@ -203,7 +203,6 @@ export function Products() {
                                     </div>
                                     <Button
                                         className="btn-secondary w-full mt-4"
-                                        disabled={!isProductsLoaded}
                                         onClick={() => addToCart(product, 1)}
                                     >
                                         Add to Cart

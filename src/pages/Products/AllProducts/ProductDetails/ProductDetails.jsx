@@ -5,6 +5,7 @@ import { getProductById } from "@api/services/productService";
 import { Button } from "@components/dumbs/Button/Button";
 import { Accordion } from "@components/dumbs/Accordion/Accordion";
 import { InputNumber } from "@components/dumbs/inputs/InputNumber/InputNumber";
+import { Skeleton } from "@components/smart/Skeleton/Skeleton";
 import { CartContext } from "@contexts/cartContext";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 
@@ -12,7 +13,7 @@ export function ProductDetails() {
     const { productId } = useParams();
 
     // STATES
-    const [product, setProduct] = useState({});
+    const [product, setProduct] = useState();
     const [productQuantity, setProductQuantity] = useState(1);
 
     // CONTEXTS
@@ -31,12 +32,29 @@ export function ProductDetails() {
         <main>
             {/* PRODUCT ITSELF */}
             <section className="section flex flex-col gap-8 lg:flex-row-reverse">
-                <img className="w-1/2 m-auto lg:m-0 lg:ml-auto" src={bufferArrayToImageURL(product.image?.data)} alt="" />
+                {product ?
+                    <img className="w-1/2 m-auto lg:m-0 lg:ml-auto" src={bufferArrayToImageURL(product.image.data)} alt="" />
+                    :
+                    <Skeleton className="w-1/2 m-auto lg:m-0 lg:ml-auto">
+                        <div className="h-[35rem]"></div>
+                    </Skeleton>
+                }
 
                 <div className="flex flex-col gap-4 flex-grow">
-                    <h2>{product.name}</h2>
-                    <h3>${product.price}</h3>
-                    <p>{product.description}.</p>
+                    {product ?
+                        <>
+                            <h2>{product.name}</h2>
+                            <h3>${product.price}</h3>
+                            <p>{product.description}</p>
+                        </>
+                        :
+                        <Skeleton className="flex flex-col gap-2">
+                            <div className="h-12"></div>
+                            <div className="h-12"></div>
+                            <div className="h-40"></div>
+                        </Skeleton>
+                    }
+
 
                     <InputNumber
                         label="Quantity"
