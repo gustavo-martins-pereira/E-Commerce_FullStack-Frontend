@@ -8,6 +8,7 @@ import { register, login as loginApi } from "@api/services/userService";
 import { InputText } from "@components/dumbs/inputs/InputText/InputText";
 import { InputRadius } from "@components/dumbs/inputs/InputRadius/InputRadius";
 import { SubmitButton } from "@components/dumbs/inputs/SubmitButton/SubmitButton";
+import { Skeleton } from "@components/smart/Skeleton/Skeleton";
 import { UserContext } from "@contexts/userContext";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 import { toastError, toastSuccess, toastInfo, toastPromise } from "@utils/toast";
@@ -55,7 +56,7 @@ export function RegisterLogin() {
     const { login } = useContext(UserContext);
 
     // STATES
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState();
 
     // REFS
     const swiperRef = useRef(null);
@@ -133,24 +134,33 @@ export function RegisterLogin() {
                 </header>
 
                 <article>
-                    <Swiper
-                        {...swiperGalleryConfig()}
-                    >
-                        {products.slice(0, 20).map(product => <SwiperSlide key={product.id}><img className="w-full max-h-80 object-fill" src={bufferArrayToImageURL(product.image.data)} alt="" /></SwiperSlide>)}
-                    </Swiper>
+                    {products ?
+                        <>
+                            <Swiper
+                                {...swiperGalleryConfig()}
+                            >
+                                {products.slice(0, 20).map(product => <SwiperSlide key={product.id}><img className="w-full max-h-80 object-fill" src={bufferArrayToImageURL(product.image.data)} alt="" /></SwiperSlide>)}
+                            </Swiper>
 
-                    <Swiper
-                        {...swiperGalleryConfig({
-                            className: "swiper-gallery mt-2",
-                            autoplay: {
-                                delay: 0,
-                                disableOnInteraction: false,
-                                reverseDirection: true,
-                            },
-                        })}
-                    >
-                        {products.slice(-20).map(product => <SwiperSlide key={product.id}><img className="w-full max-h-80 object-fill" src={bufferArrayToImageURL(product.image.data)} alt="" /></SwiperSlide>)}
-                    </Swiper>
+                            <Swiper
+                                {...swiperGalleryConfig({
+                                    className: "swiper-gallery mt-2",
+                                    autoplay: {
+                                        delay: 0,
+                                        disableOnInteraction: false,
+                                        reverseDirection: true,
+                                    },
+                                })}
+                            >
+                                {products.slice(-20).map(product => <SwiperSlide key={product.id}><img className="w-full max-h-80 object-fill" src={bufferArrayToImageURL(product.image.data)} alt="" /></SwiperSlide>)}
+                            </Swiper>
+                        </>
+                        :
+                        <Skeleton className="flex flex-col gap-2">
+                            <div className="h-60"></div>
+                            <div className="h-60"></div>
+                        </Skeleton>
+                    }
                 </article>
             </section>
 

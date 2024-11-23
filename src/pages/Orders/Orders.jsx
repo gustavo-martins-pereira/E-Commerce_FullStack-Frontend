@@ -2,13 +2,16 @@ import { useEffect, useState } from "react";
 
 import { getUserByUsername } from "@api/services/userService";
 import { getOrdersByClientId } from "@api/services/orderService";
-import { OrderCard } from "@components/smart/OrderCard/OrderCard";
 import { Button } from "@components/dumbs/Button/Button";
+import { OrderCard } from "@components/smart/OrderCard/OrderCard";
+import { Skeleton } from "@components/smart/Skeleton/Skeleton";
 import { getUserByLoggedUser } from "@utils/localstorage";
 
 export function Orders() {
+    const INITIAL_ORDERS_TO_SHOW = 3;
+
     // STATES
-    const [ordersData, setOrdersData] = useState([]);
+    const [ordersData, setOrdersData] = useState();
     const [ordersToShow, setOrdersToShow] = useState([]);
     const [isAllOrders, setIsAllOrders] = useState(false);
 
@@ -19,7 +22,7 @@ export function Orders() {
             const orders = await getOrdersByClientId(user.id);
 
             setOrdersData(orders);
-            setOrdersToShow(orders.slice(0, 3));
+            setOrdersToShow(orders.slice(0, INITIAL_ORDERS_TO_SHOW));
         })();
     }, []);
 
@@ -38,19 +41,26 @@ export function Orders() {
 
             {/* ORDERS */}
             <section className="max-w-xl m-auto flex flex-col gap-6">
-                {ordersToShow.map(order => {
-                    return <OrderCard
-                        key={order.id}
-                        orderId={order.id}
-                        date={order.createdAt}
-                        total={order.total}
-                        status={order.status}
-                        itemsCount={order.orderItems.length}
-                        orderItems={order.orderItems}
-                    />
-                })}
+                {ordersData ?
+                    ordersToShow.map(order => {
+                        return <OrderCard
+                            key={order.id}
+                            orderId={order.id}
+                            date={order.createdAt}
+                            total={order.total}
+                            status={order.status}
+                            itemsCount={order.orderItems.length}
+                            orderItems={order.orderItems}
+                        />
+                    })
+                    :
+                    <Skeleton className="flex flex-col gap-2">
+                        {Array.from({ length: INITIAL_ORDERS_TO_SHOW }).map((_, index) => <div className="h-40" key={index}></div>)}
+                    </Skeleton>
+                }
+                
 
-                {ordersData.length > 3 && !isAllOrders && <Button className="btn-primary" onClick={handleShowAllOrders}>
+                {ordersData?.length > INITIAL_ORDERS_TO_SHOW && !isAllOrders && <Button className="btn-primary" onClick={handleShowAllOrders}>
                     View All
                 </Button>}
             </section>

@@ -4,12 +4,13 @@ import { Link } from "react-router-dom";
 import { getUserByUsername } from "@api/services/userService";
 import { getProductsBySellerId, deleteProductById } from "@api/services/productService";
 import { Button } from "@components/dumbs/Button/Button";
+import { Skeleton } from "@components/smart/Skeleton/Skeleton";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 import { toastPromise } from "@utils/toast";
 
 export function ManageProducts() {
     // STATES
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState();
     const [showConfirmDelete, setShowConfirmDelete] = useState(false);
     const [productToDelete, setProductToDelete] = useState(null);
 
@@ -58,22 +59,43 @@ export function ManageProducts() {
                 <Link className="self-end" to="/dashboard/manage-products/create"><Button className="btn-primary">Create Product</Button></Link>
 
                 <div className="flex flex-col gap-8 xl:gap-2">
-                    {products.map(product => (
-                        <article key={product.id} className="flex flex-col gap-4 xl:flex-row xl:border xl:p-4">
-                            <img className="max-h-40 object-contain md:max-h-80" src={bufferArrayToImageURL(product.image.data)} alt="" />
+                    {products ?
+                        products.map(product => (
+                            <article key={product.id} className="flex flex-col gap-4 xl:flex-row xl:border xl:p-4">
+                                <img className="max-h-40 object-contain md:max-h-80" src={bufferArrayToImageURL(product.image.data)} alt="" />
 
-                            <div className="flex flex-col gap-4">
-                                <h3>{product.name}</h3>
-                                <p>{product.description}</p>
-                                <p className="text-xl font-bold">${product.price}</p>
+                                <div className="flex flex-col gap-4">
+                                    <h3>{product.name}</h3>
+                                    <p>{product.description}</p>
+                                    <p className="text-xl font-bold">${product.price}</p>
+
+                                    <div className="flex gap-4">
+                                        <Link to={`/dashboard/manage-products/edit/${product.id}`}><Button className="btn btn-primary">Edit</Button></Link>
+                                        <Button className="btn btn-secondary" onClick={() => handleOpenDeletePopup(product.id)}>Delete</Button>
+                                    </div>
+                                </div>
+                            </article>
+                        ))
+                        :
+                        Array.from({ length: 3 }).map((_, index) => <Skeleton className="flex flex-col gap-4 border p-4 xl:flex-row xl:p-4" key={index}>
+                            <div>
+                                <div className="w-40 h-60 m-auto"></div>
+                            </div>
+
+                            <div className="flex flex-col gap-8 xl:w-full">
+                                <div className="flex flex-col gap-2">
+                                    <div className="w-1/2 h-8"></div>
+                                    <div className="h-20"></div>
+                                    <div className="w-1/4 h-8"></div>
+                                </div>
 
                                 <div className="flex gap-4">
-                                    <Link to={`/dashboard/manage-products/edit/${product.id}`}><Button className="btn btn-primary">Edit</Button></Link>
-                                    <Button className="btn btn-secondary" onClick={() => handleOpenDeletePopup(product.id)}>Delete</Button>
+                                    <div className="w-20 h-10"></div>
+                                    <div className="w-20 h-10"></div>
                                 </div>
                             </div>
-                        </article>
-                    ))}
+                        </Skeleton>)
+                    }
                 </div>
             </section>
 

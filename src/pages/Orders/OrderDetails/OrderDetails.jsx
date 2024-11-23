@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { getOrderById } from "@api/services/orderService";
+import { Skeleton } from "@components/smart/Skeleton/Skeleton";
 import { getUSFormatFromDate } from "@utils/dateTime";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 
@@ -16,7 +17,7 @@ export function OrderDetails() {
 
     // STATES
     const [colSpan, setColSpan] = useState(undefined);
-    const [order, setOrder] = useState({});
+    const [order, setOrder] = useState();
 
     // EFFECTS
     useEffect(() => {
@@ -65,23 +66,31 @@ export function OrderDetails() {
                     </thead>
 
                     <tbody>
-                        {order.orderItems?.map(orderItem => {
-                            return <tr className="odd:bg-order-details-table-odd-line even:bg-order-details-table-even-line border-b border-gray-300" key={orderItem.product.id}>
-                                <td className="px-4 py-2 hidden md:table-cell">
-                                    <img src={bufferArrayToImageURL(orderItem.product.image.data)} alt="Product 1" className="w-16 h-16 object-cover" />
+                        {order ?
+                            order.orderItems.map(orderItem => {
+                                return <tr className="odd:bg-order-details-table-odd-line even:bg-order-details-table-even-line border-b border-gray-300" key={orderItem.product.id}>
+                                    <td className="px-4 py-2 hidden md:table-cell">
+                                        <img src={bufferArrayToImageURL(orderItem.product.image.data)} alt="Product 1" className="w-16 h-16 object-cover" />
+                                    </td>
+                                    <td className="px-4 py-2">{orderItem.product.name}</td>
+                                    <td className="px-4 py-2 text-center">${orderItem.product.price}</td>
+                                    <td className="px-4 py-2 text-center">{orderItem.quantity}</td>
+                                    <td className="px-4 py-2">${(orderItem.quantity * orderItem.product.price).toFixed(2)}</td>
+                                </tr>
+                            })
+                            :
+                            Array.from({ length: 3 }).map((_, index) => <tr key={index}>
+                                <td colSpan="999">
+                                    <Skeleton><div className="h-20"></div></Skeleton>
                                 </td>
-                                <td className="px-4 py-2">{orderItem.product.name}</td>
-                                <td className="px-4 py-2 text-center">${orderItem.product.price}</td>
-                                <td className="px-4 py-2 text-center">{orderItem.quantity}</td>
-                                <td className="px-4 py-2">${(orderItem.quantity * orderItem.product.price).toFixed(2)}</td>
-                            </tr>
-                        })}
+                            </tr>)
+                        }
                     </tbody>
 
                     <tfoot className="bg-order-details-table-footer text-white font-semibold">
                         <tr>
                             <th className="px-4 py-2 text-left" scope="row" colSpan={colSpan}>Total</th>
-                            <td className="px-4 py-2 md:col-span-1">${order.total}</td>
+                            <td className="px-4 py-2 md:col-span-1">${order ? order.total : " ---"}</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -92,9 +101,16 @@ export function OrderDetails() {
                 <h3 className="font-semibold text-2xl">Order Information</h3>
 
                 <div className="mt-2">
-                    <p><span className="font-medium">Order Number: </span>#{order.id}</p>
-                    <p><span className="font-medium">Order Date: </span>{getUSFormatFromDate(new Date(order.createdAt))}</p>
-                    <p><span className="font-medium">Order Status: </span><span className={statusStyles[order.status]}>{order.status}</span></p>
+                    <p><span className="font-medium">Order Number: </span>#{order ? order.id : "---"}</p>
+                    <p><span className="font-medium">Order Date: </span>{order ? getUSFormatFromDate(new Date(order.createdAt)) : "---"}</p>
+                    <p>
+                        <span className="font-medium">Order Status: </span>
+                        {order ?
+                            <span className={statusStyles[order.status]}>{order.status}</span>
+                            :
+                            <span>---</span>
+                        }
+                    </p>
                 </div>
             </footer>
         </main>
