@@ -1,9 +1,10 @@
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoIosClose, IoMdCart } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 
 import { createOrder } from "@api/services/orderService";
+import { UserContext } from "@contexts/userContext";
 import { CartContext } from "@contexts/cartContext";
 import { BadgeNumber } from "@components/dumbs/BadgeNumber/BadgeNumber";
 import { Button } from "@components/dumbs/Button/Button";
@@ -17,6 +18,7 @@ export function Cart() {
     const [isCartOpen, setIsCartOpen] = useState(false);
 
     // CONTEXTS
+    const { user } = useContext(UserContext);
     const { cartItems, updateCartQuantity, removeItemFromCart } = useContext(CartContext);
 
     // HANDLES
@@ -76,7 +78,7 @@ export function Cart() {
                                 </div>
 
                                 <Button className="bg-red-500 hover:bg-red-600 mt-2 rounded p-2 cursor-pointer" onClick={() => removeItemFromCart(cartItem.id)}>
-                                    <MdDelete className="text-red-100" size="1rem"  />
+                                    <MdDelete className="text-red-100" size="1rem" />
                                 </Button>
                             </div>
                         </div>
@@ -91,7 +93,13 @@ export function Cart() {
             </footer>
 
             <div className="mt-auto">
-                <Button className="btn-primary w-full" onClick={handleOnBuy}>Buy</Button>
+                {user ?
+                    <Button className="btn-primary w-full" onClick={handleOnBuy}>Buy</Button>
+                    :
+                    <Link to="/register-login">
+                        <Button className="btn-primary w-full">Login First to Buy</Button>
+                    </Link>
+                }
             </div>
 
             {!isCartOpen && (
