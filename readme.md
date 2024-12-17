@@ -61,7 +61,21 @@ npm install
 yarn install
 ```
 
-4. Inicie o servidor de desenvolvimento:
+4. Configure os .env necessários:
+
+***.env***
+```env
+VITE_API_URL=http://localhost:3000
+```
+
+> Caso você queira fazer deploy e utilizar outra URL de backend, configure este .env também
+
+***.env.production***
+```env
+VITE_API_URL=http://localhost:3000
+```
+
+5. Inicie o servidor de desenvolvimento:
 
 ```bash
 npm run dev
@@ -69,9 +83,7 @@ npm run dev
 yarn dev
 ```
 
-Isso iniciará o projeto em modo de desenvolvimento, e o site estará disponível em http://localhost:3000.
-
-> Obs.: Quando um pedido for criado, por padrão ele irá ter o "sellerId" do primeiro produto do carrinho, isso foi feito para o usuário ter a liberdade de comprar qualquer produto de qualquer *seller* dentro do E-Commerce e outros fatores de complexidade na construção do site
+Isso iniciará o projeto em modo de desenvolvimento, e o site estará disponível em http://localhost:5173/.
 
 ## &#x1F4C1; Estrutura do Projeto
 
