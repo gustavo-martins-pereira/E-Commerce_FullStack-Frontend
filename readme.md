@@ -94,6 +94,7 @@ Isso iniciará o projeto em modo de desenvolvimento, e o site estará disponíve
 ├── /assets
 ├── /components
 │   ├── /component
+├── /contexts
 ├── /pages
 │   ├── /page
 ├── /utils
