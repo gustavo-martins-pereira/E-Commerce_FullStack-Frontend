@@ -99,8 +99,13 @@ Isso iniciará o projeto em modo de desenvolvimento, e o site estará disponíve
 │   ├── /page
 ├── /utils
 .gitignore
+index.html
+jsconfig.json
 package-lock.json
 package.json
+postcss.config.js
 readme.md
+tailwind.config.js
+vercel.json
 vite.config.js
 ```
