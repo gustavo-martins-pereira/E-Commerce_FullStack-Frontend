@@ -1,12 +1,8 @@
-interface BufferArrayInput {
-    buffer: ArrayBuffer;
-}
+export function bufferArrayToImageURL(bufferArray: ArrayBuffer): string {
+    const arrayBuffer = bufferArray;
+    const buffer = new Uint8Array(arrayBuffer);
 
-export function bufferArrayToImageURL(bufferArray: BufferArrayInput): string {
-    const arrayBuffer: ArrayBuffer = bufferArray.buffer;
-    const buffer: Uint8Array = new Uint8Array(arrayBuffer);
-
-    const image: Blob = new Blob([buffer], { type: "image/jpeg" });
+    const image = new Blob([buffer], { type: "image/jpeg" });
 
     return URL.createObjectURL(image);
 }

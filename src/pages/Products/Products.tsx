@@ -19,7 +19,7 @@ interface Product {
     description: string;
     price: number;
     image: {
-        data: Buffer;
+        data: ArrayBuffer;
     };
 }
 
