@@ -1,6 +1,32 @@
-import { toast, Bounce } from "react-toastify";
+import { toast, Bounce, ToastPosition, Theme, ToastOptions } from "react-toastify";
+import { ReactNode } from "react";
 
-const toastProperties = {
+interface ToastProperties {
+    autoClose: number;
+    closeOnClick: boolean;
+    draggable: boolean;
+    hideProgressBar: boolean;
+    pauseOnHover: boolean;
+    position: ToastPosition;
+    progress: undefined;
+    theme: Theme;
+    transition: typeof Bounce;
+}
+
+interface PromiseMessages {
+    pending: string;
+    success: string;
+}
+
+interface ErrorResponse {
+    response: {
+        data: {
+            error: string;
+        };
+    };
+}
+
+const toastProperties: ToastProperties = {
     autoClose: 5000,
     closeOnClick: true,
     draggable: true,
@@ -10,45 +36,52 @@ const toastProperties = {
     progress: undefined,
     theme: "colored",
     transition: Bounce,
-}
+};
 
-function mergeProperties(customProperties = {}) {
+function mergeProperties(customProperties: Partial<ToastProperties> = {}): ToastProperties {
     return { ...toastProperties, ...customProperties };
 }
 
-function toastError(content, customProperties) {
+function toastError(content: ReactNode, customProperties?: Partial<ToastProperties>): void {
     toast.error(content, mergeProperties(customProperties));
 }
 
-function toastSuccess(content, customProperties) {
+function toastSuccess(content: ReactNode, customProperties?: Partial<ToastProperties>): void {
     toast.success(content, mergeProperties(customProperties));
 }
 
-function toastInfo(content, customProperties) {
+function toastInfo(content: ReactNode, customProperties?: Partial<ToastProperties>): void {
     toast.info(content, mergeProperties(customProperties));
 }
 
-function toastWarning(content, customProperties) {
+function toastWarning(content: ReactNode, customProperties?: Partial<ToastProperties>): void {
     toast.warning(content, mergeProperties(customProperties));
 }
 
-async function toastPromise(promise, promiseMessages, customProperties) {
+async function toastPromise<T>(
+    promise: Promise<T>,
+    promiseMessages: PromiseMessages,
+    customProperties?: Partial<ToastProperties>
+): Promise<T> {
     return await toast.promise(
         promise,
         {
             pending: {
-                render() {
+                render(): string {
                     return promiseMessages.pending;
                 }
             },
             success: {
-                render() {
+                render(): string {
                     return promiseMessages.success;
                 }
             },
             error: {
-                render({ data }) {
-                    return data.response.data.error;
+                render({ data }: { data: any }): string {
+                    if (data?.response?.data?.error) {
+                        return data.response.data.error;
+                    }
+                    return 'An error occurred';
                 }
             },
         },
@@ -62,4 +95,6 @@ export {
     toastInfo,
     toastWarning,
     toastPromise,
+    type ToastProperties,
+    type PromiseMessages
 };

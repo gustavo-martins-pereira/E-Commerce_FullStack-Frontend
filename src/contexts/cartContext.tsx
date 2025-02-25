@@ -1,14 +1,35 @@
-import { createContext, useState } from "react";
+import { createContext, useState, ReactNode } from "react";
 
-export const CartContext = createContext(null);
+interface CartItem {
+    id: number;
+    name: string;
+    price: number;
+    quantity: number;
+    image: {
+        data: Buffer;
+    };
+}
 
-export function CartProvider({ children }) {
-    const [cartItems, setCartItems] = useState(new Map());
+interface CartContextType {
+    cartItems: Map<number, CartItem>;
 
-    function addToCart(product, quantity) {
+    addToCart: (product: CartItem, quantity: number) => void;
+    updateCartQuantity: (productId: number, newQuantity: number) => void;
+    removeItemFromCart: (productId: number) => void;
+}
+
+interface CartProviderProps {
+    children: ReactNode;
+}
+
+export const CartContext = createContext<CartContextType | null>(null);
+
+export function CartProvider({ children }: CartProviderProps): JSX.Element {
+    const [cartItems, setCartItems] = useState<Map<number, CartItem>>(new Map());
+
+    function addToCart(product: CartItem, quantity: number): void {
         setCartItems(oldCartItems => {
             const newCartItems = new Map(oldCartItems);
-
             const existingProduct = oldCartItems.get(product.id);
 
             return existingProduct
@@ -17,7 +38,7 @@ export function CartProvider({ children }) {
         });
     }
 
-    function updateCartQuantity(productId, newQuantity) {
+    function updateCartQuantity(productId: number, newQuantity: number): void {
         setCartItems(oldCartItems => {
             const newCartItems = new Map(oldCartItems);
 
@@ -34,7 +55,7 @@ export function CartProvider({ children }) {
         });
     }
 
-    function removeItemFromCart(productId) {
+    function removeItemFromCart(productId: number): void {
         setCartItems(oldCartItems => {
             const newCartItems = new Map(oldCartItems);
             newCartItems.delete(productId);

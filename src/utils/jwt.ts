@@ -1,11 +1,24 @@
 import { jwtDecode } from "jwt-decode";
 
-function getUserByToken(token) {
-    const { username, role } = jwtDecode(token);
+interface JwtPayload {
+    username: string;
+    role: string;
+    [key: string]: any;
+}
 
-    return {username, role};
+interface UserFromToken {
+    username: string;
+    role: string;
+}
+
+function getUserByToken(token: string): UserFromToken {
+    const { username, role } = jwtDecode<JwtPayload>(token);
+
+    return { username, role };
 }
 
 export {
     getUserByToken,
+    type UserFromToken,
+    type JwtPayload
 };

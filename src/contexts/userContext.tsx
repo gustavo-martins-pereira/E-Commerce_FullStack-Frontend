@@ -1,64 +1,89 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, ReactNode } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 
 import { logout } from "@api/services/userService";
 import { Button } from "@components/dumbs/Button/Button";
 import { toastWarning, toastPromise } from "@utils/toast";
 
-export const UserContext = createContext(null);
+interface User {
+    id: number;
+    username: string;
+    email: string;
+    role: string;
+}
 
-const LogoutMessage = ({ closeToast }) => (
+interface UserContextType {
+    user: User | null;
+    login: (userData: User, loginMaxAge: number) => void;
+    logoutUser: () => Promise<void>;
+}
+
+interface LogoutMessageProps {
+    closeToast: () => void;
+}
+
+interface UserProviderProps {
+    children: ReactNode;
+}
+
+export const UserContext = createContext<UserContextType | null>(null);
+
+const LogoutMessage = ({ closeToast }: LogoutMessageProps): JSX.Element => (
     <article className="flex flex-col gap-4 pl-4">
         <p>Account disconnected, please log in again to access user features again</p>
-
         <div className="flex gap-4">
             <Button className="btn-primary" onClick={closeToast}>Ok</Button>
-            <Link to="/register-login"><Button className="btn-primary" onClick={closeToast}>Go to the Login page</Button></Link>
+            <Link to="/register-login">
+                <Button className="btn-primary" onClick={closeToast}>
+                    Go to the Login page
+                </Button>
+            </Link>
         </div>
     </article>
 );
 
-export const UserProvider = ({ children }) => {
+export const UserProvider = ({ children }: UserProviderProps): JSX.Element => {
     const navigate = useNavigate();
 
     // STATES
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<User | null>(null);
 
     // EFFECTS
     useEffect(() => {
         const savedUser = localStorage.getItem("loggedInUser");
         const loginMaxAge = localStorage.getItem("loginMaxAge");
-        const isLoginExpired = (new Date()).getTime() > loginMaxAge;
+        const isLoginExpired = loginMaxAge ? (new Date()).getTime() > Number(loginMaxAge) : false;
+        
         if(savedUser) {
             setUser(JSON.parse(savedUser));
-
             if(isLoginExpired) {
                 forceLogout();
             }
         }
     }, []);
 
-    function login(userData, loginMaxAge) {
+    function login(userData: User, loginMaxAge: number): void {
         setUser(userData);
         localStorage.setItem("loggedInUser", JSON.stringify(userData));
-
+        localStorage.setItem("loginMaxAge", loginMaxAge.toString());
+        
         const timeUntilExpires = loginMaxAge - (new Date()).getTime();
-        localStorage.setItem("loginMaxAge", loginMaxAge);
         setTimeout(forceLogout, timeUntilExpires);
-    };
+    }
 
-    async function logoutUser() {
-        toastPromise(logout(), { pending: "Logging out...", success: "Successfully logged out!" })
-            .then(clearUserStorage);
-
-        navigate("/");
-    };
-
-    function forceLogout() {
+    async function logoutUser(): Promise<void> {
+        await toastPromise(logout(), { 
+            pending: "Logging out...", 
+            success: "Successfully logged out!" 
+        });
         clearUserStorage();
+        navigate("/");
+    }
 
+    function forceLogout(): void {
+        clearUserStorage();
         toastWarning(
-            <LogoutMessage />,
+            <LogoutMessage closeToast={() => {}}/>,
             {
                 position: "top-center",
                 autoClose: 15000,
@@ -68,7 +93,7 @@ export const UserProvider = ({ children }) => {
         );
     }
 
-    function clearUserStorage() {
+    function clearUserStorage(): void {
         setUser(null);
         localStorage.removeItem("loggedInUser");
         localStorage.removeItem("accessToken");
