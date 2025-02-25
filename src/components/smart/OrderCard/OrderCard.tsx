@@ -3,25 +3,52 @@ import { Link } from "react-router-dom";
 
 import { getUSFormatFromDate } from "@utils/dateTime";
 
-export function OrderCard({ orderId, date, total, status, itemsCount, orderItems }) {
+interface OrderItem {
+    product: {
+        id: number;
+        name: string;
+    };
+    quantity: number;
+}
+
+interface OrderCardProps {
+    orderId: number;
+    date: string;
+    total: number;
+    status: 'PENDING' | 'SHIPPED' | 'DELIVERED';
+    itemsCount: number;
+    orderItems: OrderItem[];
+}
+
+interface ProductNames {
+    [key: number]: string;
+}
+
+interface StatusStyles {
+    [key: string]: string;
+}
+
+export function OrderCard({ orderId, date, total, status, itemsCount, orderItems }: OrderCardProps): JSX.Element {
     const PRODUCTS_TO_SHOW = 3;
 
-    const statusStyles = {
+    const statusStyles: StatusStyles = {
         PENDING: "bg-status-pending text-status-pending",
         SHIPPED: "bg-status-shipped text-status-shipped",
         DELIVERED: "bg-status-delivered text-status-delivered",
     };
 
     // STATES
-    const [productsNames, setProductsNames] = useState({});
+    const [productsNames, setProductsNames] = useState<ProductNames>({});
 
     // EFFECTS
     useEffect(() => {
-        const names = {};
-        orderItems.forEach(orderItem => names[orderItem.product.id] = orderItem.product.name);
+        const names: ProductNames = {};
+        orderItems.forEach((orderItem: OrderItem) => {
+            names[orderItem.product.id] = orderItem.product.name;
+        });
 
         setProductsNames(names);
-    }, []);
+    }, [orderItems]);
 
     return (
         <Link to={`/orders/${orderId}`} className="block">
@@ -48,11 +75,17 @@ export function OrderCard({ orderId, date, total, status, itemsCount, orderItems
                     <p className="text-sm">Items: <span className="font-semibold">{itemsCount}</span></p>
 
                     <section>
-                        {orderItems.slice(0, PRODUCTS_TO_SHOW).map(orderItem => <article key={orderItem.product.id} className="flex justify-between items-baseline gap-4">
-                            <p className="text-xs opacity-75">x{orderItem.quantity}</p>
-                            <h3 className="text-xl font-semibold">{productsNames[orderItem.product.id]}</h3>
-                        </article>)}
-                        {orderItems.length > PRODUCTS_TO_SHOW && <p className="mt-2 text-end text-sm opacity-50">+{orderItems.length - PRODUCTS_TO_SHOW} more items</p>}
+                        {orderItems.slice(0, PRODUCTS_TO_SHOW).map((orderItem: OrderItem) => (
+                            <article key={orderItem.product.id} className="flex justify-between items-baseline gap-4">
+                                <p className="text-xs opacity-75">x{orderItem.quantity}</p>
+                                <h3 className="text-xl font-semibold">{productsNames[orderItem.product.id]}</h3>
+                            </article>
+                        ))}
+                        {orderItems.length > PRODUCTS_TO_SHOW && (
+                            <p className="mt-2 text-end text-sm opacity-50">
+                                +{orderItems.length - PRODUCTS_TO_SHOW} more items
+                            </p>
+                        )}
                     </section>
                 </section>
             </article>

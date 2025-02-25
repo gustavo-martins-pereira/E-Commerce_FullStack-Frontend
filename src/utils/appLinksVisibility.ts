@@ -1,6 +1,13 @@
 import { USER_ROLES } from "./enums/userRoles";
 
-const mainMenu = [
+export interface MenuItem {
+    title: string;
+    path: string;
+    visibleTo?: (typeof USER_ROLES)[keyof typeof USER_ROLES][];
+    styles?: string;
+}
+
+const mainMenu: MenuItem[] = [
     {
         title: "Home",
         path: "/",
@@ -22,6 +29,4 @@ const mainMenu = [
     }
 ];
 
-export {
-    mainMenu,
-};
+export { mainMenu };

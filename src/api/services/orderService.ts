@@ -3,7 +3,7 @@ import { withTokenRefresh } from "@api/authHelper";
 import { getUserByLoggedUser } from "@utils/localstorage";
 import { getUserByUsername } from "./userService";
 
-async function createOrder(total, orderItems) {
+async function createOrder(total: number, orderItems) {
     return await withTokenRefresh(async () => {
         const user = await getUserByUsername(getUserByLoggedUser().username);
 
@@ -31,7 +31,7 @@ async function createOrder(total, orderItems) {
     });
 }
 
-async function getOrderById(orderId) {
+async function getOrderById(orderId: number) {
     return await withTokenRefresh(async () => {
         const accessToken = localStorage.getItem("accessToken");
         const response = await api.get(`/orders/${orderId}`, {
@@ -44,7 +44,7 @@ async function getOrderById(orderId) {
     });
 }
 
-async function getOrdersByUsername(username) {
+async function getOrdersByUsername(username: string) {
     return await withTokenRefresh(async () => {
         const user = await getUserByUsername(username);
 
@@ -59,7 +59,7 @@ async function getOrdersByUsername(username) {
     });
 }
 
-async function getOrdersByClientId(clientId) {
+async function getOrdersByClientId(clientId: number) {
     return await withTokenRefresh(async () => {
         const accessToken = localStorage.getItem("accessToken");
         const response = await api.get(`/orders/clients/${clientId}`, {
@@ -72,7 +72,7 @@ async function getOrdersByClientId(clientId) {
     });
 }
 
-async function getOrdersBySellerId(sellerId) {
+async function getOrdersBySellerId(sellerId: number) {
     return await withTokenRefresh(async () => {
         const accessToken = localStorage.getItem("accessToken");
         const response = await api.get(`/orders/sellers/${sellerId}`, {
@@ -85,7 +85,7 @@ async function getOrdersBySellerId(sellerId) {
     });
 }
 
-async function updateOrderStatusById(orderId, status) {
+async function updateOrderStatusById(orderId: number, status) {
     return await withTokenRefresh(async () => {
         const accessToken = localStorage.getItem("accessToken");
         await api.patch(`/orders/${orderId}`, { status }, {

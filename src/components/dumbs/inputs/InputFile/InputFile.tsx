@@ -1,6 +1,18 @@
+import { ComponentProps } from "react";
 import { FaCheck, FaRegImage } from "react-icons/fa";
 
-export function InputFile({ id, fileList, register, errorMessage }) {
+interface InputProps extends Omit<ComponentProps<"input">, 'id'> {}
+
+interface CustomProps {
+    id: string;
+    register: any;
+    fileList: FileList | null;
+    errorMessage: string;
+}
+
+interface InputFileProps extends InputProps, CustomProps {}
+
+export function InputFile({ id, fileList, register, errorMessage, ...inputProps }: InputFileProps) {
     return (
         <div>
             <input
@@ -8,6 +20,7 @@ export function InputFile({ id, fileList, register, errorMessage }) {
                 type="file"
                 className="peer hidden"
                 accept=".gif,.jpg,.png,.jpeg"
+                {...inputProps}
                 {...register}
             />
             <label

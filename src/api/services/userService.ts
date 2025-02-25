@@ -1,6 +1,8 @@
 import { api } from "@api/apiClient";
 
-async function register(username, password, role) {
+import { USER_ROLES } from "@utils/enums/userRoles";
+
+async function register(username: string, password: string, role: typeof USER_ROLES) {
     try {
         return await api.post("/register", {
             "username": username,
@@ -12,7 +14,7 @@ async function register(username, password, role) {
     }
 }
 
-async function login(username, password) {
+async function login(username: string, password: string) {
     try {
         return await api.post("/login", {
             "username": username,
@@ -41,7 +43,7 @@ async function logout() {
     }
 }
 
-async function getUserById(id) {
+async function getUserById(id: number) {
     try {
         const response = await api.get(`/users/${id}`);
 
@@ -51,7 +53,7 @@ async function getUserById(id) {
     }
 }
 
-async function getUserByUsername(username) {
+async function getUserByUsername(username: string) {
     try {
         const response = await api.get(`/users/usernames/${username}`);
 

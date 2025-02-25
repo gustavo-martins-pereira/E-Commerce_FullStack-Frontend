@@ -1,18 +1,24 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, ReactNode } from "react";
 import ReactDOM from "react-dom";
 import { IoIosClose } from "react-icons/io";
 
-export function Modal({ title, onClose, children }) {
+interface ModalProps {
+    title: string;
+    children: ReactNode;
+    onClose: () => void;
+}
+
+export function Modal({ title, onClose, children }: ModalProps): JSX.Element {
     // STATES
-    const [isShowing, setIsShowing] = useState(true);
+    const [isShowing, setIsShowing] = useState<boolean>(true);
 
     // REFS
-    const wrapperRef = useRef(null);
+    const wrapperRef = useRef<HTMLDivElement | null>(null);
 
     // EFFECTS
     useEffect(() => {
-        function handleClickOutside(event) {
-            if(wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        function handleClickOutside(event: MouseEvent): void {
+            if(wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
                 setIsShowing(false);
             }
         }
@@ -25,51 +31,53 @@ export function Modal({ title, onClose, children }) {
 
     // ACCESSIBILITY
     useEffect(() => {
-        let html = document.querySelector("html");
+        const html = document.querySelector("html");
         if(html) {
-            if(isShowing && html) {
+            if(isShowing) {
                 html.style.overflowY = "hidden";
 
                 const focusableElements = "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])";
 
                 const modal = document.querySelector("#modal");
-                const firstFocusableElement = modal.querySelectorAll(focusableElements)[0]; // Get first element to be focused inside modal
+                if (!modal) return;
 
-                const focusableContent = modal.querySelectorAll(focusableElements);
-                const lastFocusableElement = focusableContent[focusableContent.length - 1]; // Get last element to be focused inside modal
+                const focusableContent = modal.querySelectorAll<HTMLElement>(focusableElements);
+                const firstFocusableElement = focusableContent[0];
+                const lastFocusableElement = focusableContent[focusableContent.length - 1];
 
-                document.addEventListener("keydown", function (e) {
-                    if(e.keyCode === 27) {
+                const handleKeyDown = (e: KeyboardEvent): void => {
+                    if(e.key === "Escape") {
                         setIsShowing(false);
+                        return;
                     }
 
-                    let isTabPressed = e.key === "Tab" || e.keyCode === 9;
-
-                    if(!isTabPressed) return;
+                    if(e.key !== "Tab") return;
 
                     if(e.shiftKey) {
-                        // If "SHIFT" key pressed for "SHIFT" + "TAB" combination
                         if(document.activeElement === firstFocusableElement) {
-                            lastFocusableElement.focus(); // add focus for the last focusable element
+                            lastFocusableElement.focus();
                             e.preventDefault();
                         }
                     } else {
-                        // If tab key is pressed
                         if(document.activeElement === lastFocusableElement) {
-                            // If focused has reached to last focusable element then focus first focusable element after pressing tab
-                            firstFocusableElement.focus(); // Add focus for the first focusable element
+                            firstFocusableElement.focus();
                             e.preventDefault();
                         }
                     }
-                })
+                };
 
-                firstFocusableElement.focus();
+                document.addEventListener("keydown", handleKeyDown);
+                firstFocusableElement?.focus();
+
+                return () => {
+                    document.removeEventListener("keydown", handleKeyDown);
+                };
             } else {
                 onClose();
                 html.style.overflowY = "visible";
             }
         }
-    }, [isShowing]);
+    }, [isShowing, onClose]);
 
     return (
         <>
@@ -79,7 +87,7 @@ export function Modal({ title, onClose, children }) {
                         className="bg-slate-300/20 w-screen h-screen fixed top-0 left-0 flex items-center justify-center backdrop-blur-sm z-20"
                         aria-labelledby="header-3a content-3a"
                         aria-modal="true"
-                        tabIndex="-1"
+                        tabIndex={-1}
                         role="dialog"
                     >
                         {/* MODAL */}

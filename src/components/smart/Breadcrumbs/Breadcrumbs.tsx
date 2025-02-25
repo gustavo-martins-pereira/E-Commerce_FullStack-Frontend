@@ -1,22 +1,23 @@
-import React from "react";
 import { FaHome } from "react-icons/fa";
 import { FaGreaterThan } from "react-icons/fa6";
 import { useLocation, Link } from "react-router-dom";
 
-function Breadcrumb() {
+interface BreadcrumbItem {
+    name: string;
+    link: string;
+}
+
+function Breadcrumb(): JSX.Element {
     const location = useLocation();
 
-    const blacklist = [
-        {
-            invalidPath: "/dashboard/manage-products/edit",
-            replacement: "/dashboard/manage-products",
-        },
+    const blacklist: string[] = [
+        "/dashboard/manage-products/edit"
     ];
 
-    const breadcrumbs = location.pathname
+    const breadcrumbs: BreadcrumbItem[] = location.pathname
         .split("/")
-        .filter((path) => path) // Remove empty paths
-        .map((path, index, array) => {
+        .filter((path: string) => path) // Remove empty paths
+        .map((path: string, index: number, array: string[]) => {
             let fullPath = `/${array.slice(0, index + 1).join("/")}`;
 
             return {
@@ -24,9 +25,9 @@ function Breadcrumb() {
                 link: fullPath,
             };
         })
-        .filter(path => {
+        .filter((path: BreadcrumbItem) => {
             for(let item of blacklist) {
-                return path.link !== item.invalidPath;
+                return path.link !== item;
             }
         });
 
@@ -44,7 +45,7 @@ function Breadcrumb() {
                 </li>
 
                 {/* DYNAMIC BREADCRUMBS */}
-                {breadcrumbs.map((breadcrumb, index) => (
+                {breadcrumbs.map((breadcrumb: BreadcrumbItem, index: number) => (
                     <li
                         key={index}
                         className="flex items-center gap-2 text-xl"

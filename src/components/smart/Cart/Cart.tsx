@@ -11,26 +11,42 @@ import { Button } from "@components/dumbs/Button/Button";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 import { toastPromise } from "@utils/toast";
 
-export function Cart() {
+interface CartItem {
+    id: number;
+    name: string;
+    price: number;
+    quantity: number;
+    image: {
+        data: Buffer;
+    };
+}
+
+export function Cart(): JSX.Element {
     const navigate = useNavigate();
 
     // STATES
-    const [isCartOpen, setIsCartOpen] = useState(false);
+    const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
 
     // CONTEXTS
     const { user } = useContext(UserContext);
     const { cartItems, updateCartQuantity, removeItemFromCart } = useContext(CartContext);
 
     // HANDLES
-    async function handleOnBuy() {
-        await toastPromise(createOrder(totalPrice(), Array.from(cartItems.values())), { pending: "Buying", success: "Order placed!" });
+    async function handleOnBuy(): Promise<void> {
+        await toastPromise(
+            createOrder(Number(totalPrice()), Array.from(cartItems.values())), 
+            { 
+                pending: "Buying", 
+                success: "Order placed!" 
+            }
+        );
 
         navigate("/orders");
     }
 
-    function totalPrice() {
+    function totalPrice(): string {
         return Array.from(cartItems.values())
-            .reduce((total, cartItem) => total + cartItem.quantity * cartItem.price, 0)
+            .reduce((total: number, cartItem: CartItem) => total + cartItem.quantity * cartItem.price, 0)
             .toFixed(2);
     }
 
@@ -97,7 +113,7 @@ export function Cart() {
                     <Button className="btn-primary w-full" onClick={handleOnBuy}>Buy</Button>
                     :
                     <Link to="/register-login">
-                        <Button className="btn-primary w-full">Login First to Buy</Button>
+                        <Button className="btn-primary w-full" onClick={() => {}}>Login First to Buy</Button>
                     </Link>
                 }
             </div>
