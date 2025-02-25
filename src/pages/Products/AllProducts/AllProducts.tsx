@@ -7,20 +7,29 @@ import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 import { UserContext } from "@contexts/userContext";
 
-export function AllProducts() {
+interface Product {
+    id: number;
+    name: string;
+    price: number;
+    image: {
+        data: Buffer;
+    };
+}
+
+export function AllProducts(): JSX.Element {
     const INITIAL_PRODUCTS_TO_SHOW = 10;
 
     // CONTEXTS
     const { user } = useContext(UserContext);
 
     // STATES
-    const [productsData, setProductsData] = useState(null);
-    const [productsToShow, setProductsToShow] = useState([]);
-    const [isAllProducts, setIsAllProducts] = useState(false);
+    const [productsData, setProductsData] = useState<Product[] | null>(null);
+    const [productsToShow, setProductsToShow] = useState<Product[]>([]);
+    const [isAllProducts, setIsAllProducts] = useState<boolean>(false);
 
     // EFFECTS
     useEffect(() => {
-        (async function fetchAllProducts() {
+        (async function fetchAllProducts(): Promise<void> {
             const products = await getAllProducts();
 
             setProductsData(products);
@@ -29,7 +38,9 @@ export function AllProducts() {
     }, []);
 
     // HANDLES
-    function handleShowAllProducts() {
+    function handleShowAllProducts(): void {
+        if (!productsData) return;
+        
         setIsAllProducts(true);
         setProductsToShow(productsData);
     }
@@ -44,43 +55,67 @@ export function AllProducts() {
                 </header>
 
                 <section className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5">
-                    {productsData ? productsToShow.map(product => {
-                        return (
+                    {productsData ? (
+                        productsToShow.map((product: Product) => (
                             <article key={product.id}>
-                                <Link className="h-full flex flex-col justify-between gap-4" to={`/products/all/${product.id}`}>
-                                    <img className="max-h-[30rem] mx-auto object-contain" src={bufferArrayToImageURL(product.image.data)} alt="" />
+                                <Link 
+                                    className="h-full flex flex-col justify-between gap-4" 
+                                    to={`/products/all/${product.id}`}
+                                >
+                                    <img 
+                                        className="max-h-[30rem] mx-auto object-contain" 
+                                        src={bufferArrayToImageURL(product.image.data)} 
+                                        alt={product.name} 
+                                    />
 
                                     <section>
-                                        <h3 className="text-lg">{product.name.length > 50 ? product.name.substring(0, 50) + "..." : product.name}</h3>
+                                        <h3 className="text-lg">
+                                            {product.name.length > 50 
+                                                ? `${product.name.substring(0, 50)}...` 
+                                                : product.name}
+                                        </h3>
                                         <h4>${product.price}</h4>
                                     </section>
                                 </Link>
                             </article>
-                        );
-                    })
-                        :
-                        Array.from({ length: INITIAL_PRODUCTS_TO_SHOW }).map((_, index) => <Skeleton className="flex flex-col gap-2" key={index}>
-                            <div className="h-[15rem]"></div>
-                            <div className="h-[2.5rem]"></div>
-                            <div className="h-[1.5rem]"></div>
-                        </Skeleton>
-                        )
-                    }
+                        ))
+                    ) : (
+                        Array.from({ length: INITIAL_PRODUCTS_TO_SHOW }).map((_, index) => (
+                            <Skeleton className="flex flex-col gap-2" key={index}>
+                                <div className="h-[15rem]" />
+                                <div className="h-[2.5rem]" />
+                                <div className="h-[1.5rem]" />
+                            </Skeleton>
+                        ))
+                    )}
                 </section>
 
-                {productsData?.length > INITIAL_PRODUCTS_TO_SHOW && !isAllProducts && <Button className="btn-primary w-fit m-auto" onClick={handleShowAllProducts}>View All</Button>}
+                {(productsData?.length ?? 0) > INITIAL_PRODUCTS_TO_SHOW && !isAllProducts && (
+                    <Button 
+                        className="btn-primary w-fit m-auto" 
+                        onClick={handleShowAllProducts}
+                    >
+                        View All
+                    </Button>
+                )}
             </section>
 
             {/* DISCOVER */}
-            {!user && <section className="section bg-banner flex flex-col gap-8">
-                <h2>Discover Our Amazing Products Today</h2>
-                <p>Explore our wide range of high-quality products and find exactly what you need.</p>
+            {!user && (
+                <section className="section bg-banner flex flex-col gap-8">
+                    <h2>Discover Our Amazing Products Today</h2>
+                    <p>Explore our wide range of high-quality products and find exactly what you need.</p>
 
-                <div className="flex gap-4">
-                    <Link to="/register-login"><Button className="btn-secondary">Sign Up</Button></Link>
-                    <Link to="/register-login"><Button className="btn-primary">Log In</Button></Link>
-                </div>
-            </section>}
+                    <div className="flex gap-4">
+                        <Link to="/register-login">
+                            <Button className="btn-secondary">Sign Up</Button>
+                        </Link>
+                        <Link to="/register-login">
+                            <Button className="btn-primary">Log In</Button>
+                        </Link>
+                    </div>
+                </section>
+            )}
         </main>
     );
 }

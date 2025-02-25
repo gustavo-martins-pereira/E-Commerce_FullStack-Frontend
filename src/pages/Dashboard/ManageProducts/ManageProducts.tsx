@@ -8,11 +8,26 @@ import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 import { toastPromise } from "@utils/toast";
 
-export function ManageProducts() {
+interface Product {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    image: {
+        data: Buffer;
+    };
+}
+
+interface User {
+    id: number;
+    username: string;
+}
+
+export function ManageProducts(): JSX.Element {
     // STATES
-    const [products, setProducts] = useState();
-    const [showConfirmDelete, setShowConfirmDelete] = useState(false);
-    const [productToDelete, setProductToDelete] = useState(null);
+    const [products, setProducts] = useState<Product[] | null>(null);
+    const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
+    const [productToDelete, setProductToDelete] = useState<number | null>(null);
 
     // EFFECTS
     useEffect(() => {
@@ -20,32 +35,38 @@ export function ManageProducts() {
     }, []);
 
     // HANDLES
-    function handleOpenDeletePopup(id) {
+    function handleOpenDeletePopup(id: number): void {
         setProductToDelete(id);
         setShowConfirmDelete(true);
     }
 
-    function handleCloseDeletePopup() {
+    function handleCloseDeletePopup(): void {
         setProductToDelete(null);
         setShowConfirmDelete(false);
     }
 
-    async function handleConfirmDelete() {
-        await toastPromise(deleteProductById(productToDelete), { success: "Product deleted", pending: "Deleting" });
+    async function handleConfirmDelete(): Promise<void> {
+        if (productToDelete) {
+            await toastPromise(
+                deleteProductById(productToDelete), 
+                { success: "Product deleted", pending: "Deleting" }
+            );
 
-        fetchProducts();
-
-        handleCloseDeletePopup();
+            await fetchProducts();
+            handleCloseDeletePopup();
+        }
     }
 
-    async function fetchProducts() {
-        const { username } = JSON.parse(localStorage.getItem("loggedInUser"));
+    async function fetchProducts(): Promise<void> {
+        const savedUser = localStorage.getItem("loggedInUser");
+        if (!savedUser) return;
+
+        const { username } = JSON.parse(savedUser) as User;
         const user = await getUserByUsername(username);
+        const fetchedProducts = await getProductsBySellerId(user.id);
 
-        const products = await getProductsBySellerId(user.id);
-
-        setProducts(products);
-    };
+        setProducts(fetchedProducts);
+    }
 
     return (
         <main>

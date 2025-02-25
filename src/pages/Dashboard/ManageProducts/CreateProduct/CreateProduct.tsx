@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 import { createProduct } from "@api/services/productService";
 import { InputText } from "@components/dumbs/inputs/InputText/InputText";
@@ -9,8 +9,15 @@ import { InputFile } from "@components/dumbs/inputs/InputFile/InputFile";
 import { SubmitButton } from "@components/dumbs/inputs/SubmitButton/SubmitButton";
 import { toastPromise } from "@utils/toast";
 
-export function CreateProduct() {
-    const navigator = useNavigate();
+interface CreateProductFormData {
+    createProductName: string;
+    createProductDescription: string;
+    createProductPrice: number;
+    createProductImage: FileList;
+}
+
+export function CreateProduct(): JSX.Element {
+    const navigate = useNavigate();
 
     // FORM HOOKS
     const {
@@ -18,18 +25,34 @@ export function CreateProduct() {
         watch,
         handleSubmit,
         formState: { errors: newProductErrors }
-    } = useForm();
+    } = useForm<CreateProductFormData>();
 
     const fileList = watch("createProductImage");
 
     // HANDLES
-    async function handleOnSubmitCreateProductForm(createProductFormData) {
-        const { createProductName, createProductDescription, createProductPrice, createProductImage } = createProductFormData;
+    const handleOnSubmitCreateProductForm: SubmitHandler<CreateProductFormData> = async (createProductFormData): Promise<void> => {
+        const { 
+            createProductName, 
+            createProductDescription, 
+            createProductPrice, 
+            createProductImage 
+        } = createProductFormData;
 
-        await toastPromise(createProduct(createProductName, createProductDescription, createProductPrice, createProductImage[0]), { success: "Product created", pending: "Creating product..." });
+        await toastPromise(
+            createProduct(
+                createProductName, 
+                createProductDescription, 
+                createProductPrice, 
+                createProductImage[0]
+            ), 
+            { 
+                success: "Product created", 
+                pending: "Creating product..." 
+            }
+        );
 
-        navigator("/dashboard/manage-products");
-    }
+        navigate("/dashboard/manage-products");
+    };
 
     return (
         <main>
@@ -41,7 +64,10 @@ export function CreateProduct() {
 
                 {/* PRODUCT FORM */}
                 <section className="w-full max-w-2xl m-auto rounded shadow p-8">
-                    <form className="flex flex-col gap-4" onSubmit={handleSubmit(handleOnSubmitCreateProductForm)}>
+                    <form 
+                        className="flex flex-col gap-4" 
+                        onSubmit={handleSubmit(handleOnSubmitCreateProductForm)}
+                    >
                         <InputText
                             label="Name"
                             id="name"

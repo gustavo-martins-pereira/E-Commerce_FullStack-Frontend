@@ -5,7 +5,7 @@ interface TextAreaProps extends ComponentProps<"textarea"> {}
 interface CustomProps {
     label: string;
     register: any;
-    errorMessage: string;
+    errorMessage?: string;
 }
 
 interface TextAreaComponentProps extends TextAreaProps, CustomProps {}

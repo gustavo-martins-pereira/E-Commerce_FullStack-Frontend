@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, ChangeEvent } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import { getProductById } from "@api/services/productService";
@@ -9,36 +9,61 @@ import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
 import { CartContext } from "@contexts/cartContext";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 
-export function ProductDetails() {
-    const { productId } = useParams();
+interface Product {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    image: {
+        data: Buffer;
+    };
+}
+
+export function ProductDetails(): JSX.Element {
+    const { productId } = useParams<{ productId: string }>();
 
     // STATES
-    const [product, setProduct] = useState();
-    const [productQuantity, setProductQuantity] = useState(1);
+    const [product, setProduct] = useState<Product | undefined>(undefined);
+    const [productQuantity, setProductQuantity] = useState<number>(1);
 
     // CONTEXTS
     const { addToCart } = useContext(CartContext);
 
     // EFFECTS
     useEffect(() => {
-        (async function fetchProductById() {
-            const product = await getProductById(productId);
-
-            setProduct(product);
+        (async function fetchProductById(): Promise<void> {
+            if (!productId) return;
+            const productData = await getProductById(Number(productId));
+            setProduct(productData);
         })();
-    }, []);
+    }, [productId]);
+
+    // HANDLES
+    const handleQuantityChange = (event: ChangeEvent<HTMLInputElement>): void => {
+        setProductQuantity(Number(event.target.value));
+    };
+
+    const handleAddToCart = (): void => {
+        if (product) {
+            addToCart(product, productQuantity);
+        }
+    };
 
     return (
         <main>
             {/* PRODUCT ITSELF */}
             <section className="section flex flex-col gap-8 lg:flex-row-reverse">
-                {product ?
-                    <img className="w-1/2 m-auto lg:m-0 lg:ml-auto" src={bufferArrayToImageURL(product.image.data)} alt="" />
-                    :
+                {product ? (
+                    <img 
+                        className="w-1/2 m-auto lg:m-0 lg:ml-auto" 
+                        src={bufferArrayToImageURL(product.image.data)} 
+                        alt={product.name} 
+                    />
+                ) : (
                     <Skeleton className="w-1/2 m-auto lg:m-0 lg:ml-auto">
                         <div className="h-[35rem]"></div>
                     </Skeleton>
-                }
+                )}
 
                 <div className="flex flex-col gap-4 flex-grow">
                     {product ?
@@ -62,12 +87,12 @@ export function ProductDetails() {
                         inputStyles="w-20"
                         min={1}
                         value={productQuantity}
-                        onChange={event => setProductQuantity(Number(event.target.value))}
+                        onChange={handleQuantityChange}
                     />
                     <Button
                         className="btn-secondary"
                         disabled={!product}
-                        onClick={() => addToCart(product, productQuantity)}
+                        onClick={handleAddToCart}
                     >
                         Add to Cart
                     </Button>

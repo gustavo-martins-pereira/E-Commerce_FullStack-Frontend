@@ -6,7 +6,7 @@ interface CustomProps {
     id: string;
     label: string;
     register: any;
-    errorMessage: string;
+    errorMessage?: string;
 }
 
 interface InputRadiusProps extends InputProps, CustomProps {}

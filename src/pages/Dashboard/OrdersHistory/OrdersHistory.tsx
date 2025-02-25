@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, ChangeEvent } from "react";
 
 import { getOrdersBySellerId, updateOrderStatusById } from "@api/services/orderService";
 import { getUserById, getUserByUsername } from "@api/services/userService";
@@ -9,39 +9,76 @@ import { getUserByLoggedUser } from "@utils/localstorage";
 import { getUSFormatFromDate } from "@utils/dateTime";
 import { toastPromise } from "@utils/toast";
 
-export function OrdersHistory() {
+interface OrderItem {
+    product: {
+        name: string;
+        description: string;
+    };
+    quantity: number;
+    price: number;
+    subtotal: number;
+}
+
+interface Order {
+    id: number;
+    clientId: number;
+    total: number;
+    status: 'PENDING' | 'SHIPPED' | 'DELIVERED';
+    createdAt: string;
+    orderItems: OrderItem[];
+}
+
+interface Client {
+    id: number;
+    username: string;
+}
+
+interface ClientsMap {
+    [key: number]: Client;
+}
+
+export function OrdersHistory(): JSX.Element {
     // STATES
-    const [orders, setOrders] = useState();
-    const [clients, setClients] = useState({});
-    const [selectedOrder, setSelectedOrder] = useState(null);
+    const [orders, setOrders] = useState<Order[] | null>(null);
+    const [clients, setClients] = useState<ClientsMap>({});
+    const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
     // EFFECTS
     useEffect(() => {
         (async function fetchOrders() {
-            const user = await getUserByUsername(getUserByLoggedUser().username);
-            const orders = await getOrdersBySellerId(user.id);
-            setOrders(orders);
+            const user = await getUserByUsername(getUserByLoggedUser()?.username || '');
+            const fetchedOrders = await getOrdersBySellerId(user.id);
+            setOrders(fetchedOrders);
 
-            const clients = {};
-            for (const order of orders) {
+            const fetchedClients: ClientsMap = {};
+            for (const order of fetchedOrders) {
                 const client = await getUserById(order.clientId);
-                clients[order.id] = client;
+                fetchedClients[order.id] = client;
             }
 
-            setClients(clients);
+            setClients(fetchedClients);
         })();
     }, []);
 
     // HANDLES
-    function handleShowOrderDetails(order) {
+    function handleShowOrderDetails(order: Order): void {
         setSelectedOrder(order);
     }
 
-    async function handleStatusChange(orderId, newStatus) {
-        await toastPromise(updateOrderStatusById(orderId, newStatus), { success: "Status updated", pending: "Updating" });
+    async function handleStatusChange(orderId: number, newStatus: Order['status']): Promise<void> {
+        await toastPromise(
+            updateOrderStatusById(orderId, newStatus), 
+            { success: "Status updated", pending: "Updating" }
+        );
 
-        setOrders(prevOrders => prevOrders.map(order => order.id === orderId ? { ...order, status: newStatus } : order));
-    };
+        setOrders(prevOrders => 
+            prevOrders?.map(order => 
+                order.id === orderId 
+                    ? { ...order, status: newStatus } 
+                    : order
+            ) || null
+        );
+    }
 
     return (
         <main>
@@ -61,40 +98,47 @@ export function OrdersHistory() {
                     </thead>
 
                     <tbody>
-                        {orders ?
-                            orders.map(order => <tr key={order.id}>
-                                <td className="px-4 py-2">{order.id}</td>
-                                <td className="px-4 py-2">{clients[order.id]?.username}</td>
-                                <td className="px-4 py-2">{getUSFormatFromDate(new Date(order.createdAt))}</td>
-                                <td className="px-4 py-2">${order.total}</td>
-                                <th scope="col" className="px-4 py-2">
-                                    <select
-                                        className="p-2 border"
-                                        value={order.status}
-                                        onChange={(e) => handleStatusChange(order.id, e.target.value)}
-                                    >
-                                        <option value="PENDING">PENDING</option>
-                                        <option value="SHIPPED">SHIPPED</option>
-                                        <option value="DELIVERED">DELIVERED</option>
-                                    </select>
-                                </th>
-                                <td className="px-4 py-2">
-                                    <Button
-                                        className="btn-primary rounded p-1 text-sm"
-                                        onClick={() => handleShowOrderDetails(order)}
-                                    >
-                                        Show Details
-                                    </Button>
-                                </td>
-                            </tr>)
-                            :
-                            Array.from({ length: 3 }).map((_, index) => <tr key={index}>
-                                <td colSpan="999">
-                                    <Skeleton>
-                                        <div className="h-20"></div>
-                                    </Skeleton>
-                                </td>
-                            </tr>)
+                        {orders
+                            ? orders.map(order => (
+                                <tr key={order.id}>
+                                    <td className="px-4 py-2">{order.id}</td>
+                                    <td className="px-4 py-2">{clients[order.id]?.username}</td>
+                                    <td className="px-4 py-2">
+                                        {getUSFormatFromDate(new Date(order.createdAt))}
+                                    </td>
+                                    <td className="px-4 py-2">${order.total}</td>
+                                    <th scope="col" className="px-4 py-2">
+                                        <select
+                                            className="p-2 border"
+                                            value={order.status}
+                                            onChange={(e: ChangeEvent<HTMLSelectElement>) => 
+                                                handleStatusChange(order.id, e.target.value as Order['status'])
+                                            }
+                                        >
+                                            <option value="PENDING">PENDING</option>
+                                            <option value="SHIPPED">SHIPPED</option>
+                                            <option value="DELIVERED">DELIVERED</option>
+                                        </select>
+                                    </th>
+                                    <td className="px-4 py-2">
+                                        <Button
+                                            className="btn-primary rounded p-1 text-sm"
+                                            onClick={() => handleShowOrderDetails(order)}
+                                        >
+                                            Show Details
+                                        </Button>
+                                    </td>
+                                </tr>
+                            ))
+                            : Array.from({ length: 3 }).map((_, index) => (
+                                <tr key={index}>
+                                    <td colSpan={999}>
+                                        <Skeleton>
+                                            <div className="h-20"></div>
+                                        </Skeleton>
+                                    </td>
+                                </tr>
+                            ))
                         }
                     </tbody>
                 </table>

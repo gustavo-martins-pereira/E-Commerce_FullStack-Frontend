@@ -6,41 +6,65 @@ import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
 import { getUSFormatFromDate } from "@utils/dateTime";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 
-export function OrderDetails() {
-    const statusStyles = {
+interface OrderProduct {
+    id: number;
+    name: string;
+    price: number;
+    image: {
+        data: Buffer;
+    };
+}
+
+interface OrderItem {
+    product: OrderProduct;
+    quantity: number;
+}
+
+interface Order {
+    id: number;
+    total: number;
+    status: 'PENDING' | 'SHIPPED' | 'DELIVERED';
+    createdAt: string;
+    orderItems: OrderItem[];
+}
+
+interface StatusStyles {
+    [key: string]: string;
+}
+
+export function OrderDetails(): JSX.Element {
+    const statusStyles: StatusStyles = {
         PENDING: "text-status-pending",
         SHIPPED: "text-status-shipped",
         DELIVERED: "text-status-delivered",
     };
 
-    const { orderId } = useParams();
+    const { orderId } = useParams<{ orderId: string }>();
 
     // STATES
-    const [colSpan, setColSpan] = useState(undefined);
-    const [order, setOrder] = useState();
+    const [colSpan, setColSpan] = useState<number | undefined>(undefined);
+    const [order, setOrder] = useState<Order | undefined>(undefined);
 
     // EFFECTS
     useEffect(() => {
-        (async function fetchProductById() {
-            const order = await getOrderById(orderId);
+        (async function fetchOrderById(): Promise<void> {
+            if (!orderId) return;
+            const orderData = await getOrderById(Number(orderId));
+            setOrder(orderData);
+        })();
 
-            setOrder(order);
-        }());
-
-        const mediaQuery = window.matchMedia("(min-width: 768px)");
-
+        const mediaQuery: MediaQueryList = window.matchMedia("(min-width: 768px)");
         mediaQuery.onchange = handleOnChangeWindowSize;
-
         handleOnChangeWindowSize();
-    }, []);
+
+        return () => {
+            mediaQuery.onchange = null;
+        };
+    }, [orderId]);
 
     // HANDLES
-    const handleOnChangeWindowSize = () => {
-        if (window.innerWidth >= 768) {
-            setColSpan(4);
-        } else {
-            setColSpan(3);
-        }
+    const handleOnChangeWindowSize = (): void => {
+        setColSpan(window.innerWidth >= 768 ? 4 : 3);
     };
 
     return (
@@ -80,7 +104,7 @@ export function OrderDetails() {
                             })
                             :
                             Array.from({ length: 3 }).map((_, index) => <tr key={index}>
-                                <td colSpan="999">
+                                <td colSpan={999}>
                                     <Skeleton><div className="h-20"></div></Skeleton>
                                 </td>
                             </tr>)

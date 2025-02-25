@@ -1,7 +1,8 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFlip, Navigation } from "swiper/modules";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
+import type { Swiper as SwiperType } from 'swiper';
 
 import { getAllProducts } from "@api/services/productService";
 import { register, login as loginApi } from "@api/services/userService";
@@ -19,15 +20,57 @@ import Login from "./assets/images/login.svg";
 
 import "./assets/css/register-login.css";
 
-export function RegisterLogin() {
-    function swiperGalleryConfig(customConfig) {
+interface Product {
+    id: number;
+    name: string;
+    image: {
+        data: Buffer;
+    };
+}
+
+interface RegisterFormData {
+    registerUsername: string;
+    registerPassword: string;
+    registerConfirmPassword: string;
+    role: 'USER' | 'SELLER';
+}
+
+interface LoginFormData {
+    loginUsername: string;
+    loginPassword: string;
+}
+
+interface SwiperGalleryConfig {
+    className: string;
+    modules: any[];
+    spaceBetween: number;
+    slidesPerView: number;
+    centeredSlides: boolean;
+    loop: boolean;
+    speed: number;
+    allowTouchMove: boolean;
+    autoplay: {
+        delay: number;
+        disableOnInteraction: boolean;
+        reverseDirection?: boolean;
+    };
+    breakpoints?: {
+        [key: number]: {
+            slidesPerView: number;
+            spaceBetween: number;
+        };
+    };
+}
+
+export function RegisterLogin(): JSX.Element {
+    function swiperGalleryConfig(customConfig?: Partial<SwiperGalleryConfig>): SwiperGalleryConfig {
         return {
             className: "swiper-gallery",
             modules: [Autoplay],
             spaceBetween: 10,
             slidesPerView: 2.5,
             centeredSlides: true,
-            loop: products.length >= 3,
+            loop: (products?.length ?? 0) >= 3,
             speed: 8000,
             allowTouchMove: false,
             autoplay: {
@@ -56,10 +99,10 @@ export function RegisterLogin() {
     const { login } = useContext(UserContext);
 
     // STATES
-    const [products, setProducts] = useState();
+    const [products, setProducts] = useState<Product[] | null>(null);
 
     // REFS
-    const swiperRef = useRef(null);
+    const swiperRef = useRef<SwiperType | null>(null);
 
     // FORM HOOKS (Separate for Register and Login)
     const {
@@ -67,13 +110,13 @@ export function RegisterLogin() {
         watch: registerFormWatch,
         handleSubmit: handleRegisterSubmit,
         formState: { errors: registerErrors }
-    } = useForm();
+    } = useForm<RegisterFormData>();
 
     const {
         register: loginFormRegister,
         handleSubmit: handleLoginSubmit,
         formState: { errors: loginErrors }
-    } = useForm();
+    } = useForm<LoginFormData>();
 
     const registerPassword = registerFormWatch("registerPassword");
 
@@ -86,42 +129,42 @@ export function RegisterLogin() {
     }, []);
 
     // HANDLES
-    function handleOnSubmitValidRegisterForm(registerFormData) {
+    const handleOnSubmitValidRegisterForm: SubmitHandler<RegisterFormData> = async (
+        registerFormData
+    ): Promise<void> => {
         const { registerUsername, registerPassword, role } = registerFormData;
 
         try {
-            register(registerUsername, registerPassword, role)
-                .then(() => {
-                    toastSuccess("Registration successful!");
-                    toastInfo("Now login with your new Account.", { autoClose: 10000 });
-                    swiperRef.current.slideNext();
-                })
-                .catch(error => {
-                    toastError(error.response.data?.error);
-                });
-        } catch (error) {
-            toastError("An Unexpected error occurred");
+            await register(registerUsername, registerPassword, role);
+            toastSuccess("Registration successful!");
+            toastInfo("Now login with your new Account.", { autoClose: 10000 });
+            swiperRef.current?.slideNext();
+        } catch (error: any) {
+            toastError(error.response?.data?.error || "An unexpected error occurred");
         }
-    }
+    };
 
-    function handleOnSubmitValidLoginForm(loginFormData) {
+    const handleOnSubmitValidLoginForm: SubmitHandler<LoginFormData> = async (
+        loginFormData
+    ): Promise<void> => {
         const { loginUsername, loginPassword } = loginFormData;
         
-        toastPromise(loginApi(loginUsername, loginPassword), { pending: "Logging...", success: "Login successful!" })
-            .then(response => {
-                const accessToken = response.data.accessToken;
-                localStorage.setItem("accessToken", accessToken);
+        const response = await toastPromise(
+            loginApi(loginUsername, loginPassword), 
+            { pending: "Logging...", success: "Login successful!" }
+        );
 
-                login(getUserByToken(accessToken), response.data.loginMaxAge);
-            });
-    }
+        const accessToken = response.data.accessToken;
+        localStorage.setItem("accessToken", accessToken);
+        login(getUserByToken(accessToken), response.data.loginMaxAge);
+    };
 
     function handleNextSlide() {
-        swiperRef.current.slideNext();
+        swiperRef.current?.slideNext();
     }
 
     function handlePrevSlide() {
-        swiperRef.current.slidePrev();
+        swiperRef.current?.slidePrev();
     }
 
     return (
@@ -134,7 +177,7 @@ export function RegisterLogin() {
                 </header>
 
                 <article>
-                    {products ?
+                    {products ? 
                         <>
                             <Swiper
                                 {...swiperGalleryConfig()}

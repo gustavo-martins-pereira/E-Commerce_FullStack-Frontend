@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 import { getProductById, editProductById } from "@api/services/productService";
 import { InputText } from "@components/dumbs/inputs/InputText/InputText";
@@ -8,12 +8,24 @@ import { TextArea } from "@components/dumbs/inputs/TextArea/TextArea";
 import { SubmitButton } from "@components/dumbs/inputs/SubmitButton/SubmitButton";
 import { toastPromise } from "@utils/toast";
 
-export function EditProduct() {
-    const { productId } = useParams();
+interface EditProductFormData {
+    editProductName: string;
+    editProductDescription: string;
+    editProductPrice: number;
+}
+
+interface ProductData {
+    name: string;
+    description: string;
+    price: number;
+}
+
+export function EditProduct(): JSX.Element {
+    const { productId } = useParams<{ productId: string }>();
     const navigate = useNavigate();
 
     // STATES
-    const [isProductLoaded, setIsProductLoaded] = useState(false);
+    const [isProductLoaded, setIsProductLoaded] = useState<boolean>(false);
 
     // FORM HOOKS
     const {
@@ -21,12 +33,14 @@ export function EditProduct() {
         setValue,
         handleSubmit,
         formState: { errors: editProductErrors }
-    } = useForm();
+    } = useForm<EditProductFormData>();
 
     // EFFECTS
     useEffect(() => {
-        (async function fetchProductById() {
-            const productData = await getProductById(productId);
+        (async function fetchProductById(): Promise<void> {
+            if (!productId) return;
+
+            const productData: ProductData = await getProductById(Number(productId));
 
             setValue("editProductName", productData.name);
             setValue("editProductDescription", productData.description);
@@ -37,13 +51,32 @@ export function EditProduct() {
     }, [productId, setValue]);
 
     // HANDLES
-    async function handleOnSubmitEditProductForm(editProductFormData) {
-        const { editProductName, editProductDescription, editProductPrice } = editProductFormData;
+    const handleOnSubmitEditProductForm: SubmitHandler<EditProductFormData> = async (
+        editProductFormData
+    ): Promise<void> => {
+        if (!productId) return;
 
-        await toastPromise(editProductById(productId, editProductName, editProductDescription, editProductPrice), { success: "Product edited", pending: "Editing product..." });
+        const { 
+            editProductName, 
+            editProductDescription, 
+            editProductPrice 
+        } = editProductFormData;
+
+        await toastPromise(
+            editProductById(
+                Number(productId), 
+                editProductName, 
+                editProductDescription, 
+                editProductPrice
+            ), 
+            { 
+                success: "Product edited", 
+                pending: "Editing product..." 
+            }
+        );
 
         navigate("/dashboard/manage-products");
-    }
+    };
 
     return (
         <main>

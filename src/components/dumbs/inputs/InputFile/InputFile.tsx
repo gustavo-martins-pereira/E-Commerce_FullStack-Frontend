@@ -7,7 +7,7 @@ interface CustomProps {
     id: string;
     register: any;
     fileList: FileList | null;
-    errorMessage: string;
+    errorMessage?: string;
 }
 
 interface InputFileProps extends InputProps, CustomProps {}

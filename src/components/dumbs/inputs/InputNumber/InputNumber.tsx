@@ -6,8 +6,8 @@ interface CustomProps {
     inputNumberStyles?: string;
     label: string;
     inputStyles?: string;
-    register: any;
-    errorMessage: string;
+    register?: any;
+    errorMessage?: string;
 }
 
 interface InputNumberProps extends InputProps, CustomProps {}

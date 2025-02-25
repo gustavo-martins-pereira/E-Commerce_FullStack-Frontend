@@ -2,8 +2,16 @@ import { useNavigate } from "react-router-dom";
 
 import { Button } from "@components/dumbs/Button/Button";
 
-export function NotFound() {
-    const navigator = useNavigate();
+export function NotFound(): JSX.Element {
+    const navigate = useNavigate();
+
+    const handleNavigateBack = (): void => {
+        navigate(-1);
+    };
+
+    const handleNavigateHome = (): void => {
+        navigate("/");
+    };
 
     return (
         <main>
@@ -12,7 +20,12 @@ export function NotFound() {
                 <h1>Page Not Found</h1>
                 <p>The page you are looking for could not be found. Please check the URL and try again.</p>
 
-                <Button className="btn-primary" onClick={() => navigator(-1)}>Back</Button>
+                <Button 
+                    className="btn-primary" 
+                    onClick={handleNavigateBack}
+                >
+                    Back
+                </Button>
             </section>
 
             <article className="section flex flex-col items-start gap-4 md:flex-row md:justify-between">
@@ -22,7 +35,12 @@ export function NotFound() {
                     <p>Explore our wide range of high-quality products and find exactly what you need.</p>
 
                     <div className="flex gap-4">
-                        <Button className="btn-secondary" onClick={() => navigator("/")}>Homepage</Button>
+                        <Button 
+                            className="btn-secondary" 
+                            onClick={handleNavigateHome}
+                        >
+                            Homepage
+                        </Button>
                     </div>
                 </div>
             </article>

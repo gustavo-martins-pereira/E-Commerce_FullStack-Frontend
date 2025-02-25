@@ -5,7 +5,7 @@ interface InputProps extends ComponentProps<"input"> {}
 interface CustomProps {
     label: string;
     register: any;
-    errorMessage: string;
+    errorMessage?: string;
 }
 
 interface InputTextProps extends InputProps, CustomProps {}

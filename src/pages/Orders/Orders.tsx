@@ -7,18 +7,37 @@ import { OrderCard } from "@components/smart/OrderCard/OrderCard";
 import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
 import { getUserByLoggedUser } from "@utils/localstorage";
 
-export function Orders() {
+interface OrderItem {
+    quantity: number;
+    product: {
+        id: number;
+        name: string;
+    };
+}
+
+interface Order {
+    id: number;
+    createdAt: string;
+    total: number;
+    status: 'PENDING' | 'SHIPPED' | 'DELIVERED';
+    orderItems: OrderItem[];
+}
+
+export function Orders(): JSX.Element {
     const INITIAL_ORDERS_TO_SHOW = 3;
 
     // STATES
-    const [ordersData, setOrdersData] = useState();
-    const [ordersToShow, setOrdersToShow] = useState([]);
-    const [isAllOrders, setIsAllOrders] = useState(false);
+    const [ordersData, setOrdersData] = useState<Order[] | null>(null);
+    const [ordersToShow, setOrdersToShow] = useState<Order[]>([]);
+    const [isAllOrders, setIsAllOrders] = useState<boolean>(false);
 
     // EFFECTS
     useEffect(() => {
-        (async function fetchOrdersData() {
-            const user = await getUserByUsername(getUserByLoggedUser().username);
+        (async function fetchOrdersData(): Promise<void> {
+            const loggedUser = getUserByLoggedUser();
+            if (!loggedUser) return;
+
+            const user = await getUserByUsername(loggedUser.username);
             const orders = await getOrdersByClientId(user.id);
 
             setOrdersData(orders);
@@ -27,7 +46,9 @@ export function Orders() {
     }, []);
 
     // HANDLES
-    function handleShowAllOrders() {
+    function handleShowAllOrders(): void {
+        if (!ordersData) return;
+        
         setOrdersToShow(ordersData);
         setIsAllOrders(true);
     }
@@ -42,8 +63,8 @@ export function Orders() {
             {/* ORDERS */}
             <section className="max-w-xl m-auto flex flex-col gap-6">
                 {ordersData ?
-                    ordersToShow.map(order => {
-                        return <OrderCard
+                    ordersToShow.map((order: Order) => (
+                        <OrderCard
                             key={order.id}
                             orderId={order.id}
                             date={order.createdAt}
@@ -52,17 +73,23 @@ export function Orders() {
                             itemsCount={order.orderItems.length}
                             orderItems={order.orderItems}
                         />
-                    })
+                    ))
                     :
                     <Skeleton className="flex flex-col gap-2">
-                        {Array.from({ length: INITIAL_ORDERS_TO_SHOW }).map((_, index) => <div className="h-40" key={index}></div>)}
+                        {Array.from({ length: INITIAL_ORDERS_TO_SHOW }).map((_, index) => (
+                            <div className="h-40" key={index} />
+                        ))}
                     </Skeleton>
                 }
-                
 
-                {ordersData?.length > INITIAL_ORDERS_TO_SHOW && !isAllOrders && <Button className="btn-primary" onClick={handleShowAllOrders}>
-                    View All
-                </Button>}
+                {(ordersData?.length ?? 0) > INITIAL_ORDERS_TO_SHOW && !isAllOrders && (
+                    <Button 
+                        className="btn-primary" 
+                        onClick={handleShowAllOrders}
+                    >
+                        View All
+                    </Button>
+                )}
             </section>
         </main>
     );

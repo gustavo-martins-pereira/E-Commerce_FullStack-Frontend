@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, ReactElement } from "react";
 import { Link } from "react-router-dom";
 import { FaShippingFast, FaHeadset, FaAward, FaSearch, FaShoppingCart, FaTag } from "react-icons/fa";
 
@@ -9,8 +9,15 @@ import { UserContext } from "@contexts/userContext";
 
 import OnlineShopping from "./images/online-shopping.svg";
 
-export function Home() {
-    const shopWithConfidenceData = [
+interface Feature {
+    icon: ReactElement;
+    altText: string;
+    title: string;
+    description: string;
+}
+
+export function Home(): JSX.Element {
+    const shopWithConfidenceData: Feature[] = [
         {
             icon: <FaShippingFast className="icon-primary" />,
             altText: "Delivery truck",
@@ -31,7 +38,7 @@ export function Home() {
         },
     ];
 
-    const howWorksData = [
+    const howWorksData: Feature[] = [
         {
             icon: <FaSearch className="icon-primary" />,
             altText: "Magnifying glass",

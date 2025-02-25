@@ -1,8 +1,16 @@
 import { Link } from "react-router-dom";
 import { FaBox, FaHistory } from "react-icons/fa";
+import { ReactElement } from "react";
 
-export function Dashboard() {
-    const features = [
+interface DashboardFeature {
+    link: string;
+    title: string;
+    description: string;
+    icon: ReactElement;
+}
+
+export function Dashboard(): JSX.Element {
+    const features: DashboardFeature[] = [
         {
             link: "/dashboard/manage-products",
             title: "Manage Products",
@@ -29,13 +37,15 @@ export function Dashboard() {
                 <h2 className="text-center">Dashboard Features</h2>
 
                 <section className="max-w-[80%] flex flex-col gap-8 m-auto md:grid md:grid-cols-2">
-                    {features.map((feature, index) => <Link to={feature.link} key={index}>
-                        <article key={feature.link} className="h-full flex flex-col items-center gap-4 border-2 border-primary rounded p-4 text-center transition-transform hover:scale-110">
-                            {feature.icon}
-                            <h3>{feature.title}</h3>
-                            <p>{feature.description}</p>
-                        </article>
-                    </Link>)}
+                    {features.map((feature: DashboardFeature, index: number) => (
+                        <Link to={feature.link} key={index}>
+                            <article className="h-full flex flex-col items-center gap-4 border-2 border-primary rounded p-4 text-center transition-transform hover:scale-110">
+                                {feature.icon}
+                                <h3>{feature.title}</h3>
+                                <p>{feature.description}</p>
+                            </article>
+                        </Link>
+                    ))}
                 </section>
             </section>
         </main>

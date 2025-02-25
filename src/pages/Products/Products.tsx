@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, ChangeEvent } from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from "swiper/modules";
@@ -13,8 +13,26 @@ import { CartContext } from "@contexts/cartContext";
 import { paginationRenderBulletConfig } from "@utils/swiper";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 
-export function Products() {
-    const arrivalsData = [
+interface Product {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    image: {
+        data: Buffer;
+    };
+}
+
+interface Feature {
+    icon: JSX.Element;
+    altText: string;
+    title: string;
+    description: string;
+    className?: string;
+}
+
+export function Products(): JSX.Element {
+    const arrivalsData: Feature[] = [
         {
             icon: <FaStar className="icon-primary" />,
             altText: "Star",
@@ -35,7 +53,7 @@ export function Products() {
         },
     ];
 
-    const perfectProductData = [
+    const perfectProductData: Feature[] = [
         {
             icon: <FaListUl className="icon-primary" />,
             altText: "Bullet list",
@@ -60,24 +78,33 @@ export function Products() {
     ];
 
     // STATES
-    const [products, setProducts] = useState(null);
-    const [isProductsLoaded, setIsProductsLoaded] = useState(false);
-    const [selectedProduct, setSelectedProduct] = useState({});
-    const [productQuantity, setProductQuantity] = useState(1);
+    const [products, setProducts] = useState<Product[] | null>(null);
+    const [isProductsLoaded, setIsProductsLoaded] = useState<boolean>(false);
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    const [productQuantity, setProductQuantity] = useState<number>(1);
 
     // CONTEXTS
     const { addToCart } = useContext(CartContext);
 
     // EFFECTS
     useEffect(() => {
-        (async function fetchAllProducts() {
-            const products = await getAllProducts();
+        (async function fetchAllProducts(): Promise<void> {
+            const fetchedProducts = await getAllProducts();
 
-            setProducts(products);
+            setProducts(fetchedProducts);
             setIsProductsLoaded(true);
-            setSelectedProduct(products[0]);
-        }());
+            setSelectedProduct(fetchedProducts[0]);
+        })();
     }, []);
+
+    // HANDLES
+    const handleQuantityChange = (event: ChangeEvent<HTMLInputElement>): void => {
+        setProductQuantity(Number(event.target.value));
+    };
+
+    const handleAddToCart = (product: Product, quantity: number): void => {
+        addToCart(product, quantity);
+    };
 
     return (
         <main>
@@ -129,13 +156,13 @@ export function Products() {
                     inputStyles="w-20"
                     min={1}
                     value={productQuantity}
-                    onChange={event => setProductQuantity(Number(event.target.value))}
+                    onChange={handleQuantityChange}
                 />
 
                 <Button
                     className="btn-primary"
                     disabled={!isProductsLoaded}
-                    onClick={() => addToCart(selectedProduct, productQuantity)}
+                    onClick={() => handleAddToCart(selectedProduct!, productQuantity)}
                 >
                     Add to Cart
                 </Button>
@@ -203,7 +230,7 @@ export function Products() {
                                     </div>
                                     <Button
                                         className="btn-secondary w-full mt-4"
-                                        onClick={() => addToCart(product, 1)}
+                                        onClick={() => handleAddToCart(product, 1)}
                                     >
                                         Add to Cart
                                     </Button>
