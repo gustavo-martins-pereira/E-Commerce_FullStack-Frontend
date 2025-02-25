@@ -28,7 +28,12 @@ import { UserProvider } from "@contexts/userContext";
 export function App() {
     return (
         <React.Fragment>
-            <BrowserRouter>
+            <BrowserRouter
+                future={{
+                    v7_startTransition: true,
+                    v7_relativeSplatPath: true,
+                }}
+            >
                 <UserProvider>
                     <ScrollToTop />
 

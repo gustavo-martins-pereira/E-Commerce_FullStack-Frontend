@@ -129,14 +129,12 @@ export function RegisterLogin(): JSX.Element {
     }, []);
 
     // HANDLES
-    const handleOnSubmitValidRegisterForm: SubmitHandler<RegisterFormData> = async (
-        registerFormData
-    ): Promise<void> => {
+    const handleOnSubmitValidRegisterForm: SubmitHandler<RegisterFormData> = async (registerFormData): Promise<void> => {
         const { registerUsername, registerPassword, role } = registerFormData;
 
         try {
-            await register(registerUsername, registerPassword, role);
-            toastSuccess("Registration successful!");
+            // FIXME: Twice the same toast message
+            await toastPromise(register(registerUsername, registerPassword, role), { pending: "Registering...", success: "Registration successful!" });
             toastInfo("Now login with your new Account.", { autoClose: 10000 });
             swiperRef.current?.slideNext();
         } catch (error: any) {
@@ -144,19 +142,17 @@ export function RegisterLogin(): JSX.Element {
         }
     };
 
-    const handleOnSubmitValidLoginForm: SubmitHandler<LoginFormData> = async (
-        loginFormData
-    ): Promise<void> => {
+    const handleOnSubmitValidLoginForm: SubmitHandler<LoginFormData> = async (loginFormData): Promise<void> => {
         const { loginUsername, loginPassword } = loginFormData;
         
-        const response = await toastPromise(
+        const userLogin = await toastPromise(
             loginApi(loginUsername, loginPassword), 
             { pending: "Logging...", success: "Login successful!" }
         );
 
-        const accessToken = response.data.accessToken;
+        const accessToken = userLogin.accessToken;
         localStorage.setItem("accessToken", accessToken);
-        login(getUserByToken(accessToken), response.data.loginMaxAge);
+        login(getUserByToken(accessToken), userLogin.loginMaxAge);
     };
 
     function handleNextSlide() {

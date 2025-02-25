@@ -1,9 +1,9 @@
-import { USER_ROLES } from "./enums/userRoles";
+import { USER_ROLES } from "@utils/types/user";
 
 export interface MenuItem {
     title: string;
     path: string;
-    visibleTo?: (typeof USER_ROLES)[keyof typeof USER_ROLES][];
+    visibleTo?: USER_ROLES[];
     styles?: string;
 }
 

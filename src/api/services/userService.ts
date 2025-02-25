@@ -1,31 +1,35 @@
 import { api } from "@api/apiClient";
 
-import { USER_ROLES } from "@utils/enums/userRoles";
+import { User, USER_ROLES, UserLogin, UserRefreshToken } from "@utils/types/user";
 
-async function register(username: string, password: string, role: typeof USER_ROLES) {
+async function register(username: string, password: string, role: USER_ROLES): Promise<User> {
     try {
-        return await api.post("/register", {
+        const response = await api.post("/register", {
             "username": username,
             "password": password,
             "role": role,
         });
+
+        return response.data;
     } catch(error) {
         throw error;
     }
 }
 
-async function login(username: string, password: string) {
+async function login(username: string, password: string): Promise<UserLogin> {
     try {
-        return await api.post("/login", {
+        const response = await api.post("/login", {
             "username": username,
             "password": password,
         }, { withCredentials: true });
+
+        return response.data;
     } catch (error) {
         throw error;
     }
 }
 
-async function refreshToken() {
+async function refreshToken(): Promise<UserRefreshToken> {
     try {
         const response = await api.post("/login/refresh", {}, { withCredentials: true });
 
@@ -35,7 +39,7 @@ async function refreshToken() {
     }
 }
 
-async function logout() {
+async function logout(): Promise<void> {
     try {
         await api.post("/users/logout", {}, { withCredentials: true });
     } catch (error) {
@@ -43,7 +47,7 @@ async function logout() {
     }
 }
 
-async function getUserById(id: number) {
+async function getUserById(id: number): Promise<User> {
     try {
         const response = await api.get(`/users/${id}`);
 
@@ -53,7 +57,7 @@ async function getUserById(id: number) {
     }
 }
 
-async function getUserByUsername(username: string) {
+async function getUserByUsername(username: string): Promise<User> {
     try {
         const response = await api.get(`/users/usernames/${username}`);
 
