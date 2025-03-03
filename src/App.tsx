@@ -66,6 +66,7 @@ export function App() {
 
                         {/* SELLER ROUTES */}
                         <Route path="/dashboard">
+                            {/* FIXME: Make the Dashboard available only for a seller logged */}
                             <Route index element={<Dashboard />} />
 
                             <Route path="manage-products">

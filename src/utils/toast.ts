@@ -1,4 +1,4 @@
-import { toast, Bounce, ToastPosition, Theme, ToastOptions } from "react-toastify";
+import { toast, Bounce, ToastPosition, Theme } from "react-toastify";
 import { ReactNode } from "react";
 
 interface ToastProperties {
@@ -16,14 +16,6 @@ interface ToastProperties {
 interface PromiseMessages {
     pending: string;
     success: string;
-}
-
-interface ErrorResponse {
-    response: {
-        data: {
-            error: string;
-        };
-    };
 }
 
 const toastProperties: ToastProperties = {
@@ -78,10 +70,15 @@ async function toastPromise<T>(
             },
             error: {
                 render({ data }: { data: any }): string {
+                    if (data instanceof Error) {
+                        return data.message;
+                    }
+
                     if (data?.response?.data?.error) {
                         return data.response.data.error;
                     }
-                    return 'An error occurred';
+
+                    return "An error occurred";
                 }
             },
         },

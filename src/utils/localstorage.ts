@@ -5,7 +5,7 @@ interface LoggedInUser {
 
 function getUserByLoggedUser(): LoggedInUser | null {
     const userString = localStorage.getItem("loggedInUser");
-    if (!userString) return null;
+    if(!userString) return null;
     
     return JSON.parse(userString) as LoggedInUser;
 }

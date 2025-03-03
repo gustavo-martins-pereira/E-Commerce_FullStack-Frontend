@@ -1,14 +1,18 @@
 import { api } from "@api/apiClient";
 import { withTokenRefresh } from "@api/authHelper";
+import { getUserByUsername } from "@api/services/userService";
 import { getUserByLoggedUser } from "@utils/localstorage";
-import { getUserByUsername } from "./userService";
+import { CartOrderItem, Order, ORDER_STATUS } from "@utils/types/order";
 
-async function createOrder(total: number, orderItems) {
+async function createOrder(total: number, orderItems: CartOrderItem[]): Promise<void> {
     return await withTokenRefresh(async () => {
-        const user = await getUserByUsername(getUserByLoggedUser().username);
+        const loggedUser = getUserByLoggedUser();
+        if(!loggedUser) throw new Error("User is not logged in");
+
+        const user = await getUserByUsername(loggedUser.username);
 
         const accessToken = localStorage.getItem("accessToken");
-        const response = await api.post("/orders/", {
+        await api.post("/orders/", {
             clientId: user.id,
             sellerId: orderItems[0].ownerId,
             total,
@@ -26,12 +30,10 @@ async function createOrder(total: number, orderItems) {
                 Authorization: `Bearer ${accessToken}`,
             },
         });
-
-        return response.data;
     });
 }
 
-async function getOrderById(orderId: number) {
+async function getOrderById(orderId: number): Promise<Order> {
     return await withTokenRefresh(async () => {
         const accessToken = localStorage.getItem("accessToken");
         const response = await api.get(`/orders/${orderId}`, {
@@ -44,7 +46,7 @@ async function getOrderById(orderId: number) {
     });
 }
 
-async function getOrdersByUsername(username: string) {
+async function getOrdersByUsername(username: string): Promise<Order[] | undefined> {
     return await withTokenRefresh(async () => {
         const user = await getUserByUsername(username);
 
@@ -59,7 +61,7 @@ async function getOrdersByUsername(username: string) {
     });
 }
 
-async function getOrdersByClientId(clientId: number) {
+async function getOrdersByClientId(clientId: number): Promise<Order[] | undefined> {
     return await withTokenRefresh(async () => {
         const accessToken = localStorage.getItem("accessToken");
         const response = await api.get(`/orders/clients/${clientId}`, {
@@ -72,7 +74,7 @@ async function getOrdersByClientId(clientId: number) {
     });
 }
 
-async function getOrdersBySellerId(sellerId: number) {
+async function getOrdersBySellerId(sellerId: number): Promise<Order[] | undefined> {
     return await withTokenRefresh(async () => {
         const accessToken = localStorage.getItem("accessToken");
         const response = await api.get(`/orders/sellers/${sellerId}`, {
@@ -85,7 +87,7 @@ async function getOrdersBySellerId(sellerId: number) {
     });
 }
 
-async function updateOrderStatusById(orderId: number, status) {
+async function updateOrderStatusById(orderId: number, status: ORDER_STATUS): Promise<void> {
     return await withTokenRefresh(async () => {
         const accessToken = localStorage.getItem("accessToken");
         await api.patch(`/orders/${orderId}`, { status }, {
