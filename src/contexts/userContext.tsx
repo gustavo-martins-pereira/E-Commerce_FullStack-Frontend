@@ -1,8 +1,8 @@
 import { createContext, useState, useEffect, ReactNode } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { logout } from "@api/services/userService";
-import { Button } from "@components/dumbs/Button/Button";
+import { LogoutMessage } from "@components/dumbs/toastfy/LogoutMessage";
 import { toastWarning, toastPromise } from "@utils/toast";
 
 interface User {
@@ -14,12 +14,9 @@ interface User {
 
 interface UserContextType {
     user: User | null;
+
     login: (userData: User, loginMaxAge: number) => void;
     logoutUser: () => Promise<void>;
-}
-
-interface LogoutMessageProps {
-    closeToast: () => void;
 }
 
 interface UserProviderProps {
@@ -28,21 +25,7 @@ interface UserProviderProps {
 
 export const UserContext = createContext<UserContextType | null>(null);
 
-const LogoutMessage = ({ closeToast }: LogoutMessageProps): JSX.Element => (
-    <article className="flex flex-col gap-4 pl-4">
-        <p>Account disconnected, please log in again to access user features again</p>
-        <div className="flex gap-4">
-            <Button className="btn-primary" onClick={closeToast}>Ok</Button>
-            <Link to="/register-login">
-                <Button className="btn-primary" onClick={closeToast}>
-                    Go to the Login page
-                </Button>
-            </Link>
-        </div>
-    </article>
-);
-
-export const UserProvider = ({ children }: UserProviderProps): JSX.Element => {
+export function UserProvider({ children }: UserProviderProps) {
     const navigate = useNavigate();
 
     // STATES
@@ -56,9 +39,8 @@ export const UserProvider = ({ children }: UserProviderProps): JSX.Element => {
         
         if(savedUser) {
             setUser(JSON.parse(savedUser));
-            if(isLoginExpired) {
-                forceLogout();
-            }
+
+            if(isLoginExpired) forceLogout();
         }
     }, []);
 

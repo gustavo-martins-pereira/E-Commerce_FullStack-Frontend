@@ -1,3 +1,4 @@
+import { ProductImage } from "@utils/types/product";
 import { createContext, useState, ReactNode } from "react";
 
 interface CartItem {
@@ -5,9 +6,8 @@ interface CartItem {
     name: string;
     price: number;
     quantity: number;
-    image: {
-        data: Buffer;
-    };
+
+    image: ProductImage;
 }
 
 interface CartContextType {
@@ -24,7 +24,7 @@ interface CartProviderProps {
 
 export const CartContext = createContext<CartContextType | null>(null);
 
-export function CartProvider({ children }: CartProviderProps): JSX.Element {
+export function CartProvider({ children }: CartProviderProps) {
     const [cartItems, setCartItems] = useState<Map<number, CartItem>>(new Map());
 
     function addToCart(product: CartItem, quantity: number): void {
@@ -46,9 +46,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
                 newCartItems.delete(productId);
             } else {
                 const existingProduct = oldCartItems.get(productId);
-                if(existingProduct) {
-                    newCartItems.set(productId, { ...existingProduct, quantity: newQuantity });
-                }
+                if(existingProduct) newCartItems.set(productId, { ...existingProduct, quantity: newQuantity });
             }
 
             return newCartItems;
