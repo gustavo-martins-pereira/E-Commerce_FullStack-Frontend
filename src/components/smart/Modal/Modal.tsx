@@ -8,7 +8,7 @@ interface ModalProps {
     onClose: () => void;
 }
 
-export function Modal({ title, onClose, children }: ModalProps): JSX.Element {
+export function Modal({ title, onClose, children }: ModalProps) {
     // STATES
     const [isShowing, setIsShowing] = useState<boolean>(true);
 

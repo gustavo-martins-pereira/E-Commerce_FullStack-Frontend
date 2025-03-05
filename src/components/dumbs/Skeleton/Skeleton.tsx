@@ -1,14 +1,10 @@
-import { ReactNode } from "react";
+import { ComponentProps } from "react";
+import { twMerge } from "tailwind-merge";
 
-interface SkeletonProps {
-    className?: string;
-    children: ReactNode;
-}
+interface SkeletonProps extends ComponentProps<"div"> {}
 
-export function Skeleton({ className = "", children }: SkeletonProps) {
+export function Skeleton({ className, ...props }: SkeletonProps) {
     return (
-        <div className={`skeleton ${className}`}>
-            {children}
-        </div>
+        <div className={twMerge("skeleton", className)} {...props} />
     );
 }

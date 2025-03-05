@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { getUSFormatFromDate } from "@utils/dateTime";
+import { ORDER_STATUS } from "@utils/types/order";
 
 interface OrderItem {
     product: {
@@ -15,8 +16,9 @@ interface OrderCardProps {
     orderId: number;
     date: string;
     total: number;
-    status: 'PENDING' | 'SHIPPED' | 'DELIVERED';
+    status: ORDER_STATUS;
     itemsCount: number;
+
     orderItems: OrderItem[];
 }
 
@@ -24,11 +26,11 @@ interface ProductNames {
     [key: number]: string;
 }
 
-interface StatusStyles {
-    [key: string]: string;
-}
+type StatusStyles = {
+    [key in ORDER_STATUS]: string;
+};
 
-export function OrderCard({ orderId, date, total, status, itemsCount, orderItems }: OrderCardProps): JSX.Element {
+export function OrderCard({ orderId, date, total, status, itemsCount, orderItems }: OrderCardProps) {
     const PRODUCTS_TO_SHOW = 3;
 
     const statusStyles: StatusStyles = {

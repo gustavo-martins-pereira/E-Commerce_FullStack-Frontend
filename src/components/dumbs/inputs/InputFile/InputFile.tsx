@@ -1,7 +1,7 @@
 import { ComponentProps } from "react";
 import { FaCheck, FaRegImage } from "react-icons/fa";
 
-interface InputProps extends Omit<ComponentProps<"input">, 'id'> {}
+interface InputProps extends Omit<ComponentProps<"input">, "id"> {}
 
 interface CustomProps {
     id: string;

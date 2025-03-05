@@ -1,4 +1,4 @@
-export function bufferArrayToImageURL(bufferArray: ArrayBuffer): string {
+export function bufferArrayToImageURL(bufferArray: Buffer): string {
     const arrayBuffer = bufferArray;
     const buffer = new Uint8Array(arrayBuffer);
 

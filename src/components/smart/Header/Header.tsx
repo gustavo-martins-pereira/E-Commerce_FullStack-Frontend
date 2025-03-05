@@ -12,7 +12,7 @@ interface IconStyle {
     cursor: string;
 }
 
-export function Header(): JSX.Element {
+export function Header() {
     const iconsStyle: IconStyle = { display: "inline-block", cursor: "pointer" };
 
     const { pathname } = useLocation();
@@ -21,7 +21,7 @@ export function Header(): JSX.Element {
     const headerRef = useRef<HTMLElement | null>(null);
 
     // CONTEXTS
-    const { user, logoutUser } = useContext(UserContext);
+    const { user, logoutUser } = useContext(UserContext)!;
 
     // STATES
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -84,7 +84,7 @@ export function Header(): JSX.Element {
                         {/* LINKS */}
                         <ul className="flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
                             {mainMenu
-                                .filter((link: MenuItem) => !link.visibleTo || link.visibleTo.includes(user?.role))
+                                .filter((link: MenuItem) => !link.visibleTo || (user && link.visibleTo.includes(user.role)))
                                 .map((link: MenuItem) => (
                                     <li key={link.path}>
                                         <Link 

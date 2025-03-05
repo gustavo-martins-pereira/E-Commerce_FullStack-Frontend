@@ -2,14 +2,14 @@ import { createContext, useState, useEffect, ReactNode } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import { logout } from "@api/services/userService";
-import { LogoutMessage } from "@components/dumbs/toastfy/LogoutMessage";
+import { LogoutMessage } from "@components/dumbs/toastify/LogoutMessage";
 import { toastWarning, toastPromise } from "@utils/toast";
+import { USER_ROLES } from "@utils/types/user";
 
 interface User {
     id: number;
     username: string;
-    email: string;
-    role: string;
+    role: USER_ROLES;
 }
 
 interface UserContextType {

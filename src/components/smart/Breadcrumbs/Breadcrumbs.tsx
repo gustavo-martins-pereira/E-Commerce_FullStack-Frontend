@@ -7,7 +7,7 @@ interface BreadcrumbItem {
     link: string;
 }
 
-function Breadcrumb(): JSX.Element {
+function Breadcrumb() {
     const location = useLocation();
 
     const blacklist: string[] = [

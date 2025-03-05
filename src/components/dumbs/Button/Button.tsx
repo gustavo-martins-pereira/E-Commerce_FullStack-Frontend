@@ -1,18 +1,13 @@
-interface ButtonProps {
-    children: React.ReactNode;
-    className?: string;
-    disabled?: boolean;
-    onClick?: () => void;
-}
+import { ComponentProps } from "react";
+import { twMerge } from "tailwind-merge";
 
-export function Button({ children, className, disabled = false, onClick = () => {} }: ButtonProps) {
+interface ButtonProps extends ComponentProps<"button"> {}
+
+export function Button({ className, ...props }: ButtonProps) {
     return (
         <button
-            className={`btn disabled:opacity-50 disabled:cursor-auto ${className}`}
-            disabled={disabled}
-            onClick={onClick}
-        >
-            {children}
-        </button>
+            className={twMerge("btn disabled:opacity-50 disabled:cursor-auto", className)}
+            {...props}
+        />
     );
 }

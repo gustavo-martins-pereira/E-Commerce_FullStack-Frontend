@@ -5,9 +5,9 @@ import Logo from "@assets/images/logo.svg";
 import { UserContext } from "@contexts/userContext";
 import { mainMenu, MenuItem } from "@utils/appLinksVisibility";
 
-export function Footer(): JSX.Element {
+export function Footer() {
     // CONTEXTS
-    const { user } = useContext(UserContext);
+    const { user } = useContext(UserContext)!;
 
     return (
         <footer className="bg-footer flex flex-col justify-between items-start gap-8 border-t p-4 lg:flex-row lg:p-16">
@@ -18,7 +18,7 @@ export function Footer(): JSX.Element {
             <nav>
                 <ul className="flex flex-col justify-between gap-4 lg:items-end">
                     {mainMenu
-                        .filter((link: MenuItem) => !link.visibleTo || link.visibleTo.includes(user?.role))
+                        .filter((link: MenuItem) => !link.visibleTo || (user && link.visibleTo.includes(user.role)))
                         .map((link: MenuItem) => (
                             <li key={link.path}>
                                 <Link 

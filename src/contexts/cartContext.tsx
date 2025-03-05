@@ -1,19 +1,11 @@
-import { ProductImage } from "@utils/types/product";
 import { createContext, useState, ReactNode } from "react";
 
-interface CartItem {
-    id: number;
-    name: string;
-    price: number;
-    quantity: number;
-
-    image: ProductImage;
-}
+import { CartOrderItem } from "@utils/types/order";
 
 interface CartContextType {
-    cartItems: Map<number, CartItem>;
+    cartOrderItems: Map<number, CartOrderItem>;
 
-    addToCart: (product: CartItem, quantity: number) => void;
+    addToCart: (product: CartOrderItem, quantity: number) => void;
     updateCartQuantity: (productId: number, newQuantity: number) => void;
     removeItemFromCart: (productId: number) => void;
 }
@@ -25,9 +17,9 @@ interface CartProviderProps {
 export const CartContext = createContext<CartContextType | null>(null);
 
 export function CartProvider({ children }: CartProviderProps) {
-    const [cartItems, setCartItems] = useState<Map<number, CartItem>>(new Map());
+    const [cartOrderItems, setCartItems] = useState<Map<number, CartOrderItem>>(new Map());
 
-    function addToCart(product: CartItem, quantity: number): void {
+    function addToCart(product: CartOrderItem, quantity: number): void {
         setCartItems(oldCartItems => {
             const newCartItems = new Map(oldCartItems);
             const existingProduct = oldCartItems.get(product.id);
@@ -63,7 +55,7 @@ export function CartProvider({ children }: CartProviderProps) {
     }
 
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, updateCartQuantity, removeItemFromCart }}>
+        <CartContext.Provider value={{ cartOrderItems, addToCart, updateCartQuantity, removeItemFromCart }}>
             {children}
         </CartContext.Provider>
     );

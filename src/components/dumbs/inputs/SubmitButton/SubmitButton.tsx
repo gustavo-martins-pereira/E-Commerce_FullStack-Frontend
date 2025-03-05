@@ -1,21 +1,14 @@
 import { ComponentProps } from "react";
+import { twMerge } from "tailwind-merge";
 
-interface InputProps extends Omit<ComponentProps<"input">, "type"> {}
+interface InputProps extends ComponentProps<"input"> {}
 
-interface CustomProps {
-    className?: string;
-    disabled?: boolean;
-}
-
-interface SubmitButtonProps extends InputProps, CustomProps {}
-
-export function SubmitButton({ className = "", disabled = false, ...inputProps }: SubmitButtonProps) {
+export function SubmitButton({ className, ...props }: InputProps) {
     return (
         <input 
-            className={`btn disabled:opacity-75 ${className}`} 
+            className={twMerge("btn disabled:opacity-75", className)} 
             type="submit" 
-            disabled={disabled}
-            {...inputProps}
+            {...props}
         />
     );
 }

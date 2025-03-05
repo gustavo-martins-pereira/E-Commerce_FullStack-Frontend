@@ -7,10 +7,11 @@ interface FeaturesSectionProps {
         title: string;
         description: string;
     }[];
-    featureStyles?: React.CSSProperties;
+
+    featureItemStyles?: React.CSSProperties;
 }
 
-export function FeaturesSection({ features, featureStyles }: FeaturesSectionProps) {
+export function FeaturesSection({ features, featureItemStyles }: FeaturesSectionProps) {
     return (
         <section className="flex flex-col gap-8 md:grid md:grid-cols-3">
             {features.map((feature, index) => (
@@ -19,7 +20,7 @@ export function FeaturesSection({ features, featureStyles }: FeaturesSectionProp
                     icon={feature.icon}
                     title={feature.title}
                     description={feature.description}
-                    featureStyles={featureStyles}
+                    featureItemStyles={featureItemStyles}
                 />
             ))}
         </section>
