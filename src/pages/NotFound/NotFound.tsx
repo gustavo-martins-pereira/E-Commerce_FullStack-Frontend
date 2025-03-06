@@ -2,14 +2,14 @@ import { useNavigate } from "react-router-dom";
 
 import { Button } from "@components/dumbs/Button/Button";
 
-export function NotFound(): JSX.Element {
+export function NotFound() {
     const navigate = useNavigate();
 
-    const handleNavigateBack = (): void => {
+    function handleNavigateBack(): void {
         navigate(-1);
     };
 
-    const handleNavigateHome = (): void => {
+    function handleNavigateHome(): void {
         navigate("/");
     };
 

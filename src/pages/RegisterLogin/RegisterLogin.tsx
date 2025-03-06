@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperProps, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFlip, Navigation } from "swiper/modules";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import type { Swiper as SwiperType } from 'swiper';
 
 import { getAllProducts } from "@api/services/productService";
@@ -12,27 +12,21 @@ import { SubmitButton } from "@components/dumbs/inputs/SubmitButton/SubmitButton
 import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
 import { UserContext } from "@contexts/userContext";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
-import { toastError, toastSuccess, toastInfo, toastPromise } from "@utils/toast";
+import { toastError, toastInfo, toastPromise } from "@utils/toast";
 import { getUserByToken } from "@utils/jwt";
+import { USER_ROLES } from "@utils/types/user";
+import { Product } from "@utils/types/product";
 
 import Register from "./assets/images/register.svg";
 import Login from "./assets/images/login.svg";
 
 import "./assets/css/register-login.css";
 
-interface Product {
-    id: number;
-    name: string;
-    image: {
-        data: Buffer;
-    };
-}
-
 interface RegisterFormData {
     registerUsername: string;
     registerPassword: string;
     registerConfirmPassword: string;
-    role: 'USER' | 'SELLER';
+    role: USER_ROLES;
 }
 
 interface LoginFormData {
@@ -40,30 +34,8 @@ interface LoginFormData {
     loginPassword: string;
 }
 
-interface SwiperGalleryConfig {
-    className: string;
-    modules: any[];
-    spaceBetween: number;
-    slidesPerView: number;
-    centeredSlides: boolean;
-    loop: boolean;
-    speed: number;
-    allowTouchMove: boolean;
-    autoplay: {
-        delay: number;
-        disableOnInteraction: boolean;
-        reverseDirection?: boolean;
-    };
-    breakpoints?: {
-        [key: number]: {
-            slidesPerView: number;
-            spaceBetween: number;
-        };
-    };
-}
-
-export function RegisterLogin(): JSX.Element {
-    function swiperGalleryConfig(customConfig?: Partial<SwiperGalleryConfig>): SwiperGalleryConfig {
+export function RegisterLogin() {
+    function swiperGalleryConfig(customConfig?: Partial<SwiperProps>): SwiperProps {
         return {
             className: "swiper-gallery",
             modules: [Autoplay],
@@ -96,7 +68,7 @@ export function RegisterLogin(): JSX.Element {
     }
 
     // CONTEXTS
-    const { login } = useContext(UserContext);
+    const { login } = useContext(UserContext)!;
 
     // STATES
     const [products, setProducts] = useState<Product[] | null>(null);
@@ -129,11 +101,10 @@ export function RegisterLogin(): JSX.Element {
     }, []);
 
     // HANDLES
-    const handleOnSubmitValidRegisterForm: SubmitHandler<RegisterFormData> = async (registerFormData): Promise<void> => {
+    async function handleOnSubmitValidRegisterForm(registerFormData: RegisterFormData): Promise<void> {
         const { registerUsername, registerPassword, role } = registerFormData;
 
         try {
-            // FIXME: Twice the same toast message
             await toastPromise(register(registerUsername, registerPassword, role), { pending: "Registering...", success: "Registration successful!" });
             toastInfo("Now login with your new Account.", { autoClose: 10000 });
             swiperRef.current?.slideNext();
@@ -142,7 +113,7 @@ export function RegisterLogin(): JSX.Element {
         }
     };
 
-    const handleOnSubmitValidLoginForm: SubmitHandler<LoginFormData> = async (loginFormData): Promise<void> => {
+    async function handleOnSubmitValidLoginForm(loginFormData: LoginFormData): Promise<void> {
         const { loginUsername, loginPassword } = loginFormData;
         
         const userLogin = await toastPromise(
@@ -152,7 +123,9 @@ export function RegisterLogin(): JSX.Element {
 
         const accessToken = userLogin.accessToken;
         localStorage.setItem("accessToken", accessToken);
-        login(getUserByToken(accessToken), userLogin.loginMaxAge);
+
+        const user = await getUserByToken(accessToken);
+        login(user, userLogin.loginMaxAge);
     };
 
     function handleNextSlide() {

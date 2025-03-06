@@ -8,25 +8,7 @@ import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
 import { getUserByLoggedUser } from "@utils/localstorage";
 import { getUSFormatFromDate } from "@utils/dateTime";
 import { toastPromise } from "@utils/toast";
-
-interface OrderItem {
-    product: {
-        name: string;
-        description: string;
-    };
-    quantity: number;
-    price: number;
-    subtotal: number;
-}
-
-interface Order {
-    id: number;
-    clientId: number;
-    total: number;
-    status: 'PENDING' | 'SHIPPED' | 'DELIVERED';
-    createdAt: string;
-    orderItems: OrderItem[];
-}
+import { Order } from "@utils/types/order";
 
 interface Client {
     id: number;
@@ -37,7 +19,7 @@ interface ClientsMap {
     [key: number]: Client;
 }
 
-export function OrdersHistory(): JSX.Element {
+export function OrdersHistory() {
     // STATES
     const [orders, setOrders] = useState<Order[] | null>(null);
     const [clients, setClients] = useState<ClientsMap>({});
@@ -46,17 +28,19 @@ export function OrdersHistory(): JSX.Element {
     // EFFECTS
     useEffect(() => {
         (async function fetchOrders() {
-            const user = await getUserByUsername(getUserByLoggedUser()?.username || '');
+            const user = await getUserByUsername(getUserByLoggedUser()?.username || "");
             const fetchedOrders = await getOrdersBySellerId(user.id);
             setOrders(fetchedOrders);
 
-            const fetchedClients: ClientsMap = {};
-            for (const order of fetchedOrders) {
-                const client = await getUserById(order.clientId);
-                fetchedClients[order.id] = client;
-            }
+            if (fetchedOrders) {
+                const fetchedClients: ClientsMap = {};
+                for (const order of fetchedOrders) {
+                    const client = await getUserById(order.clientId);
+                    fetchedClients[order.id] = client;
+                }
 
-            setClients(fetchedClients);
+                setClients(fetchedClients);
+            }
         })();
     }, []);
 
@@ -67,14 +51,14 @@ export function OrdersHistory(): JSX.Element {
 
     async function handleStatusChange(orderId: number, newStatus: Order['status']): Promise<void> {
         await toastPromise(
-            updateOrderStatusById(orderId, newStatus), 
+            updateOrderStatusById(orderId, newStatus),
             { success: "Status updated", pending: "Updating" }
         );
 
-        setOrders(prevOrders => 
-            prevOrders?.map(order => 
-                order.id === orderId 
-                    ? { ...order, status: newStatus } 
+        setOrders(prevOrders =>
+            prevOrders?.map(order =>
+                order.id === orderId
+                    ? { ...order, status: newStatus }
                     : order
             ) || null
         );
@@ -98,39 +82,8 @@ export function OrdersHistory(): JSX.Element {
                     </thead>
 
                     <tbody>
-                        {orders
-                            ? orders.map(order => (
-                                <tr key={order.id}>
-                                    <td className="px-4 py-2">{order.id}</td>
-                                    <td className="px-4 py-2">{clients[order.id]?.username}</td>
-                                    <td className="px-4 py-2">
-                                        {getUSFormatFromDate(new Date(order.createdAt))}
-                                    </td>
-                                    <td className="px-4 py-2">${order.total}</td>
-                                    <th scope="col" className="px-4 py-2">
-                                        <select
-                                            className="p-2 border"
-                                            value={order.status}
-                                            onChange={(e: ChangeEvent<HTMLSelectElement>) => 
-                                                handleStatusChange(order.id, e.target.value as Order['status'])
-                                            }
-                                        >
-                                            <option value="PENDING">PENDING</option>
-                                            <option value="SHIPPED">SHIPPED</option>
-                                            <option value="DELIVERED">DELIVERED</option>
-                                        </select>
-                                    </th>
-                                    <td className="px-4 py-2">
-                                        <Button
-                                            className="btn-primary rounded p-1 text-sm"
-                                            onClick={() => handleShowOrderDetails(order)}
-                                        >
-                                            Show Details
-                                        </Button>
-                                    </td>
-                                </tr>
-                            ))
-                            : Array.from({ length: 3 }).map((_, index) => (
+                        {orders === null
+                            ? Array.from({ length: 3 }).map((_, index) => (
                                 <tr key={index}>
                                     <td colSpan={999}>
                                         <Skeleton>
@@ -139,6 +92,45 @@ export function OrdersHistory(): JSX.Element {
                                     </td>
                                 </tr>
                             ))
+                            : orders.length > 0
+                                ? orders.map(order => (
+                                    <tr key={order.id}>
+                                        <td className="px-4 py-2">{order.id}</td>
+                                        <td className="px-4 py-2">{clients[order.id]?.username}</td>
+                                        <td className="px-4 py-2">
+                                            {getUSFormatFromDate(new Date(order.createdAt))}
+                                        </td>
+                                        <td className="px-4 py-2">${order.total}</td>
+                                        <th scope="col" className="px-4 py-2">
+                                            <select
+                                                className="p-2 border"
+                                                value={order.status}
+                                                onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+                                                    handleStatusChange(order.id, e.target.value as Order['status'])
+                                                }
+                                            >
+                                                <option value="PENDING">PENDING</option>
+                                                <option value="SHIPPED">SHIPPED</option>
+                                                <option value="DELIVERED">DELIVERED</option>
+                                            </select>
+                                        </th>
+                                        <td className="px-4 py-2">
+                                            <Button
+                                                className="btn-primary rounded p-1 text-sm"
+                                                onClick={() => handleShowOrderDetails(order)}
+                                            >
+                                                Show Details
+                                            </Button>
+                                        </td>
+                                    </tr>
+                                ))
+                                : (
+                                    <tr>
+                                        <td colSpan={6} className="text-center p-4 text-gray-500">
+                                            No orders yet
+                                        </td>
+                                    </tr>
+                                )
                         }
                     </tbody>
                 </table>
@@ -149,18 +141,18 @@ export function OrdersHistory(): JSX.Element {
                 onClose={() => setSelectedOrder(null)}
             >
                 <div className="space-y-4">
-                    {selectedOrder.orderItems.map((item, index) => (
+                    {selectedOrder.orderItems.map((product, index) => (
                         <div key={index} className="border-b pb-4 mb-4 last:border-none">
                             <h2 className="text-xl font-semibold">
-                                {item.product.name}
+                                {product.product.name}
                             </h2>
                             <p className="text-sm text-gray-600">
-                                {item.product.description}
+                                {product.product.description}
                             </p>
                             <div className="flex flex-col justify-between gap-2 mt-2 md:flex-row">
-                                <p><strong>Quantity</strong>: {item.quantity}</p>
-                                <p><strong>Price</strong>: ${item.price.toFixed(2)}</p>
-                                <p><strong>Subtotal</strong>: ${item.subtotal.toFixed(2)}</p>
+                                <p><strong>Quantity</strong>: {product.quantity}</p>
+                                <p><strong>Price</strong>: ${product.price.toFixed(2)}</p>
+                                <p><strong>Subtotal</strong>: ${product.subtotal.toFixed(2)}</p>
                             </div>
                         </div>
                     ))}

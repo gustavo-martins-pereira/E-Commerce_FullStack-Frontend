@@ -4,23 +4,15 @@ import { Link } from "react-router-dom";
 import { getAllProducts } from "@api/services/productService";
 import { Button } from "@components/dumbs/Button/Button";
 import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
-import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 import { UserContext } from "@contexts/userContext";
+import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
+import { Product } from "@utils/types/product";
 
-interface Product {
-    id: number;
-    name: string;
-    price: number;
-    image: {
-        data: Buffer;
-    };
-}
-
-export function AllProducts(): JSX.Element {
+export function AllProducts() {
     const INITIAL_PRODUCTS_TO_SHOW = 10;
 
     // CONTEXTS
-    const { user } = useContext(UserContext);
+    const { user } = useContext(UserContext)!;
 
     // STATES
     const [productsData, setProductsData] = useState<Product[] | null>(null);
@@ -33,7 +25,7 @@ export function AllProducts(): JSX.Element {
             const products = await getAllProducts();
 
             setProductsData(products);
-            setProductsToShow(products.slice(0, INITIAL_PRODUCTS_TO_SHOW));
+            if(products) setProductsToShow(products.slice(0, INITIAL_PRODUCTS_TO_SHOW));
         })();
     }, []);
 

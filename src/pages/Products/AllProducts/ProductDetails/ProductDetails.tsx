@@ -8,18 +8,9 @@ import { InputNumber } from "@components/dumbs/inputs/InputNumber/InputNumber";
 import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
 import { CartContext } from "@contexts/cartContext";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
+import { Product } from "@utils/types/product";
 
-interface Product {
-    id: number;
-    name: string;
-    description: string;
-    price: number;
-    image: {
-        data: Buffer;
-    };
-}
-
-export function ProductDetails(): JSX.Element {
+export function ProductDetails() {
     const { productId } = useParams<{ productId: string }>();
 
     // STATES
@@ -27,24 +18,24 @@ export function ProductDetails(): JSX.Element {
     const [productQuantity, setProductQuantity] = useState<number>(1);
 
     // CONTEXTS
-    const { addToCart } = useContext(CartContext);
+    const { addToCart } = useContext(CartContext)!;
 
     // EFFECTS
     useEffect(() => {
         (async function fetchProductById(): Promise<void> {
             if (!productId) return;
             const productData = await getProductById(Number(productId));
-            setProduct(productData);
+            if(productData) setProduct(productData);
         })();
     }, [productId]);
 
     // HANDLES
-    const handleQuantityChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    function handleQuantityChange(event: ChangeEvent<HTMLInputElement>): void {
         setProductQuantity(Number(event.target.value));
     };
 
-    const handleAddToCart = (): void => {
-        if (product) {
+    function handleAddToCart(): void {
+        if(product) {
             addToCart(product, productQuantity);
         }
     };

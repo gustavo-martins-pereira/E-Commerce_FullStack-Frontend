@@ -6,7 +6,7 @@ import { getProductById, editProductById } from "@api/services/productService";
 import { InputText } from "@components/dumbs/inputs/InputText/InputText";
 import { TextArea } from "@components/dumbs/inputs/TextArea/TextArea";
 import { SubmitButton } from "@components/dumbs/inputs/SubmitButton/SubmitButton";
-import { toastPromise } from "@utils/toast";
+import { toastError, toastPromise } from "@utils/toast";
 
 interface EditProductFormData {
     editProductName: string;
@@ -14,13 +14,7 @@ interface EditProductFormData {
     editProductPrice: number;
 }
 
-interface ProductData {
-    name: string;
-    description: string;
-    price: number;
-}
-
-export function EditProduct(): JSX.Element {
+export function EditProduct() {
     const { productId } = useParams<{ productId: string }>();
     const navigate = useNavigate();
 
@@ -40,11 +34,16 @@ export function EditProduct(): JSX.Element {
         (async function fetchProductById(): Promise<void> {
             if (!productId) return;
 
-            const productData: ProductData = await getProductById(Number(productId));
+            const product = await getProductById(Number(productId));
+            if(!product) {
+                toastError("Product not found");
+                navigate(-1);
+                return;
+            }
 
-            setValue("editProductName", productData.name);
-            setValue("editProductDescription", productData.description);
-            setValue("editProductPrice", productData.price);
+            setValue("editProductName", product.name);
+            setValue("editProductDescription", product.description);
+            setValue("editProductPrice", product.price);
 
             setIsProductLoaded(true);
         })();
@@ -110,6 +109,7 @@ export function EditProduct(): JSX.Element {
                         />
 
                         <TextArea
+                            id="description"
                             label="Description"
                             placeholder="Product description"
                             name="description"

@@ -12,16 +12,7 @@ import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
 import { CartContext } from "@contexts/cartContext";
 import { paginationRenderBulletConfig } from "@utils/swiper";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
-
-interface Product {
-    id: number;
-    name: string;
-    description: string;
-    price: number;
-    image: {
-        data: ArrayBuffer;
-    };
-}
+import { Product } from "@utils/types/product";
 
 interface Feature {
     icon: JSX.Element;
@@ -31,7 +22,7 @@ interface Feature {
     className?: string;
 }
 
-export function Products(): JSX.Element {
+export function Products() {
     const arrivalsData: Feature[] = [
         {
             icon: <FaStar className="icon-primary" />,
@@ -84,7 +75,7 @@ export function Products(): JSX.Element {
     const [productQuantity, setProductQuantity] = useState<number>(1);
 
     // CONTEXTS
-    const { addToCart } = useContext(CartContext);
+    const { addToCart } = useContext(CartContext)!;
 
     // EFFECTS
     useEffect(() => {
@@ -93,16 +84,16 @@ export function Products(): JSX.Element {
 
             setProducts(fetchedProducts);
             setIsProductsLoaded(true);
-            setSelectedProduct(fetchedProducts[0]);
+            if(fetchedProducts) setSelectedProduct(fetchedProducts[0]);
         })();
     }, []);
 
     // HANDLES
-    const handleQuantityChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    function handleQuantityChange(event: ChangeEvent<HTMLInputElement>): void {
         setProductQuantity(Number(event.target.value));
     };
 
-    const handleAddToCart = (product: Product, quantity: number): void => {
+    function handleAddToCart(product: Product, quantity: number): void {
         addToCart(product, quantity);
     };
 
@@ -177,9 +168,7 @@ export function Products(): JSX.Element {
 
                 <FeaturesSection
                     features={arrivalsData}
-                    featureStyles={{
-                        alignItems: "flex-start"
-                    }}
+                    featureItemStyles="flex-start"
                 />
             </article>
 
@@ -261,9 +250,7 @@ export function Products(): JSX.Element {
 
                 <FeaturesSection
                     features={perfectProductData}
-                    featureStyles={{
-                        additionalClassNames: "md:items-center",
-                    }}
+                    featureItemStyles="md:items-center"
                 />
 
                 <Link className="btn btn-primary self-center px-12 text-center" to="/products/all">View All</Link>

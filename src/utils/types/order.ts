@@ -1,4 +1,4 @@
-import { ProductImage } from "@utils/types/product";
+import { Product, ProductImage } from "@utils/types/product";
 
 /** ISO 8601 date string (e.g. "2025-02-25T17:49:18.891Z") */
 type ISODateString = string;
@@ -20,9 +20,10 @@ interface OrderItem {
     price: number;
     subtotal: number;
     orderId: number;
-    productId: number;
     createdAt: ISODateString;
     updatedAt: ISODateString;
+
+    product: Product;
 }
 
 interface CartOrderItem {

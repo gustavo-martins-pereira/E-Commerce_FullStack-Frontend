@@ -6,24 +6,9 @@ import { Button } from "@components/dumbs/Button/Button";
 import { OrderCard } from "@components/smart/OrderCard/OrderCard";
 import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
 import { getUserByLoggedUser } from "@utils/localstorage";
+import { Order } from "@utils/types/order";
 
-interface OrderItem {
-    quantity: number;
-    product: {
-        id: number;
-        name: string;
-    };
-}
-
-interface Order {
-    id: number;
-    createdAt: string;
-    total: number;
-    status: 'PENDING' | 'SHIPPED' | 'DELIVERED';
-    orderItems: OrderItem[];
-}
-
-export function Orders(): JSX.Element {
+export function Orders() {
     const INITIAL_ORDERS_TO_SHOW = 3;
 
     // STATES
@@ -41,7 +26,9 @@ export function Orders(): JSX.Element {
             const orders = await getOrdersByClientId(user.id);
 
             setOrdersData(orders);
-            setOrdersToShow(orders.slice(0, INITIAL_ORDERS_TO_SHOW));
+            if (orders) {
+                setOrdersToShow(orders.slice(0, INITIAL_ORDERS_TO_SHOW));
+            }
         })();
     }, []);
 
@@ -63,17 +50,20 @@ export function Orders(): JSX.Element {
             {/* ORDERS */}
             <section className="max-w-xl m-auto flex flex-col gap-6">
                 {ordersData ?
-                    ordersToShow.map((order: Order) => (
-                        <OrderCard
-                            key={order.id}
-                            orderId={order.id}
-                            date={order.createdAt}
-                            total={order.total}
-                            status={order.status}
-                            itemsCount={order.orderItems.length}
-                            orderItems={order.orderItems}
-                        />
-                    ))
+                    ordersData.length > 0 ?
+                        ordersToShow.map((order: Order) => (
+                            <OrderCard
+                                key={order.id}
+                                orderId={order.id}
+                                date={order.createdAt}
+                                total={order.total}
+                                status={order.status}
+                                itemsCount={order.orderItems.length}
+                                orderItems={order.orderItems}
+                            />
+                        ))
+                        :
+                        <h4 className="mt-12 text-center">No Orders to show</h4>
                     :
                     <Skeleton className="flex flex-col gap-2">
                         {Array.from({ length: INITIAL_ORDERS_TO_SHOW }).map((_, index) => (

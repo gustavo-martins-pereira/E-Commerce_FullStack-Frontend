@@ -8,7 +8,7 @@ interface FeaturesSectionProps {
         description: string;
     }[];
 
-    featureItemStyles?: React.CSSProperties;
+    featureItemStyles?: string;
 }
 
 export function FeaturesSection({ features, featureItemStyles }: FeaturesSectionProps) {

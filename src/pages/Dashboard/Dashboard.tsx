@@ -9,7 +9,7 @@ interface DashboardFeature {
     icon: ReactElement;
 }
 
-export function Dashboard(): JSX.Element {
+export function Dashboard() {
     const features: DashboardFeature[] = [
         {
             link: "/dashboard/manage-products",

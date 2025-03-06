@@ -1,11 +1,12 @@
 import { createContext, useState, ReactNode } from "react";
 
 import { CartOrderItem } from "@utils/types/order";
+import { Product } from "@utils/types/product";
 
 interface CartContextType {
     cartOrderItems: Map<number, CartOrderItem>;
 
-    addToCart: (product: CartOrderItem, quantity: number) => void;
+    addToCart: (product: Product, quantity: number) => void;
     updateCartQuantity: (productId: number, newQuantity: number) => void;
     removeItemFromCart: (productId: number) => void;
 }
@@ -19,7 +20,7 @@ export const CartContext = createContext<CartContextType | null>(null);
 export function CartProvider({ children }: CartProviderProps) {
     const [cartOrderItems, setCartItems] = useState<Map<number, CartOrderItem>>(new Map());
 
-    function addToCart(product: CartOrderItem, quantity: number): void {
+    function addToCart(product: Product, quantity: number): void {
         setCartItems(oldCartItems => {
             const newCartItems = new Map(oldCartItems);
             const existingProduct = oldCartItems.get(product.id);

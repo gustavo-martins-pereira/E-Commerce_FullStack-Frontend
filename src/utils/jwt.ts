@@ -1,4 +1,6 @@
+import { getUserByUsername } from "@api/services/userService";
 import { jwtDecode } from "jwt-decode";
+import { User } from "./types/user";
 
 interface JwtPayload {
     username: string;
@@ -6,19 +8,13 @@ interface JwtPayload {
     [key: string]: any;
 }
 
-interface UserFromToken {
-    username: string;
-    role: string;
-}
+function getUserByToken(token: string): Promise<User> {
+    const { username } = jwtDecode<JwtPayload>(token);
 
-function getUserByToken(token: string): UserFromToken {
-    const { username, role } = jwtDecode<JwtPayload>(token);
-
-    return { username, role };
+    return getUserByUsername(username);
 }
 
 export {
     getUserByToken,
-    type UserFromToken,
     type JwtPayload
 };

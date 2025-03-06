@@ -3,36 +3,15 @@ import { useParams } from "react-router-dom";
 
 import { getOrderById } from "@api/services/orderService";
 import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
+import { Order, ORDER_STATUS } from "@utils/types/order";
 import { getUSFormatFromDate } from "@utils/dateTime";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 
-interface OrderProduct {
-    id: number;
-    name: string;
-    price: number;
-    image: {
-        data: Buffer;
-    };
-}
+type StatusStyles = {
+    [key in ORDER_STATUS]: string;
+};
 
-interface OrderItem {
-    product: OrderProduct;
-    quantity: number;
-}
-
-interface Order {
-    id: number;
-    total: number;
-    status: 'PENDING' | 'SHIPPED' | 'DELIVERED';
-    createdAt: string;
-    orderItems: OrderItem[];
-}
-
-interface StatusStyles {
-    [key: string]: string;
-}
-
-export function OrderDetails(): JSX.Element {
+export function OrderDetails() {
     const statusStyles: StatusStyles = {
         PENDING: "text-status-pending",
         SHIPPED: "text-status-shipped",
@@ -48,7 +27,7 @@ export function OrderDetails(): JSX.Element {
     // EFFECTS
     useEffect(() => {
         (async function fetchOrderById(): Promise<void> {
-            if (!orderId) return;
+            if(!orderId) return;
             const orderData = await getOrderById(Number(orderId));
             setOrder(orderData);
         })();
@@ -63,7 +42,7 @@ export function OrderDetails(): JSX.Element {
     }, [orderId]);
 
     // HANDLES
-    const handleOnChangeWindowSize = (): void => {
+    function handleOnChangeWindowSize(): void {
         setColSpan(window.innerWidth >= 768 ? 4 : 3);
     };
 
@@ -104,7 +83,7 @@ export function OrderDetails(): JSX.Element {
                             })
                             :
                             Array.from({ length: 3 }).map((_, index) => <tr key={index}>
-                                <td colSpan={999}>
+                                <td colSpan={Math.max()}>
                                     <Skeleton><div className="h-20"></div></Skeleton>
                                 </td>
                             </tr>)

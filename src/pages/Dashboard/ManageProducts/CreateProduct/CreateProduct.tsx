@@ -16,7 +16,7 @@ interface CreateProductFormData {
     createProductImage: FileList;
 }
 
-export function CreateProduct(): JSX.Element {
+export function CreateProduct() {
     const navigate = useNavigate();
 
     // FORM HOOKS
@@ -87,6 +87,7 @@ export function CreateProduct(): JSX.Element {
                         />
 
                         <TextArea
+                            id="description"
                             label="Description"
                             placeholder="Product description"
                             name="description"

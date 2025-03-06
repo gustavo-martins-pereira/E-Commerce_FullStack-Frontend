@@ -16,7 +16,7 @@ interface Feature {
     description: string;
 }
 
-export function Home(): JSX.Element {
+export function Home() {
     const shopWithConfidenceData: Feature[] = [
         {
             icon: <FaShippingFast className="icon-primary" />,
@@ -60,7 +60,7 @@ export function Home(): JSX.Element {
     ];
 
     // CONTEXTS
-    const { user } = useContext(UserContext);
+    const { user } = useContext(UserContext)!;
 
     return (
         <main>

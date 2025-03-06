@@ -29,7 +29,7 @@ async function createProduct(name: string, description: string, price: number, i
     });
 }
 
-async function getAllProducts(): Promise<Product[] | undefined> {
+async function getAllProducts(): Promise<Product[] | null> {
     try {
         const response = await api.get("/products");
 
@@ -39,7 +39,7 @@ async function getAllProducts(): Promise<Product[] | undefined> {
     }
 }
 
-async function getProductById(productId: number): Promise<Product | undefined> {
+async function getProductById(productId: number): Promise<Product | null> {
     try {
         const response = await api.get(`/products/${productId}`);
 
@@ -49,7 +49,7 @@ async function getProductById(productId: number): Promise<Product | undefined> {
     }
 }
 
-async function getProductsBySellerId(sellerId: number): Promise<Product[] | undefined> {
+async function getProductsBySellerId(sellerId: number): Promise<Product[] | null> {
     try {
         const response = await api.get(`/products/seller/${sellerId}`);
 

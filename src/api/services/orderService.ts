@@ -46,7 +46,7 @@ async function getOrderById(orderId: number): Promise<Order> {
     });
 }
 
-async function getOrdersByUsername(username: string): Promise<Order[] | undefined> {
+async function getOrdersByUsername(username: string): Promise<Order[] | null> {
     return await withTokenRefresh(async () => {
         const user = await getUserByUsername(username);
 
@@ -61,7 +61,7 @@ async function getOrdersByUsername(username: string): Promise<Order[] | undefine
     });
 }
 
-async function getOrdersByClientId(clientId: number): Promise<Order[] | undefined> {
+async function getOrdersByClientId(clientId: number): Promise<Order[] | null> {
     return await withTokenRefresh(async () => {
         const accessToken = localStorage.getItem("accessToken");
         const response = await api.get(`/orders/clients/${clientId}`, {
@@ -74,7 +74,7 @@ async function getOrdersByClientId(clientId: number): Promise<Order[] | undefine
     });
 }
 
-async function getOrdersBySellerId(sellerId: number): Promise<Order[] | undefined> {
+async function getOrdersBySellerId(sellerId: number): Promise<Order[] | null> {
     return await withTokenRefresh(async () => {
         const accessToken = localStorage.getItem("accessToken");
         const response = await api.get(`/orders/sellers/${sellerId}`, {
