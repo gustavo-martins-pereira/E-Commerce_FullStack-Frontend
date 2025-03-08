@@ -112,7 +112,6 @@ export function EditProduct() {
                             id="description"
                             label="Description"
                             placeholder="Product description"
-                            name="description"
                             disabled={!isProductLoaded}
                             register={register("editProductDescription")}
                             errorMessage={editProductErrors.editProductDescription?.message}
