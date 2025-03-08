@@ -115,9 +115,9 @@ export function RegisterLogin() {
 
     async function handleOnSubmitValidLoginForm(loginFormData: LoginFormData): Promise<void> {
         const { loginUsername, loginPassword } = loginFormData;
-        
+
         const userLogin = await toastPromise(
-            loginApi(loginUsername, loginPassword), 
+            loginApi(loginUsername, loginPassword),
             { pending: "Logging...", success: "Login successful!" }
         );
 
@@ -146,7 +146,7 @@ export function RegisterLogin() {
                 </header>
 
                 <article>
-                    {products ? 
+                    {products ?
                         <>
                             <Swiper
                                 {...swiperGalleryConfig()}
@@ -257,21 +257,19 @@ export function RegisterLogin() {
                                 <p className="font-semibold">Role</p>
                                 <div className="flex gap-4">
                                     <InputRadius
-                                        name="register-user-role"
                                         id="register-user-role-user"
                                         label="User"
-                                        value="USER"
-                                        checked={true}
+                                        value={USER_ROLES.USER}
+                                        checked
                                         register={registerFormRegister("role", {
                                             required: "Please select a role"
                                         })}
                                         errorMessage={registerErrors.role?.message}
                                     />
                                     <InputRadius
-                                        name="register-user-role"
                                         id="register-user-role-seller"
                                         label="Seller"
-                                        value="SELLER"
+                                        value={USER_ROLES.SELLER}
                                         register={registerFormRegister("role")}
                                     />
                                 </div>
