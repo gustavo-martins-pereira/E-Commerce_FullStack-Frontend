@@ -83,7 +83,7 @@ export function OrderDetails() {
                             })
                             :
                             Array.from({ length: 3 }).map((_, index) => <tr key={index}>
-                                <td colSpan={Math.max()}>
+                                <td colSpan={999}>
                                     <Skeleton><div className="h-20"></div></Skeleton>
                                 </td>
                             </tr>)
