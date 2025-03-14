@@ -70,10 +70,6 @@ async function toastPromise<T>(
             },
             error: {
                 render({ data }: { data: any }): string {
-                    if (data instanceof Error) {
-                        return data.message;
-                    }
-
                     if (data?.response?.data?.error) {
                         return data.response.data.error;
                     }

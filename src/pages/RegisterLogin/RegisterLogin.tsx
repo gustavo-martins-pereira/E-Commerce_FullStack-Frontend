@@ -12,7 +12,7 @@ import { SubmitButton } from "@components/dumbs/inputs/SubmitButton/SubmitButton
 import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
 import { UserContext } from "@contexts/userContext";
 import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
-import { toastError, toastInfo, toastPromise } from "@utils/toast";
+import { toastInfo, toastPromise } from "@utils/toast";
 import { getUserByToken } from "@utils/jwt";
 import { USER_ROLES } from "@utils/types/user";
 import { Product } from "@utils/types/product";
@@ -104,13 +104,9 @@ export function RegisterLogin() {
     async function handleOnSubmitValidRegisterForm(registerFormData: RegisterFormData): Promise<void> {
         const { registerUsername, registerPassword, role } = registerFormData;
 
-        try {
-            await toastPromise(register(registerUsername, registerPassword, role), { pending: "Registering...", success: "Registration successful!" });
-            toastInfo("Now login with your new Account.", { autoClose: 10000 });
-            swiperRef.current?.slideNext();
-        } catch (error: any) {
-            toastError(error.response?.data?.error || "An unexpected error occurred");
-        }
+        await toastPromise(register(registerUsername, registerPassword, role), { pending: "Registering...", success: "Registration successful!" });
+        toastInfo("Now login with your new Account.", { autoClose: 10000 });
+        swiperRef.current?.slideNext();
     };
 
     async function handleOnSubmitValidLoginForm(loginFormData: LoginFormData): Promise<void> {
