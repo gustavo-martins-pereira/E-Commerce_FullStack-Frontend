@@ -5,7 +5,7 @@ interface InputProps extends Omit<ComponentProps<"input">, "id"> {}
 interface CustomProps {
     id: string;
     label: string;
-    register: any;
+    register?: any;
     errorMessage?: string;
 }
 

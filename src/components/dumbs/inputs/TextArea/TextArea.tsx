@@ -5,7 +5,7 @@ interface TextAreaProps extends Omit<ComponentProps<"textarea">, "id"> {}
 interface CustomProps {
     id: string;
     label: string;
-    register: any;
+    register?: any;
     errorMessage?: string;
 }
 
