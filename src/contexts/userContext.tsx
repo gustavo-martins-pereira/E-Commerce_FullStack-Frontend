@@ -54,16 +54,13 @@ export function UserProvider({ children }: UserProviderProps) {
     }
 
     async function logoutUser(): Promise<void> {
-        try {
-                await toastPromise(logout(), { 
-                pending: "Logging out...", 
-                success: "Successfully logged out!" 
-            });
-        } catch(error) {
-            forceLogout();
-        } finally {
-            navigate("/");
-        }
+        await toastPromise(logout(), { 
+            pending: "Logging out...", 
+            success: "Successfully logged out!"
+        });
+
+        forceLogout();
+        navigate("/");
     }
 
     function forceLogout(): void {
