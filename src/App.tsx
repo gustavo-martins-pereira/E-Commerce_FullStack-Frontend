@@ -23,7 +23,10 @@ import { Breadcrumb } from "@components/smart/Breadcrumbs/Breadcrumbs";
 import { ScrollToTop } from "@components/scripts/ScrollToTop";
 import { AuthenticatedUserToHome } from "@components/scripts/AuthenticatedUserToHome";
 import { UnauthenticatedRedirect } from "@components/scripts/UnauthenticatedRedirect";
+import { UnauthorizedUserRedirect } from "@components/scripts/UnauthorizedUserRedirect";
 import { UserProvider } from "@contexts/userContext";
+
+import { USER_ROLES } from "@utils/types/user";
 
 export function App() {
     return (
@@ -65,8 +68,7 @@ export function App() {
                         />
 
                         {/* SELLER ROUTES */}
-                        <Route path="/dashboard">
-                            {/* FIXME: Make the Dashboard available only for a seller logged */}
+                        <Route path="/dashboard" element={<UnauthorizedUserRedirect roles={[USER_ROLES.SELLER]} />}>
                             <Route index element={<Dashboard />} />
 
                             <Route path="manage-products">
