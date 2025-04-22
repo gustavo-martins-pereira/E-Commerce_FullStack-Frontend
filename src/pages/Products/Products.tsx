@@ -213,7 +213,7 @@ export function Products() {
                                         src={bufferArrayToImageURL(product.image.data)}
                                         alt=""
                                     />
-                                    <div className="flex justify-between items-center gap-4 mt-auto font-bold">
+                                    <div className="flex justify-between items-center gap-4 my-auto font-bold">
                                         <h3 className="text-xl">{product.name}</h3>
                                         <p className="text-xl">${product.price}</p>
                                     </div>
