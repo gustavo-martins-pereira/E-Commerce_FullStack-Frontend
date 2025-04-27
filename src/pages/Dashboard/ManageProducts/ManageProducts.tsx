@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { BsBoxSeam } from "react-icons/bs";
 
 import { getUserByUsername } from "@api/services/userService";
 import { getProductsBySellerId, deleteProductById } from "@api/services/productService";
@@ -14,6 +15,7 @@ export function ManageProducts() {
     const [products, setProducts] = useState<Product[] | null>(null);
     const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
     const [productToDelete, setProductToDelete] = useState<number | null>(null);
+    const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
     // EFFECTS
     useEffect(() => {
@@ -33,13 +35,18 @@ export function ManageProducts() {
 
     async function handleConfirmDelete(): Promise<void> {
         if (productToDelete) {
-            await toastPromise(
-                deleteProductById(productToDelete), 
-                { success: "Product deleted", pending: "Deleting" }
-            );
+            setIsDeleting(true);
+            try {
+                await toastPromise(
+                    deleteProductById(productToDelete), 
+                    { success: "Product deleted", pending: "Deleting" }
+                );
 
-            await fetchProducts();
-            handleCloseDeletePopup();
+                await fetchProducts();
+                handleCloseDeletePopup();
+            } finally {
+                setIsDeleting(false);
+            }
         }
     }
 
@@ -63,27 +70,43 @@ export function ManageProducts() {
 
             {/* PRODUCTS */}
             <section className="section flex flex-col gap-4 pt-0">
-                <Link className="self-end" to="/dashboard/manage-products/create"><Button className="btn-primary">Create Product</Button></Link>
+                {products && products.length > 0 && <Link className="self-end" to="/dashboard/manage-products/create"><Button className="btn-primary">Create Product</Button></Link>}
 
                 <div className="flex flex-col gap-8 xl:gap-2">
                     {products ?
-                        products.map(product => (
-                            <article key={product.id} className="flex flex-col gap-4 xl:flex-row xl:border xl:p-4">
-                                <img className="max-h-40 object-contain md:max-h-80" src={product.imageUrl} alt="" />
+                        products.length > 0 ?
+                            products.map(product => (
+                                <article key={product.id} className="flex flex-col gap-4 xl:flex-row xl:border xl:p-4">
+                                    <img className="max-h-40 object-contain md:max-h-80" src={product.imageUrl} alt="" />
 
-                                <div className="flex flex-col gap-4">
-                                    <h3>{product.name}</h3>
-                                    <p>{product.description}</p>
-                                    <p className="text-xl font-bold">${product.price}</p>
+                                    <div className="flex flex-col gap-4">
+                                        <h3>{product.name}</h3>
+                                        <p>{product.description}</p>
+                                        <p className="text-xl font-bold">${product.price}</p>
 
-                                    <div className="flex gap-4">
-                                        {/* TODO: Disable the button when the user click on delete */}
-                                        <Link to={`/dashboard/manage-products/edit/${product.id}`}><Button className="btn btn-primary">Edit</Button></Link>
-                                        <Button className="btn btn-secondary" onClick={() => handleOpenDeletePopup(product.id)}>Delete</Button>
+                                        <div className="flex gap-4">
+                                            <Link to={`/dashboard/manage-products/edit/${product.id}`}><Button className="btn btn-primary">Edit</Button></Link>
+                                            <Button 
+                                                className="btn btn-secondary" 
+                                                onClick={() => handleOpenDeletePopup(product.id)}
+                                            >
+                                                Delete
+                                            </Button>
+                                        </div>
                                     </div>
+                                </article>
+                            ))
+                            :
+                            <div className="flex flex-col items-center justify-center gap-6 p-8 border border-primary rounded-lg">
+                                <BsBoxSeam className="w-16 h-16 text-icon-primary" />
+                                <div className="text-center">
+                                    <h3 className="text-xl font-semibold text-ebony">No Products Created Yet</h3>
+                                    <p className="text-black-50 mt-2">Start by creating your first product to showcase in your store.</p>
                                 </div>
-                            </article>
-                        ))
+                                <Link to="/dashboard/manage-products/create">
+                                    <Button className="btn-primary">Create Your First Product</Button>
+                                </Link>
+                            </div>
                         :
                         Array.from({ length: 3 }).map((_, index) => <Skeleton className="flex flex-col gap-4 border p-4 xl:flex-row xl:p-4" key={index}>
                             <div>
@@ -115,7 +138,7 @@ export function ManageProducts() {
 
                         <p>Are you sure you want to delete this product?</p>
                         <div className="flex justify-center gap-4 mt-6">
-                            <Button className="btn btn-primary" onClick={handleConfirmDelete}>Yes, Delete</Button>
+                            <Button className="btn btn-primary" onClick={handleConfirmDelete} disabled={isDeleting}>Yes, Delete</Button>
                             <Button className="btn btn-secondary" onClick={handleCloseDeletePopup}>Cancel</Button>
                         </div>
                     </div>

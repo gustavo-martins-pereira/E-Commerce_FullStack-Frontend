@@ -206,13 +206,14 @@ export function Products() {
                     >
                         {products ?
                             products.slice(0, 10).map(product => (
-                                // TODO: Create a link to the product through the product id
                                 <SwiperSlide className="h-auto flex flex-col justify-between" tag="article" key={product.id}>
-                                    <img
-                                        className="max-h-80"
-                                        src={product.imageUrl}
-                                        alt=""
-                                    />
+                                    <Link to={`/products/all/${product.id}`}>
+                                        <img
+                                            className="max-h-80"
+                                            src={product.imageUrl}
+                                            alt=""
+                                        />
+                                    </Link>
                                     <div className="flex justify-between items-center gap-4 my-auto font-bold">
                                         <h3 className="text-xl">{product.name}</h3>
                                         <p className="text-xl">${product.price}</p>
