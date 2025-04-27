@@ -25,9 +25,14 @@ export function Orders() {
             const user = await getUserByUsername(loggedUser.username);
             const orders = await getOrdersByClientId(user.id);
 
-            setOrdersData(orders);
-            if (orders) {
-                setOrdersToShow(orders.slice(0, INITIAL_ORDERS_TO_SHOW));
+            // Sort orders by date in descending order (newest first)
+            const sortedOrders = orders?.sort((a, b) => 
+                new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            ) ?? null;
+
+            setOrdersData(sortedOrders);
+            if(sortedOrders) {
+                setOrdersToShow(sortedOrders.slice(0, INITIAL_ORDERS_TO_SHOW));
             }
         })();
     }, []);

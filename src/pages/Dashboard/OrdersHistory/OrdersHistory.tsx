@@ -30,11 +30,17 @@ export function OrdersHistory() {
         (async function fetchOrders() {
             const user = await getUserByUsername(getUserByLoggedUser()?.username || "");
             const fetchedOrders = await getOrdersBySellerId(user.id);
-            setOrders(fetchedOrders);
+            
+            // Sort orders by date in descending order (newest first)
+            const sortedOrders = fetchedOrders?.sort((a, b) => 
+                new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            ) ?? null;
+            
+            setOrders(sortedOrders);
 
-            if (fetchedOrders) {
+            if (sortedOrders) {
                 const fetchedClients: ClientsMap = {};
-                for (const order of fetchedOrders) {
+                for (const order of sortedOrders) {
                     const client = await getUserById(order.clientId);
                     fetchedClients[order.id] = client;
                 }
@@ -94,7 +100,6 @@ export function OrdersHistory() {
                             ))
                             : orders.length > 0
                                 ? orders.map(order => (
-                                    // TODO: Add a line between each order
                                     <tr className="border-x odd:bg-order-details-table-odd-line even:bg-order-details-table-even-line last:border-b" key={order.id}>
                                         <td className="px-4 py-2">{order.id}</td>
                                         <td className="px-4 py-2">{clients[order.id]?.username}</td>
