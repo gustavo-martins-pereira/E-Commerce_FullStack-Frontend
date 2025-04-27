@@ -1,19 +1,13 @@
 import { createContext, useState, useEffect, ReactNode } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-import { logout } from "@api/services/userService";
+import { getUserByUsername, logout } from "@api/services/userService";
 import { LogoutMessage } from "@components/dumbs/toastify/LogoutMessage";
 import { toastWarning, toastPromise } from "@utils/toast";
-import { USER_ROLES } from "@utils/types/user";
-
-interface User {
-    id: number;
-    username: string;
-    role: USER_ROLES;
-}
+import { LoggedInUser, User } from "@utils/types/user";
 
 interface UserContextType {
-    user: User | null;
+    loggedInUser: LoggedInUser | null;
 
     login: (userData: User, loginMaxAge: number) => void;
     logoutUser: () => Promise<void>;
@@ -27,29 +21,45 @@ export const UserContext = createContext<UserContextType | null>(null);
 
 export function UserProvider({ children }: UserProviderProps) {
     const navigate = useNavigate();
+    const location = useLocation();
 
     // STATES
-    const [user, setUser] = useState<User | null>(null);
+    const [loggedInUser, setLoggedInUser] = useState<LoggedInUser | null>(null);
 
     // EFFECTS
     useEffect(() => {
-        // TODO: Make a request (getUserByUsername) in the API to verify if the user is logged off through the "refreshToken" property
-        const savedUser = localStorage.getItem("loggedInUser");
-        const loginMaxAge = localStorage.getItem("loginMaxAge");
-        const isLoginExpired = loginMaxAge ? (new Date()).getTime() > Number(loginMaxAge) : false;
-        
-        if(savedUser) {
-            setUser(JSON.parse(savedUser));
+        (async function checkUser(): Promise<void> {
+            const savedUser = localStorage.getItem("loggedInUser");
+            const loginMaxAge = localStorage.getItem("loginMaxAge");
+            const isLoginExpired = loginMaxAge ? (new Date()).getTime() > Number(loginMaxAge) : false;
 
-            if(isLoginExpired) forceLogout();
-        }
-    }, []);
+            if(savedUser) {
+                if(isLoginExpired) forceLogout();
+
+                const loggedUser: LoggedInUser = JSON.parse(savedUser);
+
+                const user = await getUserByUsername(loggedUser.username);
+                if(!user.refreshToken) {
+                    clearUserStorage();
+
+                    navigate(location.pathname);
+                    window.location.reload();
+                }
+
+                setLoggedInUser(loggedUser);
+            }
+        })();
+    }, [location.pathname]);
 
     function login(userData: User, loginMaxAge: number): void {
-        setUser(userData);
-        localStorage.setItem("loggedInUser", JSON.stringify(userData));
+        const user = {
+            username: userData.username,
+            role: userData.role,
+        };
+        setLoggedInUser(user);
+        localStorage.setItem("loggedInUser", JSON.stringify(user));
+
         localStorage.setItem("loginMaxAge", loginMaxAge.toString());
-        
         const timeUntilExpires = loginMaxAge - (new Date()).getTime();
         setTimeout(forceLogout, timeUntilExpires);
     }
@@ -66,6 +76,17 @@ export function UserProvider({ children }: UserProviderProps) {
 
     function forceLogout(): void {
         clearUserStorage();
+        showWarning();
+    }
+
+    function clearUserStorage(): void {
+        setLoggedInUser(null);
+        localStorage.removeItem("loggedInUser");
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("loginMaxAge");
+    }
+
+    function showWarning() {
         toastWarning(
             <LogoutMessage closeToast={() => {}}/>,
             {
@@ -77,15 +98,8 @@ export function UserProvider({ children }: UserProviderProps) {
         );
     }
 
-    function clearUserStorage(): void {
-        setUser(null);
-        localStorage.removeItem("loggedInUser");
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("loginMaxAge");
-    }
-
     return (
-        <UserContext.Provider value={{ user, login, logoutUser }}>
+        <UserContext.Provider value={{ loggedInUser, login, logoutUser }}>
             {children}
         </UserContext.Provider>
     );

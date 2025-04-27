@@ -6,6 +6,7 @@ interface User {
     username: string;
     password: string;
     role: USER_ROLES;
+    refreshToken: string;
     createdAt: ISODateString;
     updatedAt: ISODateString;
 }
@@ -14,6 +15,11 @@ enum USER_ROLES {
     SELLER = "SELLER",
     USER = "USER",
 };
+
+interface LoggedInUser {
+    username: string;
+    role: USER_ROLES;
+}
 
 // User Related Routes
 interface UserLogin {
@@ -27,6 +33,7 @@ interface UserRefreshToken {
 
 export {
     type User,
+    type LoggedInUser,
     type UserLogin,
     type UserRefreshToken,
     USER_ROLES,

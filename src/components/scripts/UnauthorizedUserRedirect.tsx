@@ -9,7 +9,7 @@ interface UnauthorizedUserRedirectProps {
 }
 
 export function UnauthorizedUserRedirect({ roles }: UnauthorizedUserRedirectProps) {
-    const { user } = useContext(UserContext)!;
+    const { loggedInUser } = useContext(UserContext)!;
 
-    return roles.some(role => user?.role.includes(role)) ? <Outlet /> : <Navigate to="/" replace />;
+    return roles.some(role => loggedInUser?.role.includes(role)) ? <Outlet /> : <Navigate to="/" replace />;
 }

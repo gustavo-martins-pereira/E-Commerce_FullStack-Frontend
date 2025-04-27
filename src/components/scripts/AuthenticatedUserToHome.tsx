@@ -8,7 +8,7 @@ interface AuthenticatedUserToHomeProps {
 }
 
 export function AuthenticatedUserToHome({ children }: AuthenticatedUserToHomeProps) {
-    const { user } = useContext(UserContext)!;
+    const { loggedInUser } = useContext(UserContext)!;
 
-    return user ? <Navigate to="/" replace /> : children;
+    return loggedInUser ? <Navigate to="/" replace /> : children;
 }

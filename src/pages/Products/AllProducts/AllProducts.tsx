@@ -11,7 +11,7 @@ export function AllProducts() {
     const INITIAL_PRODUCTS_TO_SHOW = 10;
 
     // CONTEXTS
-    const { user } = useContext(UserContext)!;
+    const { loggedInUser } = useContext(UserContext)!;
 
     // STATES
     const [productsData, setProductsData] = useState<Product[] | null>(null);
@@ -92,7 +92,7 @@ export function AllProducts() {
             </section>
 
             {/* DISCOVER */}
-            {!user && (
+            {!loggedInUser && (
                 <section className="section bg-banner flex flex-col gap-8">
                     <h2>Discover Our Amazing Products Today</h2>
                     <p>Explore our wide range of high-quality products and find exactly what you need.</p>

@@ -7,7 +7,7 @@ import { mainMenu, MenuItem } from "@utils/appLinksVisibility";
 
 export function Footer() {
     // CONTEXTS
-    const { user } = useContext(UserContext)!;
+    const { loggedInUser } = useContext(UserContext)!;
 
     return (
         <footer className="bg-footer flex flex-col justify-between items-start gap-8 border-t p-4 lg:flex-row lg:p-16">
@@ -18,7 +18,7 @@ export function Footer() {
             <nav>
                 <ul className="flex flex-col justify-between gap-4 lg:items-end">
                     {mainMenu
-                        .filter((link: MenuItem) => !link.visibleTo || (user && link.visibleTo.includes(user.role)))
+                        .filter((link: MenuItem) => !link.visibleTo || (loggedInUser && link.visibleTo.includes(loggedInUser.role)))
                         .map((link: MenuItem) => (
                             <li key={link.path}>
                                 <Link 

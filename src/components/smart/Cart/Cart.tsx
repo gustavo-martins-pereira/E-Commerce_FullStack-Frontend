@@ -19,7 +19,7 @@ export function Cart() {
     const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
 
     // CONTEXTS
-    const { user } = useContext(UserContext)!;
+    const { loggedInUser } = useContext(UserContext)!;
     const { cartOrderItems, updateCartQuantity, removeItemFromCart } = useContext(CartContext)!;
 
     // HANDLES
@@ -100,7 +100,7 @@ export function Cart() {
             </footer>
 
             <div className="mt-auto">
-                {user ?
+                {loggedInUser ?
                     <Button className="btn-primary w-full" onClick={handleOnBuy}>Buy</Button>
                     :
                     <Link to="/register-login">

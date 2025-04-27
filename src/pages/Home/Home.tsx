@@ -60,7 +60,7 @@ export function Home() {
     ];
 
     // CONTEXTS
-    const { user } = useContext(UserContext)!;
+    const { loggedInUser } = useContext(UserContext)!;
 
     return (
         <main>
@@ -72,7 +72,7 @@ export function Home() {
 
                     <div className="flex gap-4">
                         <Link to="/products"><Button className="btn-primary">Explore</Button></Link>
-                        {!user && <Link to="/register-login"><Button className="btn-secondary">Sign Up</Button></Link>}
+                        {!loggedInUser && <Link to="/register-login"><Button className="btn-secondary">Sign Up</Button></Link>}
                     </div>
                 </div>
 
@@ -88,7 +88,7 @@ export function Home() {
 
                 <FeaturesSection features={shopWithConfidenceData} />
 
-                {!user && <LinkArrow
+                {!loggedInUser && <LinkArrow
                     url="/register-login"
                     text="Sign Up"
                 />}

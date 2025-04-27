@@ -21,7 +21,7 @@ export function Header() {
     const headerRef = useRef<HTMLElement | null>(null);
 
     // CONTEXTS
-    const { user, logoutUser } = useContext(UserContext)!;
+    const { loggedInUser, logoutUser } = useContext(UserContext)!;
 
     // STATES
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -84,7 +84,7 @@ export function Header() {
                         {/* LINKS */}
                         <ul className="flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
                             {mainMenu
-                                .filter((link: MenuItem) => !link.visibleTo || (user && link.visibleTo.includes(user.role)))
+                                .filter((link: MenuItem) => !link.visibleTo || (loggedInUser && link.visibleTo.includes(loggedInUser.role)))
                                 .map((link: MenuItem) => (
                                     <li key={link.path}>
                                         <Link 
@@ -101,9 +101,9 @@ export function Header() {
 
                         {/* PROFILE */}
                         <div className="flex items-center gap-4 lg:flex-row">
-                            {user ? (
+                            {loggedInUser ? (
                                 <div className="flex items-center self-start gap-4 text-xl lg:self-auto">
-                                    <p>Hello, <strong>{user.username}</strong></p>
+                                    <p>Hello, <strong>{loggedInUser.username}</strong></p>
                                     <IoIosLogOut color="red" size="2.5rem" style={iconsStyle} onClick={logoutUser} />
                                 </div>
                             ) : (
