@@ -29,7 +29,6 @@ async function createProduct(name: string, description: string, price: number, i
     });
 }
 
-// TODO: Verify if the "null" is necessary
 async function getAllProducts(): Promise<Product[] | null> {
     try {
         const response = await api.get("/products");
