@@ -15,10 +15,10 @@ export default {
                 "custom-white": "hsl(0, 0%, 100%)",
                 "custom-red": "hsl(0, 100%, 50%)",
                 "cosmos": "hsl(0, 100%, 91%)",
-                "sunset-orange": "hsl(5, 100%, 62%)", // MAIN COLOR
+                "sunset-orange": "hsl(5, 100%, 62%)",
                 "sunset-orange-25": "hsla(5, 100%, 62%, 0.33)",
                 "sunset-orange-33": "hsla(5, 100%, 62%, 0.33)",
-                "sunset-orange-50": "hsla(5, 100%, 62%, 0.50)",
+                "sunset-orange-75": "hsla(5, 100%, 62%, 0.75)",
                 "fair-pink": "hsl(11, 100%, 95%)",
                 "negroni-50": "hsla(25, 100%, 88%, 0.5)",
                 "korma": "hsl(32, 81%, 29%)",
@@ -39,7 +39,7 @@ export default {
                 "btn-secondary--hover": theme("colors.cosmos"),
 
                 // INPUTS
-                "input-radius--checked": theme("colors.sunset-orange-50"),
+                "input-radius--checked": theme("colors.sunset-orange-75"),
                 
                 // ICONS
                 "icon-primary--hover": theme("colors.sunset-orange-25"),

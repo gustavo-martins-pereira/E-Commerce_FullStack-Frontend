@@ -26,7 +26,6 @@ interface OrderItem {
     product: Product;
 }
 
-// TODO: Verify if is necessary all this properties
 interface CartOrderItem {
     id: number;
     name: string;

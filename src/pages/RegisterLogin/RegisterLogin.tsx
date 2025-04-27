@@ -81,7 +81,8 @@ export function RegisterLogin() {
         register: registerFormRegister,
         watch: registerFormWatch,
         handleSubmit: handleRegisterSubmit,
-        formState: { errors: registerErrors }
+        formState: { errors: registerErrors },
+        reset: resetRegisterForm
     } = useForm<RegisterFormData>();
 
     const {
@@ -106,6 +107,7 @@ export function RegisterLogin() {
 
         await toastPromise(register(registerUsername, registerPassword, role), { pending: "Registering...", success: "Registration successful!" });
         toastInfo("Now login with your new Account.", { autoClose: 10000 });
+        resetRegisterForm();
         swiperRef.current?.slideNext();
     };
 
