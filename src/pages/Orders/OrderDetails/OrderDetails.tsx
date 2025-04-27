@@ -5,7 +5,6 @@ import { getOrderById } from "@api/services/orderService";
 import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
 import { Order, ORDER_STATUS } from "@utils/types/order";
 import { getUSFormatFromDate } from "@utils/dateTime";
-import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 
 type StatusStyles = {
     [key in ORDER_STATUS]: string;
@@ -22,7 +21,7 @@ export function OrderDetails() {
 
     // STATES
     const [colSpan, setColSpan] = useState<number | undefined>(undefined);
-    const [order, setOrder] = useState<Order | undefined>(undefined);
+    const [order, setOrder] = useState<Order>();
 
     // EFFECTS
     useEffect(() => {
@@ -73,7 +72,7 @@ export function OrderDetails() {
                             order.orderItems.map(orderItem => {
                                 return <tr className="odd:bg-order-details-table-odd-line even:bg-order-details-table-even-line border-b border-gray-300" key={orderItem.product.id}>
                                     <td className="px-4 py-2 hidden md:table-cell">
-                                        <img src={bufferArrayToImageURL(orderItem.product.image.data)} alt="Product 1" className="w-16 h-16 object-cover" />
+                                        <img src={orderItem.product.imageUrl} alt="Product 1" className="w-16 h-16 object-cover" />
                                     </td>
                                     <td className="px-4 py-2">{orderItem.product.name}</td>
                                     <td className="px-4 py-2 text-center">${orderItem.product.price}</td>

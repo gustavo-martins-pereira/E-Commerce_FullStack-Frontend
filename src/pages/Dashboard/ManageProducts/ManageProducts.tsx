@@ -5,25 +5,11 @@ import { getUserByUsername } from "@api/services/userService";
 import { getProductsBySellerId, deleteProductById } from "@api/services/productService";
 import { Button } from "@components/dumbs/Button/Button";
 import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
-import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
+import { Product } from "@utils/types/product";
 import { toastPromise } from "@utils/toast";
+import { User } from "@utils/types/user";
 
-interface Product {
-    id: number;
-    name: string;
-    description: string;
-    price: number;
-    image: {
-        data: Buffer;
-    };
-}
-
-interface User {
-    id: number;
-    username: string;
-}
-
-export function ManageProducts(): JSX.Element {
+export function ManageProducts() {
     // STATES
     const [products, setProducts] = useState<Product[] | null>(null);
     const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
@@ -83,7 +69,7 @@ export function ManageProducts(): JSX.Element {
                     {products ?
                         products.map(product => (
                             <article key={product.id} className="flex flex-col gap-4 xl:flex-row xl:border xl:p-4">
-                                <img className="max-h-40 object-contain md:max-h-80" src={bufferArrayToImageURL(product.image.data)} alt="" />
+                                <img className="max-h-40 object-contain md:max-h-80" src={product.imageUrl} alt="" />
 
                                 <div className="flex flex-col gap-4">
                                     <h3>{product.name}</h3>
@@ -91,6 +77,7 @@ export function ManageProducts(): JSX.Element {
                                     <p className="text-xl font-bold">${product.price}</p>
 
                                     <div className="flex gap-4">
+                                        {/* TODO: Disable the button when the user click on delete */}
                                         <Link to={`/dashboard/manage-products/edit/${product.id}`}><Button className="btn btn-primary">Edit</Button></Link>
                                         <Button className="btn btn-secondary" onClick={() => handleOpenDeletePopup(product.id)}>Delete</Button>
                                     </div>

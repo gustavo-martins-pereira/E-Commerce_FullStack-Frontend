@@ -11,7 +11,7 @@ import { InputRadius } from "@components/dumbs/inputs/InputRadius/InputRadius";
 import { SubmitButton } from "@components/dumbs/inputs/SubmitButton/SubmitButton";
 import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
 import { UserContext } from "@contexts/userContext";
-import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
+
 import { toastInfo, toastPromise } from "@utils/toast";
 import { getUserByToken } from "@utils/jwt";
 import { USER_ROLES } from "@utils/types/user";
@@ -147,7 +147,7 @@ export function RegisterLogin() {
                             <Swiper
                                 {...swiperGalleryConfig()}
                             >
-                                {products.slice(0, 20).map(product => <SwiperSlide key={product.id}><img className="w-full max-h-80 object-fill" src={bufferArrayToImageURL(product.image.data)} alt="" /></SwiperSlide>)}
+                                {products.slice(0, 20).map(product => <SwiperSlide key={product.id}><img className="w-full max-h-80 object-fill" src={product.imageUrl} alt="" /></SwiperSlide>)}
                             </Swiper>
 
                             <Swiper
@@ -160,7 +160,7 @@ export function RegisterLogin() {
                                     },
                                 })}
                             >
-                                {products.slice(-20).map(product => <SwiperSlide key={product.id}><img className="w-full max-h-80 object-fill" src={bufferArrayToImageURL(product.image.data)} alt="" /></SwiperSlide>)}
+                                {products.slice(-20).map(product => <SwiperSlide key={product.id}><img className="w-full max-h-80 object-fill" src={product.imageUrl} alt="" /></SwiperSlide>)}
                             </Swiper>
                         </>
                         :

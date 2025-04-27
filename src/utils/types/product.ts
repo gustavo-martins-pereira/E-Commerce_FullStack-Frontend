@@ -7,21 +7,12 @@ interface Product {
     description: string;
     price: number;
     ownerId: number;
-    createdAt: ISODateString;
-    updatedAt: ISODateString;
-
-    image: ProductImage;
-}
-
-interface ProductImage {
-    id: number;
-    name: string;
-    data: Buffer;
+    imageName: string;
+    imageUrl: string;
     createdAt: ISODateString;
     updatedAt: ISODateString;
 }
 
 export {
     type Product,
-    type ProductImage,
 }

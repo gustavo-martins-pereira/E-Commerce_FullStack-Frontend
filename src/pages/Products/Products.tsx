@@ -11,7 +11,6 @@ import { InputNumber } from "@components/dumbs/inputs/InputNumber/InputNumber";
 import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
 import { CartContext } from "@contexts/cartContext";
 import { paginationRenderBulletConfig } from "@utils/swiper";
-import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 import { Product } from "@utils/types/product";
 
 interface Feature {
@@ -117,7 +116,7 @@ export function Products() {
                                 <SwiperSlide className="lg:grid lg:grid-cols-2 lg:gap-8" tag="article" key={product.id}>
                                     <img
                                         className="w-full max-h-[30rem] object-contain sm:w-1/2 sm:m-auto lg:w-full"
-                                        src={bufferArrayToImageURL(product.image.data)}
+                                        src={product.imageUrl}
                                         alt={product.name}
                                     />
 
@@ -207,10 +206,11 @@ export function Products() {
                     >
                         {products ?
                             products.slice(0, 10).map(product => (
+                                // TODO: Create a link to the product through the product id
                                 <SwiperSlide className="h-auto flex flex-col justify-between" tag="article" key={product.id}>
                                     <img
                                         className="max-h-80"
-                                        src={bufferArrayToImageURL(product.image.data)}
+                                        src={product.imageUrl}
                                         alt=""
                                     />
                                     <div className="flex justify-between items-center gap-4 my-auto font-bold">

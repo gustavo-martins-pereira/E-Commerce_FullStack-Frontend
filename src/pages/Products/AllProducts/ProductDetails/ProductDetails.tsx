@@ -7,14 +7,13 @@ import { Accordion } from "@components/dumbs/Accordion/Accordion";
 import { InputNumber } from "@components/dumbs/inputs/InputNumber/InputNumber";
 import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
 import { CartContext } from "@contexts/cartContext";
-import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 import { Product } from "@utils/types/product";
 
 export function ProductDetails() {
     const { productId } = useParams<{ productId: string }>();
 
     // STATES
-    const [product, setProduct] = useState<Product | undefined>(undefined);
+    const [product, setProduct] = useState<Product>();
     const [productQuantity, setProductQuantity] = useState<number>(1);
 
     // CONTEXTS
@@ -45,10 +44,10 @@ export function ProductDetails() {
             {/* PRODUCT ITSELF */}
             <section className="section flex flex-col gap-8 lg:flex-row-reverse">
                 {product ? (
-                    <img 
-                        className="w-1/2 m-auto lg:m-0 lg:ml-auto" 
-                        src={bufferArrayToImageURL(product.image.data)} 
-                        alt={product.name} 
+                    <img
+                        className="w-1/2 m-auto lg:m-0 lg:ml-auto"
+                        src={product.imageUrl}
+                        alt={product.name}
                     />
                 ) : (
                     <Skeleton className="w-1/2 m-auto lg:m-0 lg:ml-auto">

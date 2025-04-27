@@ -1,4 +1,4 @@
-import { Product, ProductImage } from "@utils/types/product";
+import { Product } from "@utils/types/product";
 
 /** ISO 8601 date string (e.g. "2025-02-25T17:49:18.891Z") */
 type ISODateString = string;
@@ -26,6 +26,7 @@ interface OrderItem {
     product: Product;
 }
 
+// TODO: Verify if is necessary all this properties
 interface CartOrderItem {
     id: number;
     name: string;
@@ -33,10 +34,10 @@ interface CartOrderItem {
     price: number;
     quantity: number;
     ownerId: number;
+    imageName: string;
+    imageUrl: string;
     createdAt: ISODateString;
     updatedAt: ISODateString;
-
-    image: ProductImage;
 }
 
 enum ORDER_STATUS {

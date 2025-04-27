@@ -8,7 +8,7 @@ import { UserContext } from "@contexts/userContext";
 import { CartContext } from "@contexts/cartContext";
 import { BadgeNumber } from "@components/dumbs/BadgeNumber/BadgeNumber";
 import { Button } from "@components/dumbs/Button/Button";
-import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
+
 import { toastPromise } from "@utils/toast";
 import { CartOrderItem } from "@utils/types/order";
 
@@ -59,7 +59,7 @@ export function Cart() {
                         <div className="flex items-center gap-4">
                             <img
                                 className="w-12 h-12 object-fill"
-                                src={bufferArrayToImageURL(cartOrderItem.image.data)}
+                                src={cartOrderItem.imageUrl}
                                 alt=""
                             />
 

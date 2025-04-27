@@ -5,7 +5,6 @@ import { getAllProducts } from "@api/services/productService";
 import { Button } from "@components/dumbs/Button/Button";
 import { Skeleton } from "@components/dumbs/Skeleton/Skeleton";
 import { UserContext } from "@contexts/userContext";
-import { bufferArrayToImageURL } from "@utils/bufferArrayToImageURL";
 import { Product } from "@utils/types/product";
 
 export function AllProducts() {
@@ -50,14 +49,14 @@ export function AllProducts() {
                     {productsData ? (
                         productsToShow.map((product: Product) => (
                             <article key={product.id}>
-                                <Link 
-                                    className="h-full flex flex-col justify-between gap-4" 
+                                <Link
+                                    className="h-full flex flex-col justify-between gap-4"
                                     to={`/products/all/${product.id}`}
                                 >
-                                    <img 
-                                        className="max-h-[30rem] mx-auto object-contain" 
-                                        src={bufferArrayToImageURL(product.image.data)} 
-                                        alt={product.name} 
+                                    <img
+                                        className="max-h-[30rem] mx-auto object-contain"
+                                        src={product.imageUrl}
+                                        alt={product.name}
                                     />
 
                                     <section>

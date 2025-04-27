@@ -94,6 +94,7 @@ export function OrdersHistory() {
                             ))
                             : orders.length > 0
                                 ? orders.map(order => (
+                                    // TODO: Add a line between each order
                                     <tr key={order.id}>
                                         <td className="px-4 py-2">{order.id}</td>
                                         <td className="px-4 py-2">{clients[order.id]?.username}</td>

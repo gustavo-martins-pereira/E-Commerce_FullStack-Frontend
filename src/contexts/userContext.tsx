@@ -33,6 +33,7 @@ export function UserProvider({ children }: UserProviderProps) {
 
     // EFFECTS
     useEffect(() => {
+        // TODO: Make a request (getUserByUsername) in the API to verify if the user is logged off through the "refreshToken" property
         const savedUser = localStorage.getItem("loggedInUser");
         const loginMaxAge = localStorage.getItem("loginMaxAge");
         const isLoginExpired = loginMaxAge ? (new Date()).getTime() > Number(loginMaxAge) : false;
