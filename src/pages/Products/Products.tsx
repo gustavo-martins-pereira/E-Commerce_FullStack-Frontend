@@ -209,7 +209,6 @@ export function Products() {
                                 <SwiperSlide className="h-auto flex flex-col justify-between" tag="article" key={product.id}>
                                     <Link to={`/products/all/${product.id}`}>
                                         <img
-                                            className="max-h-80"
                                             src={product.imageUrl}
                                             alt=""
                                         />
