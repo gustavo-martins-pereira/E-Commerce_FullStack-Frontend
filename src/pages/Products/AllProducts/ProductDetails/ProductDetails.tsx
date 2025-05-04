@@ -101,7 +101,7 @@ export function ProductDetails() {
             </section>
 
             {/* FAQ */}
-            <section className="section flex flex-col gap-4 text-center lg:w-3/4 lg:max-w-[40rem] lg:m-auto">
+            <section className="section flex flex-col gap-4 text-center lg:w-3/4 lg:max-w-[40rem] lg:m-auto lg:mb-28">
                 <h2>FAQs</h2>
                 <p>Find answers to commonly asked questions about the product.</p>
 

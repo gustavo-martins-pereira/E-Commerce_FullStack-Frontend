@@ -104,7 +104,7 @@
 /*============================== GENERIC CLASSES ==============================*/
 @layer utilities {
     /* GENERIC */
-    .px-section {
+    .mx-section {
         @apply mx-4 md:mx-16 lg:mx-20;
     }
 
@@ -117,7 +117,7 @@
 @layer components {
     /* DEFAULT SECTION */
     .section {
-        @apply my-12 md:my-24 lg:my-28 px-section;
+        @apply my-12 md:my-24 lg:my-28 mx-section;
     }
 
     /* BUTTON */

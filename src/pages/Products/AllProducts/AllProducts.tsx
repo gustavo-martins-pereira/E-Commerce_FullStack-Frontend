@@ -93,17 +93,18 @@ export function AllProducts() {
 
             {/* DISCOVER */}
             {!loggedInUser && (
-                <section className="section bg-banner flex flex-col gap-8">
-                    <h2>Discover Our Amazing Products Today</h2>
-                    <p>Explore our wide range of high-quality products and find exactly what you need.</p>
-
-                    <div className="flex gap-4">
-                        <Link to="/register-login">
-                            <Button className="btn-secondary">Sign Up</Button>
-                        </Link>
-                        <Link to="/register-login">
-                            <Button className="btn-primary">Log In</Button>
-                        </Link>
+                <section className="bg-banner py-12">
+                    <div className="flex flex-col gap-8 mx-section">
+                        <h2>Discover Our Amazing Products Today</h2>
+                        <p>Explore our wide range of high-quality products and find exactly what you need.</p>
+                        <div className="flex gap-4">
+                            <Link to="/register-login">
+                                <Button className="btn-secondary">Sign Up</Button>
+                            </Link>
+                            <Link to="/register-login">
+                                <Button className="btn-primary">Log In</Button>
+                            </Link>
+                        </div>
                     </div>
                 </section>
             )}
