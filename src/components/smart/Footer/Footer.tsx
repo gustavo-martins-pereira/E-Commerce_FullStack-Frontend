@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Logo from "@assets/images/logo.svg";
 import { UserContext } from "@contexts/userContext";
 import { mainMenu, MenuItem } from "@utils/appLinksVisibility";
+import { twMerge } from "tailwind-merge";
 
 export function Footer() {
     // CONTEXTS
@@ -22,7 +23,7 @@ export function Footer() {
                         .map((link: MenuItem) => (
                             <li key={link.path}>
                                 <Link 
-                                    className={`inline-block pr-4 py-2 pl-0 hover:underline lg:px-4 ${link.styles || ''}`}
+                                    className={twMerge(`inline-block py-2 pl-0 hover:underline lg:px-4 ${link.styles || ''}`)}
                                     to={link.path}
                                 >
                                     {link.title}

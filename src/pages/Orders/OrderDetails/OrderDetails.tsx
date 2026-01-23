@@ -46,7 +46,7 @@ export function OrderDetails() {
     };
 
     return (
-        <main className="section max-w-[60rem] m-auto">
+        <main className="section max-w-[60rem] m-auto p-8">
             <header className="flex flex-col gap-4">
                 <h2>Order Details</h2>
                 <p>View details of your order.</p>
@@ -99,7 +99,7 @@ export function OrderDetails() {
             </section>
 
             {/* MORE INFO */}
-            <footer className="mt-8 p-4 bg-gray-50 rounded-md shadow-lg">
+            <footer className="my-8 p-4 bg-gray-50 rounded-md shadow-lg">
                 <h3 className="font-semibold text-2xl">Order Information</h3>
 
                 <div className="mt-2">
